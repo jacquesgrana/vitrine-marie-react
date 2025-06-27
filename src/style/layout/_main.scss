@@ -1,0 +1,10 @@
+.App-main {
+    background-color: $primary-color-light;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 75vh;
+    font-size: calc(10px + 2vmin);
+    color: $white-color;
+}

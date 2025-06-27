@@ -1,0 +1,22 @@
+.button-dark-small {
+    background-color: $primary-color;
+    color: $white-color;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid $white-color;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 5px;
+    font-size: small;
+    font-weight: bold;   
+
+    &.active {
+        background-color: $primary-color-lighter;
+        color: $secondary-color;
+    }
+
+    &:hover {
+        background-color: $secondary-color;
+        color: $black-color;
+    }
+}
