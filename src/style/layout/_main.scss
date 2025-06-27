@@ -1,5 +1,5 @@
 .App-main {
-    background-color: $primary-color-light;
+    background-color: $black-color;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,4 +7,8 @@
     min-height: 75vh;
     font-size: calc(10px + 2vmin);
     color: $white-color;
+
+    h1,h2,h3,h4,h5,h6 {
+        color: $secondary-color;
+    }
 }

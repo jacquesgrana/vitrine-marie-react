@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom'
 
 const Header: React.FC = () => (
   <header className="App-header">
-        <h1>Site de Marie</h1>
-        <nav>
+        <h1 className='mt-3'>Site de Marie</h1>
+        <nav className='mb-2'>
         {/* NavLink ajoute automatiquement la classe "active" quand c’est la route courante */}
         <NavLink to="/" end className="button-dark-small">
             Accueil
