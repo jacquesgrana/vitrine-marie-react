@@ -1,21 +1,27 @@
 .button-dark-small {
-    background-color: $primary-color;
+    background-color: $primary-color-dark;
     color: $white-color;
     padding: 5px 10px;
     border-radius: 5px;
-    border: 1px solid $white-color;
+    //border: 1px solid $white-color;
     cursor: pointer;
     text-decoration: none;
-    margin: 5px;
+    margin: 10px;
     font-size: small;
     font-weight: bold;   
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    display: inline-block;
+    min-width: 200px;
 
     &.active {
+        transition: 0.3s;
         background-color: $primary-color-lighter;
         color: $secondary-color;
     }
 
     &:hover {
+        transition: 0.3s;
         background-color: $secondary-color;
         color: $black-color;
     }

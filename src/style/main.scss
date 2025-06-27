@@ -13,11 +13,14 @@
 @import 'layout/main';
 
 @import 'page/home';
+@import 'page/gallery';
 @import 'page/about';
+@import 'page/contact';
 @import 'page/not_found';
 
 @import 'component/button';
 @import 'component/link';
+@import 'component/text';
 
 @import 'theme/dark';
 @import 'theme/light';

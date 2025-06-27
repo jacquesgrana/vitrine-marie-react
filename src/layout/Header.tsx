@@ -9,8 +9,14 @@ const Header: React.FC = () => (
         <NavLink to="/" end className="button-dark-small">
             Accueil
         </NavLink>
+        <NavLink to="/gallery" className="button-dark-small">
+            Galerie
+        </NavLink>
         <NavLink to="/about" className="button-dark-small">
             À propos
+        </NavLink>
+        <NavLink to="/contact" className="button-dark-small">
+            Contact
         </NavLink>
         </nav>
     </header>
