@@ -7,9 +7,49 @@ import img1 from '../../assets/image/carousel/image_carousel_01.jpg'
 import img2 from '../../assets/image/carousel/image_carousel_02.jpg'
 import img3 from '../../assets/image/carousel/image_carousel_03.jpg'
 import img4 from '../../assets/image/carousel/image_carousel_04.jpg'
+import PhotoCarouselItem, { PhotoSlide } from './PhotoCarouselItem'
 
 
+const slides: PhotoSlide[] = [
+  {
+  image: img1,
+  title: 'Premier slide',
+  description: 'Description du premier slide.',
+  alt: 'First slide'
+  },
+  {
+  image: img2,
+  title: 'Deuxième slide',
+  description: 'Description du deuxième slide.',
+  alt: 'Second slide'
+  },
+  {
+  image: img3,
+  title: 'Troisième slide',
+  description: 'Description du troisième slide.',
+  alt: 'Third slide'
+  },
+  {
+  image: img4,
+  title: 'Quatrième slide',
+  description: 'Description du quatrième slide.',
+  alt: 'Fourth slide'
+  }
+];
 const PhotoCarousel: React.FC = () => (
+  
+    <Carousel>
+      {slides.map((slide, idx) => {
+        //console.log(`slide ${idx}`, slide)
+        return <PhotoCarouselItem key={idx} {...slide} />
+      })}
+    </Carousel>
+  
+)
+
+export default PhotoCarousel;
+
+/*
   <Carousel>
     <Carousel.Item>
       <img
@@ -58,6 +98,4 @@ const PhotoCarousel: React.FC = () => (
       </Carousel.Caption>
     </Carousel.Item>
   </Carousel>
-)
-
-export default PhotoCarousel
+  */
