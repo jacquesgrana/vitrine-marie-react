@@ -5,8 +5,7 @@ export interface PhotoSlide {
   image: string
   title: string
   description: string
-  alt: string,
-  
+  alt: string
 }
 
 const PhotoCarouselItem: React.FC<PhotoSlide> = ({
@@ -20,7 +19,7 @@ const PhotoCarouselItem: React.FC<PhotoSlide> = ({
   // LA MODIFICATION CLÉ N°2 : On applique ces props directement au Carousel.Item
   <Carousel.Item {...rest}> 
     <img 
-      className="d-block w-100" 
+      className="d-block w-100 photo-carousel-image-cover" 
       src={image} 
       alt={alt} 
     />

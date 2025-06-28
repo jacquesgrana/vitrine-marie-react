@@ -37,14 +37,14 @@ const slides: PhotoSlide[] = [
   }
 ];
 const PhotoCarousel: React.FC = () => (
-  
+  <div className='photo-carousel-container'>
     <Carousel>
       {slides.map((slide, idx) => {
         //console.log(`slide ${idx}`, slide)
         return <PhotoCarouselItem key={idx} {...slide} />
       })}
     </Carousel>
-  
+  </div>
 )
 
 export default PhotoCarousel;
