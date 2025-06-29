@@ -6,7 +6,7 @@
 
 
 .photo-carousel-container {
-    max-width: 800px;
+    max-width: min(100%, 800px);
     width: auto;
     //max-height: 500px;
     margin: 0 auto;
@@ -18,14 +18,97 @@
     }
 
     .photo-carousel-image-cover {
-    width: 800px;
+    width: min(auto, 600px);
+    //width: auto;
     height: 800px;
-    object-fit:cover; /* La propriété magique ! */
-    object-position: center; /* Centre l'image après recadrage */
+    object-fit:scale-down;
+    object-position: center;
     }
 
     .description-text {
         text-align: center;
         font-size: small;
     }
+
+    .carousel-indicators {
+
+    // On cible chaque "point" indicateur
+    [data-bs-target] {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%; // Les transformer en cercles
+      background-color: $secondary-color-dark-3;
+      opacity: 0.66; // Opacité pour les indicateurs inactifs
+      border: 1px solid $black-color; // Ajouter une bordure pour la visibilité
+      transition: opacity 0.3s ease;
+      margin: 0 5px; // Un peu plus d'espace entre les points
+    }
+
+    // On cible l'indicateur de la slide actuellement visible
+    .active {
+      opacity: 1; // Pleine opacité pour le point actif
+      background-color: $secondary-color; // On réutilise la même couleur que les flèches
+    }
+  }
+
+ // --- STYLE DES FLÈCHES (MÉTHODE UTF-8) ---
+
+ // Ajoutez ce bloc juste avant le ciblage de .carousel-control-prev-icon
+.carousel-control-prev,
+.carousel-control-next {
+  // La correction clé : on supprime la décoration du lien
+  text-decoration: none;
+
+    // --- CORRECTION DE L'ALIGNEMENT HORIZONTAL ---
+    &.carousel-control-prev {
+        justify-content: flex-start; // Aligne la flèche à gauche dans son conteneur
+    }
+    &.carousel-control-next {
+        justify-content: flex-end; // Aligne la flèche à droite dans son conteneur
+        margin-right: 60px; // TODO : améliorer !!
+    }
+
+  // On s'assure que le trait ne réapparaît pas au survol ou au focus
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+}
+
+  // 1. On cible les conteneurs des icônes et on cache le SVG par défaut.
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-image: none; // ÉTAPE CRUCIALE : on retire l'icône de Bootstrap
+    
+    // On utilise un pseudo-élément pour créer notre nouvelle icône
+    &::before {
+      display: block;
+      font-family: sans-serif; // Assure la compatibilité
+      font-size: 10rem;
+      color: $secondary-color;
+      font-weight: bold;
+      text-shadow: $secondary-color-dark-2; // Essentiel pour la lisibilité sur les images
+      line-height: 0; // Aide à l'alignement vertical
+      transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+      
+    }
+  }
+
+  // 2. On définit le caractère spécifique pour "Précédent"
+  .carousel-control-prev-icon::before {
+    content: '«'; // Caractère UTF-8 "chevron simple gauche". Alternatives : ‹ « ou ←
+    
+  }
+
+  // 3. On définit le caractère spécifique pour "Suivant"
+  .carousel-control-next-icon::before {
+    content: '»'; // Caractère UTF-8 "chevron simple droit". Alternatives : › » ou →
+    
+  }
+  
+  // 4. (Optionnel mais recommandé) On ajoute un effet au survol
+  .carousel-control-prev:hover .carousel-control-prev-icon::before,
+  .carousel-control-next:hover .carousel-control-next-icon::before {
+    color: $secondary-color-light-3;
+    transform: scale(1.1); // Grossit légèrement la flèche
+  }
 }

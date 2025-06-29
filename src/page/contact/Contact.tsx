@@ -3,12 +3,12 @@ import coloredGradientStone from '../../assets/image/stone/color_gradient_stone.
 
 
 const Contact: React.FC = () => (
-  <main>
+  <div className='app-container'>
     <h2 className='mt-5'>Contact</h2>
     <p className='text-xlarge-white'>Pour me contacter.</p>
     <img className='mt-5 mb-5 image-contact' src={coloredGradientStone} alt='colored gradient stone'></img>
 
-  </main>
+  </div>
 )
 
 export default Contact
