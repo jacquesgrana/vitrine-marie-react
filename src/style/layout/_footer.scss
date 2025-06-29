@@ -1,5 +1,13 @@
 .App-footer {
-  background-color: $primary-color;
+  //background-color: $primary-color;
+
+  background-image:$gradient-layout;
+
+  // Propriétés pour contrôler le positionnement et la taille de l'image de fond
+  background-size: cover;          // Redimensionne l'image pour couvrir tout le conteneur sans la déformer
+  background-position: bottom;     // Centre l'image dans le conteneur
+  background-repeat: no-repeat;    // Empêche l'image de se répéter si elle est plus petite que le conteneur
+
   min-height: 10vh;
   display: flex;
   flex-direction: column;

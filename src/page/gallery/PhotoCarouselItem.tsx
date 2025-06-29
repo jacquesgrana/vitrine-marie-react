@@ -24,8 +24,8 @@ const PhotoCarouselItem: React.FC<PhotoSlide> = ({
       alt={alt} 
     />
     <Carousel.Caption>
-      <h3>{title}</h3>
-      <p>{description}</p>
+      <h5 className='with-black-transparent-background'>{title}</h5>
+      <p className='with-black-transparent-background description-text'>{description}</p>
     </Carousel.Caption>
   </Carousel.Item>
 );

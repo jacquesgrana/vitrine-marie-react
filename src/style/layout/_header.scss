@@ -1,5 +1,14 @@
 .App-header {
-  background-color: $primary-color;
+// Déclarez le dégradé ET l'image dans la même propriété, séparés par une virgule.
+  // Le dégradé vient en premier pour être la couche supérieure.
+  background-image: $gradient-layout;
+
+  // Propriétés pour contrôler le positionnement et la taille de l'image de fond
+  background-size: cover;          // Redimensionne l'image pour couvrir tout le conteneur sans la déformer
+  background-position: top;     // Centre l'image dans le conteneur
+  background-repeat: no-repeat;    // Empêche l'image de se répéter si elle est plus petite que le conteneur
+
+  //background-color: $primary-color;
   min-height: 15vh;
   display: flex;
   flex-direction: column;

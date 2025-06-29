@@ -6,16 +6,26 @@
 
 
 .photo-carousel-container {
-    max-width: 500px;
+    max-width: 800px;
     width: auto;
     //max-height: 500px;
     margin: 0 auto;
     margin-bottom: 20px;
 
+    .with-black-transparent-background {
+        padding: 5px;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
     .photo-carousel-image-cover {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* La propriété magique ! */
+    width: 800px;
+    height: 800px;
+    object-fit:cover; /* La propriété magique ! */
     object-position: center; /* Centre l'image après recadrage */
+    }
+
+    .description-text {
+        text-align: center;
+        font-size: small;
     }
 }

@@ -1,13 +1,46 @@
 $primary-color: #282c34;
-$primary-color-medium: #2c313a;
-$primary-color-light: #323842;
-$primary-color-lighter: #3a424c;
 
-$primary-color-dark: #212329;
+// Création de nuances plus claires (tints)
+$primary-color-light-1: lighten($primary-color, 10%); // Résultat : #3f4551
+$primary-color-light-2: lighten($primary-color, 25%); // Résultat : #5b6270
+$primary-color-light-3: lighten($primary-color, 50%); // Résultat : #9ba3b1
+
+// Création de nuances plus foncées (shades)
+$primary-color-dark-1: darken($primary-color, 5%);  // Résultat : #1b1e24
+$primary-color-dark-2: darken($primary-color, 10%); // Résultat : #0e0f11
+$primary-color-dark-3: darken($primary-color, 15%); // Résultat : #030304
 
 $secondary-color: #ebb215;
 
+$secondary-color-light-1: lighten($secondary-color, 10%); // Résultat : #f2c94c
+$secondary-color-light-2: lighten($secondary-color, 20%); // Résultat : #f5d27d
+$secondary-color-light-3: lighten($secondary-color, 30%); // Résultat : #f8daae
+
+$secondary-color-dark-1: darken($secondary-color, 5%);  // Résultat : #e8b400
+$secondary-color-dark-2: darken($secondary-color, 10%); // Résultat : #d9a000
+$secondary-color-dark-3: darken($secondary-color, 15%); // Résultat : #c89000
+
 $tertiary-color: #ce0404;
+
+$tertiary-color-light-1: lighten($tertiary-color, 10%); // Résultat : #f2c94c
+$tertiary-color-light-2: lighten($tertiary-color, 20%); // Résultat : #f5d27d
+$tertiary-color-light-3: lighten($tertiary-color, 30%); // Résultat : #f8daae  
+
+$tertiary-color-dark-1: darken($tertiary-color, 5%);  // Résultat : #e8b400
+$tertiary-color-dark-2: darken($tertiary-color, 10%); // Résultat : #d9a000
+$tertiary-color-dark-3: darken($tertiary-color, 15%); // Résultat : #c89000
 
 $white-color: #f7f7f7;
 $black-color: #000;
+
+  // Déclarez le dégradé ET l'image dans la même propriété, séparés par une virgule.
+  // Le dégradé vient en premier pour être la couche supérieure.
+$gradient-layout:     linear-gradient(to right, 
+    rgba(0, 0, 0, 0.43), 
+    rgba(0, 0, 0, 0.66), 
+    rgba(0, 0, 0, 0.80), 
+    rgba(0, 0, 0, 0.8), 
+    rgba(0, 0, 0, 0.8), 
+    rgba(0, 0, 0, 0.66), 
+    rgba(0, 0, 0, 0.43)),
+    url('../../assets/image/layout/image_bandeau.png');
