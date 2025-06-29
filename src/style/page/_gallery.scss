@@ -12,9 +12,11 @@
     margin: 0 auto;
     margin-bottom: 20px;
 
+    height: 800px;
     .with-black-transparent-background {
         padding: 5px;
         background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 5px;
     }
 
     .photo-carousel-image-cover {
@@ -65,7 +67,7 @@
     }
     &.carousel-control-next {
         justify-content: flex-end; // Aligne la flèche à droite dans son conteneur
-        margin-right: 60px; // TODO : améliorer !!
+        margin-right: 24px; // TODO : améliorer !!
     }
 
   // On s'assure que le trait ne réapparaît pas au survol ou au focus
@@ -83,7 +85,7 @@
     &::before {
       display: block;
       font-family: sans-serif; // Assure la compatibilité
-      font-size: 10rem;
+      font-size: 6rem;
       color: $secondary-color;
       font-weight: bold;
       text-shadow: $secondary-color-dark-2; // Essentiel pour la lisibilité sur les images
