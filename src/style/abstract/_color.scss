@@ -33,6 +33,9 @@ $tertiary-color-dark-3: darken($tertiary-color, 15%); // Résultat : #c89000
 $white-color: #f7f7f7;
 $black-color: #000;
 
+$success-color : #198754;
+$danger-color : #dc3545;
+
   // Déclarez le dégradé ET l'image dans la même propriété, séparés par une virgule.
   // Le dégradé vient en premier pour être la couche supérieure.
 $gradient-layout:     linear-gradient(to right, 

@@ -1,0 +1,11 @@
+.alert-success {
+    font-family: Source_Sans_3_Regular;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    background-color: $primary-color-dark-2;
+    border-color: $success-color;
+    color: $success-color;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}

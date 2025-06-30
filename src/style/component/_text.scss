@@ -13,6 +13,11 @@
     font-size: small;
 }
 
+.text-small-danger {
+    color: $danger-color;
+    font-size: small;
+}
+
 .text-medium-primary {
     color: $primary-color;
     font-size: medium;
@@ -25,6 +30,11 @@
 
 .text-medium-white {
     color: $white-color;
+    font-size: medium;
+}
+
+.text-medium-danger {
+    color: $danger-color;
     font-size: medium;
 }
 
@@ -43,6 +53,11 @@
     font-size: large;
 }
 
+.text-large-danger {
+    color: $danger-color;
+    font-size: large;
+}
+
 .text-xlarge-primary {
     color: $primary-color;
     font-size: x-large;
@@ -55,5 +70,10 @@
 
 .text-xlarge-white {
     color: $white-color;
+    font-size: x-large;
+}
+
+.text-xlarge-danger {
+    color: $danger-color;
     font-size: x-large;
 }
