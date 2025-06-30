@@ -38,7 +38,7 @@
     [data-bs-target] {
       width: 20px;
       height: 20px;
-      border-radius: 50%; // Les transformer en cercles
+      border-radius: 5px; // Les transformer en cercles
       background-color: $secondary-color-dark-3;
       opacity: 0.66; // Opacité pour les indicateurs inactifs
       border: 1px solid $black-color; // Ajouter une bordure pour la visibilité

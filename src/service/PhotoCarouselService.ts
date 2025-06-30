@@ -33,7 +33,7 @@ import img29 from '../assets/image/carousel/stone_16.jpg';
 import img30 from '../assets/image/carousel/stone_17.jpg';
 import img31 from '../assets/image/carousel/stone_18.jpg';
 import img32 from '../assets/image/carousel/stone_19.jpg';
-import img33 from '../assets/image/carousel/stone_20.jpg';
+//import img33 from '../assets/image/carousel/stone_20.jpg';
 
 
 class PhotoCarouselService {
@@ -266,12 +266,6 @@ class PhotoCarouselService {
             title: 'Trente-deuxieme slide',
             description: 'Description du Trente-deuxieme slide.',
             alt: 'Thirty-second slide'
-            },
-            {
-            image: img33,
-            title: 'Trente-troisieme slide',
-            description: 'Description du Trente-troisieme slide.',
-            alt: 'Thirty-third slide'
             }
         ];
     }
