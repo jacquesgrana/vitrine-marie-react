@@ -22,12 +22,11 @@ const PhotoCarousel: React.FC = () => {
     };
 
     loadSlides();
-  }, []); // Le tableau de dépendances vide [] garantit que l'effet ne s'exécute qu'une fois.
+  }, []);
 
-  // 5. Le JSX utilise maintenant les données de l'état "slides", qui sera mis à jour par l'useEffect.
   return (
     <div className='photo-carousel-container'>
-      <Carousel>
+      <Carousel indicators={true} controls={true} interval={4000}>
         {slides.map((slide, idx) => {
           // Utiliser un `id` unique comme clé est la meilleure pratique
           return <PhotoCarouselItem key={idx} {...slide} />

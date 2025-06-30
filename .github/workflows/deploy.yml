@@ -3,7 +3,7 @@ name: Build and Deploy React App to Hostinger
 on:
   push:
     branches:
-      - main # ou master selon votre branche par défaut
+      - main
 
 jobs:
   build-and-deploy:
@@ -15,7 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.17.0' # Assurez-vous que cette version est bien supportée
+          node-version: '22.17.0'
 
       - name: Install dependencies
         run: npm install
@@ -30,4 +30,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./build/
-          server-dir: ./ # ou le chemin vers le dossier de votre site
+          server-dir: ./

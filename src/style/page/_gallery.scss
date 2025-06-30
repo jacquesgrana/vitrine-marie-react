@@ -6,11 +6,16 @@
 
 
 .photo-carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     max-width: min(100%, 800px);
     width: auto;
     //max-height: 500px;
     margin: 0 auto;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 
     height: 800px;
     .with-black-transparent-background {
@@ -20,7 +25,7 @@
     }
 
     .photo-carousel-image-cover {
-    width: min(auto, 600px);
+    width: 600px;
     //width: auto;
     height: 800px;
     object-fit:scale-down;
@@ -33,6 +38,18 @@
     }
 
     .carousel-indicators {
+        display: flex;
+        position:absolute; 
+        //margin-top: 10rem;
+        bottom:-5rem;
+        flex-wrap: wrap; 
+        justify-content: center;
+        align-items: center;
+
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    
 
     // On cible chaque "point" indicateur
     [data-bs-target] {
@@ -44,6 +61,7 @@
       border: 1px solid $black-color; // Ajouter une bordure pour la visibilité
       transition: opacity 0.3s ease;
       margin: 0 5px; // Un peu plus d'espace entre les points
+      margin-bottom: 8px;
     }
 
     // On cible l'indicateur de la slide actuellement visible
