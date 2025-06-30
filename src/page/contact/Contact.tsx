@@ -69,7 +69,7 @@ const Contact: React.FC = () => {
   return (
     <div className='app-container'>
       <h2 className='mt-5'>Contact</h2>
-      <p className='text-xlarge-white'>Pour me contacter, remplissez ce formulaire.</p>
+      <p className='text-xlarge-white'>Pour me contacter, vous pouvez remplir et envoyer ce formulaire.</p>
       <Container className="my-3 contact-form-container">
         {showAlert && <Alert className='alert-success'>Merci pour votre message !</Alert>}
         <Form noValidate onSubmit={handleSubmit}>
@@ -85,6 +85,7 @@ const Contact: React.FC = () => {
                     required
                     isInvalid={submitted && !!errors.name}
                     isValid={isFormValid}
+                    placeholder='Saisir votre nom.'
                   />
                   <Form.Control.Feedback className='text-medium-danger' type="invalid">
                     {errors.name}
@@ -105,6 +106,7 @@ const Contact: React.FC = () => {
                     required
                     isInvalid={submitted && !!errors.firstName}
                     isValid={isFormValid}
+                    placeholder='Saisir votre prénom.'
                   />
                   <Form.Control.Feedback type="invalid" className='text-medium-danger'>
                     {errors.firstName}
@@ -124,6 +126,7 @@ const Contact: React.FC = () => {
                     required
                     isInvalid={submitted && !!errors.email}
                     isValid={isFormValid}
+                    placeholder='Saisir votre adresse e-mail.'
                   />
                   <Form.Control.Feedback type="invalid" className='text-medium-danger'>
                     {errors.email}
@@ -140,7 +143,8 @@ const Contact: React.FC = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     isInvalid={submitted && !!errors.phone}
-                    isValid={isFormValid && !!formData.phone} // Devient vert seulement s'il est rempli et valide
+                    isValid={isFormValid} // Devient vert seulement s'il est rempli et valide
+                    placeholder='Saisir votre numéro de téléphone.'
                   />
                   <Form.Control.Feedback type="invalid" className='text-medium-danger'>
                     {errors.phone}
@@ -160,8 +164,9 @@ const Contact: React.FC = () => {
                     required
                     isInvalid={submitted && !!errors.message}
                     isValid={isFormValid}
+                    placeholder='Saisir votre message.'
                   />
-                  <Form.Control.Feedback type="invalid">
+                  <Form.Control.Feedback type="invalid" className='text-medium-danger'>
                     {errors.message}
                   </Form.Control.Feedback>
                 </Form.Group>
