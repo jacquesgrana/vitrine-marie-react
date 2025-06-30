@@ -1,6 +1,5 @@
 import React from 'react'
 import cyanYellowMandala from '../../assets/image/canvas/cyan_yellow_mandala.png'
-import PhotoCarousel from '../gallery/PhotoCarousel'
 
 
 const Home: React.FC = () => (
