@@ -1,9 +1,18 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import coloredGradientStone from '../../assets/image/stone/color_gradient_stone.png'
 import { Alert, Button, Container, Form, Row } from 'react-bootstrap'
+import ContactFormService from '../../service/ContactFormService';
+import CustomCaptcha from './CustomCaptcha';
 
+
+type CaptchaHandle = {
+  reset: () => void;
+};
 
 const Contact: React.FC = () => {
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
+
+  //const contactFormService : ContactFormService = ContactFormService.getInstance();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -17,6 +26,8 @@ const Contact: React.FC = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+
+   const captchaRef = useRef<CaptchaHandle>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -55,9 +66,31 @@ const Contact: React.FC = () => {
     setSubmitted(true);
     setShowAlert(false);
 
+    if(!isCaptchaVerified) {
+      alert('Veuillez vérifier le captcha.');
+      return;
+    }
+
+    if (captchaRef.current) {
+        captchaRef.current.reset();
+    }
+
     if (Object.keys(formErrors).length === 0) {
-      console.log("Formulaire soumis :", formData);
-      setShowAlert(true);
+      // appeler méthode asynchrone du ContactFormService pour envoyer le formulaire
+      const fct = async () => {
+        const response : any = await ContactFormService.submitForm(formData);
+         if(response.error){
+          console.log('erreur', response.error);
+        }
+        else {
+          console.log('response', response);
+          setShowAlert(true);
+        }
+      }
+      fct();
+      
+      //console.log("Formulaire soumis :", formData);
+      
       // MISE À JOUR : Réinitialisation de 'firstName'
       setFormData({ name: '', firstName: '', email: '', phone: '', message: '' });
       setSubmitted(false);
@@ -65,7 +98,7 @@ const Contact: React.FC = () => {
   };
 
   const isFormValid = submitted && Object.keys(errors).length === 0;
-
+ // target={SUBMIT_FORM_URL}
   return (
     <div className='app-container'>
       <h2 className='mt-5'>Contact</h2>
@@ -157,7 +190,8 @@ const Contact: React.FC = () => {
                   <Form.Control
                     className='contact-form-field'
                     as="textarea"
-                    rows={3}
+                    rows={5}
+                    maxLength={500}
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
@@ -172,8 +206,9 @@ const Contact: React.FC = () => {
                 </Form.Group>
           </Row>
           <Row className="justify-content-center">
+              <CustomCaptcha ref={captchaRef} onVerify={setIsCaptchaVerified} />
               <div className="">
-                <Button className='button-dark-small no-border' type="submit">
+                <Button className='button-dark-small no-border' type="submit" disabled={!isCaptchaVerified}>
                   Envoyer
                 </Button>
               </div>

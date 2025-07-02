@@ -16,7 +16,7 @@
     font-weight: 900;
     border: none;
 
-    &.active {
+    &:active {
         transition: 0.3s;
         background-color: $primary-color-light-1;
         color: $secondary-color;
@@ -26,5 +26,12 @@
         transition: 0.3s;
         background-color: $secondary-color;
         color: $black-color;
+    }
+
+    &:disabled {
+        transition: 0.3s;
+        opacity: 0.5;
+        background-color: $primary-color-dark-2;
+        cursor: not-allowed;
     }
 }
