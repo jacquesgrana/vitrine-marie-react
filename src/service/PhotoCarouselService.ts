@@ -13,6 +13,7 @@ import img10 from '../assets/image/carousel/image_carousel_10.jpg';
 import img11 from '../assets/image/carousel/image_carousel_11.jpg';
 import img12 from '../assets/image/carousel/image_carousel_12.jpg';
 import img13 from '../assets/image/carousel/image_carousel_13.jpg';
+import img13bis from '../assets/image/carousel/image_carousel_14.jpg';
 
 import img14 from '../assets/image/carousel/stone_01.jpg';
 import img15 from '../assets/image/carousel/stone_02.jpg';
@@ -78,194 +79,200 @@ class PhotoCarouselService {
             {
             image: img1,
             title: 'Premier slide',
-            description: 'Description du premier slide.',
-            alt: 'First slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img2,
             title: 'Deuxième slide',
-            description: 'Description du deuxième slide.',
-            alt: 'Second slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img3,
             title: 'Troisième slide',
-            description: 'Description du troisième slide.',
-            alt: 'Third slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img4,
             title: 'Quatrième slide',
-            description: 'Description du quatrième slide.',
-            alt: 'Fourth slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img5,
             title: 'Cinquière slide',
-            description: 'Description du cinquième slide.',
-            alt: 'Fifth slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img6,
             title: 'Sixième slide',
-            description: 'Description du sixième slide.',
-            alt: 'Sixth slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img7,
             title: 'Septième slide',
-            description: 'Description du septième slide.',
-            alt: 'Seventh slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img8,
             title: 'Huitième slide',
-            description: 'Description du huitième slide.',
-            alt: 'Eighth slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img9,
             title: 'Neuvième slide',
-            description: 'Description du neuvième slide.',
-            alt: 'Ninth slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img10,
             title: 'Dixième slide',
-            description: 'Description du dixième slide.',
-            alt: 'Tenth slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img11,
             title: 'Onzième slide',
-            description: 'Description du onzième slide.',
-            alt: 'Eleventh slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img12,
             title: 'Douzième slide',
-            description: 'Description du douzième slide.',
-            alt: 'Twelfth slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img13,
             title: 'Treizième slide',
-            description: 'Description du Treizième slide.',
-            alt: 'Thirteenth slide'
+            description: 'Description du slide.',
+            alt: 'Slide'
+            },            
+            {
+            image: img13bis,
+            title: 'Quatorzième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img14,
-            title: 'Quatorzième slide',
-            description: 'Description du Quatorzième slide.',
-            alt: 'Fourteenth slide'
+            title: 'Quinzième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img15,
-            title: 'Quinzième slide',
-            description: 'Description du Quinzième slide.',
-            alt: 'Fifteenth slide'
+            title: 'Seizième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img16,
-            title: 'Seizième slide',
-            description: 'Description du Seizième slide.',
-            alt: 'Sixteenth slide'
+            title: 'Dix-septième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img17,
-            title: 'Dix-septieme slide',
-            description: 'Description du Dix-septieme slide.',
-            alt: 'Seventeenth slide'
+            title: 'Dix-huitième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img18,
-            title: 'Dix-huitieme slide',
-            description: 'Description du Dix-huitieme slide.',
-            alt: 'Eighteenth slide'
+            title: 'Dix-neuvième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img19,
-            title: 'Dix-neuvieme slide',
-            description: 'Description du Dix-neuvieme slide.',
-            alt: 'Nineteenth slide'
+            title: 'Vingtième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img20,
-            title: 'Vingtieme slide',
-            description: 'Description du Vingtieme slide.',
-            alt: 'Twenty slide'
+            title: 'Vingt et unième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img21,
-            title: 'Vingt-unieme slide',
-            description: 'Description du Vingt-unieme slide.',
-            alt: 'Twenty-first slide'
+            title: 'Vingt-deuxième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img22,
-            title: 'Vingt-deuxieme slide',
-            description: 'Description du Vingt-deuxieme slide.',
-            alt: 'Twenty-second slide'
+            title: 'Vingt-troisième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img23,
-            title: 'Vingt-troisieme slide',
-            description: 'Description du Vingt-troisieme slide.',
-            alt: 'Twenty-third slide'
+            title: 'Vingt-quatrième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img24,
-            title: 'Vingt-quatrieme slide',
-            description: 'Description du Vingt-quatrieme slide.',
-            alt: 'Twenty-fourth slide'
+            title: 'Vingt-cinquième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img25,
-            title: 'Vingt-cinquieme slide',
-            description: 'Description du Vingt-cinquieme slide.',
-            alt: 'Twenty-fifth slide'
+            title: 'Vingt-sixième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img26,
-            title: 'Vingt-sixieme slide',
-            description: 'Description du Vingt-sixieme slide.',
-            alt: 'Twenty-sixth slide'
+            title: 'Vingt-septième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img27,
-            title: 'Vingt-septieme slide',
-            description: 'Description du Vingt-septieme slide.',
-            alt: 'Twenty-seventh slide'
+            title: 'Vingt-huitième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img28,
-            title: 'Vingt-huitieme slide',
-            description: 'Description du Vingt-huitieme slide.',
-            alt: 'Twenty-eighth slide'
+            title: 'Vingt-neuvième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img29,
-            title: 'Vingt-neuvieme slide',
-            description: 'Description du Vingt-neuvieme slide.',
-            alt: 'Twenty-ninth slide'
+            title: 'Trentième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img30,
-            title: 'Trenteieme slide', 
-            description: 'Description du Trenteieme slide.',
-            alt: 'Thirtieth slide'
+            title: 'Trente-et-unième slide', 
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img31,
-            title: 'Trente-unieme slide',
-            description: 'Description du Trente-unieme slide.',
-            alt: 'Thirty-first slide'
+            title: 'Trente-deuxième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             },
             {
             image: img32,
-            title: 'Trente-deuxieme slide',
-            description: 'Description du Trente-deuxieme slide.',
-            alt: 'Thirty-second slide'
+            title: 'Trente-troisième slide',
+            description: 'Description du slide.',
+            alt: 'Slide'
             }
         ];
     }
