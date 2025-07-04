@@ -7,26 +7,6 @@ const Header: React.FC = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState<any>(null); // TODO: Remplacer 'any' par votre type UserInfo
 
-    useEffect(() => {
-        // Charger les données une seule fois au montage du composant
-        securityService.onLoad();
-        setIsAuthenticated(securityService.isAuthenticated());
-        setUser(securityService.getUser());
-    }, []);
-
-    useEffect(() => {
-    securityService.onLoad();
-    updateAuthState();
-
-    const interval = setInterval(() => {
-        const currentAuthStatus = securityService.isAuthenticated();
-        if (currentAuthStatus !== isAuthenticated) {
-            updateAuthState();
-        }
-    }, 1000); // Vérifie toutes les secondes
-
-    return () => clearInterval(interval);
-}, [isAuthenticated]);
 
     const updateAuthState = () => {
         // On récupère les dernières valeurs du service
@@ -42,6 +22,28 @@ const Header: React.FC = () => {
             setUser(currentUser);
         }
     };
+
+    useEffect(() => {
+        // Charger les données une seule fois au montage du composant
+        securityService.onLoad();
+        setIsAuthenticated(securityService.isAuthenticated());
+        setUser(securityService.getUser());
+    }, [securityService]);
+
+    useEffect(() => {
+    securityService.onLoad();
+    updateAuthState();
+
+    const interval = setInterval(() => {
+        const currentAuthStatus = securityService.isAuthenticated();
+        if (currentAuthStatus !== isAuthenticated) {
+            updateAuthState();
+        }
+    }, 1000); // Vérifie toutes les secondes
+
+    return () => clearInterval(interval);
+}, [isAuthenticated, securityService, updateAuthState]);
+
 
     const handleLogout = () => {
         securityService.logout();
