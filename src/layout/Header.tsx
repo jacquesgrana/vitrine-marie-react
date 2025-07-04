@@ -1,25 +1,90 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import SecurityService from '../service/SecurityService';
 
-const Header: React.FC = () => (
-  <header className="App-header">
-        <h1 className='mt-3'>Sushi Dot Painting</h1>
-        <nav className='mb-2'>
-        {/* NavLink ajoute automatiquement la classe "active" quand c’est la route courante */}
-        <NavLink to="/" end className="button-dark-small">
-            Accueil
-        </NavLink>
-        <NavLink to="/gallery" className="button-dark-small">
-            Galerie
-        </NavLink>
-        <NavLink to="/about" className="button-dark-small">
-            À propos
-        </NavLink>
-        <NavLink to="/contact" className="button-dark-small">
-            Contact
-        </NavLink>
-        </nav>
-    </header>
-)
+const Header: React.FC = () => {
+    const securityService = SecurityService.getInstance();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState<any>(null); // TODO: Remplacer 'any' par votre type UserInfo
 
-export default Header
+    useEffect(() => {
+        // Charger les données une seule fois au montage du composant
+        securityService.onLoad();
+        setIsAuthenticated(securityService.isAuthenticated());
+        setUser(securityService.getUser());
+    }, []);
+
+    useEffect(() => {
+    securityService.onLoad();
+    updateAuthState();
+
+    const interval = setInterval(() => {
+        const currentAuthStatus = securityService.isAuthenticated();
+        if (currentAuthStatus !== isAuthenticated) {
+            updateAuthState();
+        }
+    }, 1000); // Vérifie toutes les secondes
+
+    return () => clearInterval(interval);
+}, [isAuthenticated]);
+
+    const updateAuthState = () => {
+        // On récupère les dernières valeurs du service
+        const currentAuthStatus = securityService.isAuthenticated();
+        const currentUser = securityService.getUser();
+
+        // On met à jour les états seulement si nécessaire
+        if (currentAuthStatus !== isAuthenticated) {
+            setIsAuthenticated(currentAuthStatus);
+        }
+
+        if (JSON.stringify(currentUser) !== JSON.stringify(user)) {
+            setUser(currentUser);
+        }
+    };
+
+    const handleLogout = () => {
+        securityService.logout();
+        setIsAuthenticated(false);
+        setUser(null);
+    };
+
+    return (
+        <header className="App-header">
+            <h1 className='mt-3'>Sushi Dot Painting</h1>
+            <nav className='mb-2'>
+                <NavLink to="/" end className="button-dark-small">
+                    Accueil
+                </NavLink>
+                <NavLink to="/gallery" className="button-dark-small">
+                    Galerie
+                </NavLink>
+                <NavLink to="/about" className="button-dark-small">
+                    À propos
+                </NavLink>
+                <NavLink to="/contact" className="button-dark-small">
+                    Contact
+                </NavLink>
+
+                {isAuthenticated && (
+                    <NavLink to="/admin/dashboard" className="button-dark-small">
+                        Dashboard
+                    </NavLink>
+                )}
+                {isAuthenticated && (
+                    <NavLink to="/" className="button-dark-small" onClick={handleLogout}>
+                        Deconnexion
+                    </NavLink> 
+                )}
+
+            </nav>
+            {isAuthenticated && (
+               <p className="text-small-secondary">
+                    Connecté : {user?.firstName} {user?.name}
+                </p>
+            )}
+        </header>
+    );
+};
+
+export default Header;

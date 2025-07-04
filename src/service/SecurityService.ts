@@ -1,3 +1,4 @@
+import LocalStorageService from './LocalStorageService';
 
 interface ApiResponse {
   success: boolean;
@@ -25,7 +26,9 @@ class SecurityService {
     private token: string | null = null;
     private user: UserInfo | null = null;
 
-    //private readonly navigate = useNavigate();
+    private _isAuthenticated: boolean = false;
+
+    private localStorageService: LocalStorageService = LocalStorageService.getInstance();
 
     public static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
     public static readonly SUBMIT_LOGIN_URL : string = `${SecurityService.SERVER_URL}/api/login`;
@@ -87,6 +90,8 @@ class SecurityService {
         else {
             
             this.user = responseUserInfos.data;
+            this.saveLocalStorageDatas();
+            this._isAuthenticated = true;
             console.log('user recuperé !!', this.user);
             //navigate('/admin/dashboard');
             //window.location.href = '/admin/dashboard';
@@ -160,9 +165,58 @@ class SecurityService {
         }
     }
 
+    public onLoad(): void {
+        //console.log("onLoad");
+        //console.log('isAuthenticated', this.localStorageService.getIsAuthenticated());
+        if(this.localStorageService.getIsAuthenticated() === true) {
+            this._isAuthenticated = true;
+            this.loadLocalStorageDatas();
+        }
+        
+    }
+
+    public saveLocalStorageDatas(): void {
+        if(this.token === null || this.user === null) {
+            return;
+        }
+        this.localStorageService.setToken(this.token);
+        this.localStorageService.setUserName(this.user.name);
+        this.localStorageService.setUserFirstName(this.user.firstName);
+        this.localStorageService.setUserEmail(this.user.email);
+        this.localStorageService.setIsAuthenticated(true);
+    }
+
+    public clearLocalStorageDatas(): void {
+        this.localStorageService.clearToken();
+        this.localStorageService.clearUserName();
+        this.localStorageService.clearUserFirstName();
+        this.localStorageService.clearUserEmail();
+        this.localStorageService.clearIsAuthenticated();
+    }
+
+    public loadLocalStorageDatas(): void {
+        this.token = this.localStorageService.getToken();
+        //console.log('token', this.token);
+        this.user = {
+            name: this.localStorageService.getUserName() ?? '',
+            firstName: this.localStorageService.getUserFirstName() ?? '',
+            email: this.localStorageService.getUserEmail() ?? ''
+        };
+        //console.log('user', this.user);
+        this._isAuthenticated = this.localStorageService.getIsAuthenticated() ?? false;
+        //console.log('isAuthenticated', this._isAuthenticated);
+    }
+
+
+    public clearUser(): void {
+        this.user = null;
+    }
+
     public logout(): void {
         this.clearToken();
-        this.user = null;
+        this.clearUser();
+        this.clearLocalStorageDatas();
+        this._isAuthenticated = false;
     }
 
     public getToken(): string | null {
@@ -178,7 +232,11 @@ class SecurityService {
     }
 
     public isAuthenticated(): boolean {
-        return this.token !== null;
+        return this.token !== null && this.user !== null && this._isAuthenticated;
+    }
+
+    public setIsAuthenticated(isAuthenticated: boolean): void {
+        this._isAuthenticated = isAuthenticated;
     }
 
     public getUser(): UserInfo | null {
