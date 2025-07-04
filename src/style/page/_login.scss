@@ -1,0 +1,34 @@
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 100vw;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+
+    .login-form-field {
+        background-color: $primary-color-dark-1 !important;
+        color: $white-color;
+        border: none;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        width: 100%;
+
+        &::placeholder {
+            color: $primary-color-light-2;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0px 12px $secondary-color-dark-3;
+        }
+
+        .isValid {
+            background-color: $primary-color-dark-2;
+        }
+    }
+}

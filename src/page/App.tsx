@@ -8,6 +8,7 @@ import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import Gallery from './gallery/Gallery';
 import Contact from './contact/Contact';
+import Login from './login/Login';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
           {/* route « catch-all » pour 404  à améliorer*/}
           <Route path="*" element={<NotFound />} />
         </Routes>

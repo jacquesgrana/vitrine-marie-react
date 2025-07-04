@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import coloredGradientStone from '../../assets/image/stone/color_gradient_stone.png'
 import { Alert, Button, Container, Form, Row } from 'react-bootstrap'
 import ContactFormService from '../../service/ContactFormService';
-import CustomCaptcha from './CustomCaptcha';
+import CustomCaptcha from '../../common/CustomCaptcha';
 
 
 type CaptchaHandle = {
