@@ -28,6 +28,8 @@ class SecurityService {
 
     private _isAuthenticated: boolean = false;
 
+    private subscribers: Array<(user: UserInfo | null) => void> = [];
+
     private localStorageService: LocalStorageService = LocalStorageService.getInstance();
 
     public static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
@@ -92,7 +94,8 @@ class SecurityService {
             this.user = responseUserInfos.data;
             this.saveLocalStorageDatas();
             this._isAuthenticated = true;
-            console.log('user recuperé !!', this.user);
+            //console.log('user recuperé !!', this.user);
+            this.notifySubscribers(); // Ajoutez cette ligne
             //navigate('/admin/dashboard');
             //window.location.href = '/admin/dashboard';
         }   
@@ -165,6 +168,18 @@ class SecurityService {
         }
     }
 
+    public subscribe(callback: (user: UserInfo | null) => void): () => void {
+        this.subscribers.push(callback);
+        return () => {
+            this.subscribers = this.subscribers.filter(sub => sub !== callback);
+        };
+    }
+
+    private notifySubscribers(): void {
+        this.subscribers.forEach(callback => callback(this.user));
+    }
+
+
     public onLoad(): void {
         //console.log("onLoad");
         //console.log('isAuthenticated', this.localStorageService.getIsAuthenticated());
@@ -205,6 +220,7 @@ class SecurityService {
         //console.log('user', this.user);
         this._isAuthenticated = this.localStorageService.getIsAuthenticated() ?? false;
         //console.log('isAuthenticated', this._isAuthenticated);
+        this.notifySubscribers(); // Ajoutez cette ligne
     }
 
 
@@ -217,6 +233,7 @@ class SecurityService {
         this.clearUser();
         this.clearLocalStorageDatas();
         this._isAuthenticated = false;
+        this.notifySubscribers(); // Ajoutez cette ligne
     }
 
     public getToken(): string | null {

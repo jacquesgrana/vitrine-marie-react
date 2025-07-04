@@ -7,35 +7,30 @@ const Header: React.FC = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState<any>(null);
 
-    // On utilise useCallback pour mémoriser la fonction
     const updateAuthState = useCallback(() => {
-        const currentAuthStatus = securityService.isAuthenticated();
-        const currentUser = securityService.getUser();
-
-        if (currentAuthStatus !== isAuthenticated) {
-            setIsAuthenticated(currentAuthStatus);
-        }
-
-        if (JSON.stringify(currentUser) !== JSON.stringify(user)) {
-            setUser(currentUser);
-        }
-    }, [isAuthenticated, user, securityService]);
+        setIsAuthenticated(securityService.isAuthenticated());
+        setUser(securityService.getUser());
+    }, [securityService]);
 
     useEffect(() => {
+        // Chargement initial
         securityService.onLoad();
+
+        // Abonnement aux changements
+        const unsubscribe = securityService.subscribe((currentUser) => {
+            updateAuthState();
+        });
+
+        // Mise à jour initiale
         updateAuthState();
 
-        const interval = setInterval(() => {
-            updateAuthState();
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, [updateAuthState, securityService]); // On dépend maintenant de la version mémorisée
+        return () => {
+            unsubscribe();
+        };
+    }, [securityService, updateAuthState]);
 
     const handleLogout = () => {
         securityService.logout();
-        setIsAuthenticated(false);
-        setUser(null);
     };
 
     return (
@@ -63,7 +58,7 @@ const Header: React.FC = () => {
                 {isAuthenticated && (
                     <NavLink to="/" className="button-dark-small" onClick={handleLogout}>
                         Deconnexion
-                    </NavLink>
+                    </NavLink> 
                 )}
             </nav>
             {isAuthenticated && user && (
@@ -76,6 +71,7 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
 
 
 /*
