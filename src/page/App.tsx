@@ -9,6 +9,7 @@ import Footer from '../layout/Footer';
 import Gallery from './gallery/Gallery';
 import Contact from './contact/Contact';
 import Login from './login/Login';
+import DashboardAdmin from './admin/dashboard/DashboardAdmin';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/admin/dashboard" element={<DashboardAdmin />} />
           {/* route « catch-all » pour 404  à améliorer*/}
           <Route path="*" element={<NotFound />} />
         </Routes>

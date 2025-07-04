@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 interface ApiResponse {
   success: boolean;
   message?: string;
@@ -23,6 +25,8 @@ class SecurityService {
 
     private token: string | null = null;
     private user: UserInfo | null = null;
+
+    //private readonly navigate = useNavigate();
 
     public static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
     public static readonly SUBMIT_LOGIN_URL : string = `${SecurityService.SERVER_URL}/api/login`;
@@ -82,8 +86,11 @@ class SecurityService {
             };
         }
         else {
+            
             this.user = responseUserInfos.data;
             console.log('user recuperé !!', this.user);
+            //navigate('/admin/dashboard');
+            //window.location.href = '/admin/dashboard';
         }   
 
 
@@ -172,7 +179,11 @@ class SecurityService {
     }
 
     public isAuthenticated(): boolean {
-        return !!this.token;
+        return this.token !== null;
+    }
+
+    public getUser(): UserInfo | null {
+        return this.user;
     }
 }
 

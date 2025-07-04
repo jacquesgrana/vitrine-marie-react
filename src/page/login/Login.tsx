@@ -2,6 +2,7 @@ import { Button, Container, Form, Row } from 'react-bootstrap';
 import CustomCaptcha from '../../common/CustomCaptcha';
 import { useRef, useState } from 'react';
 import SecurityService from '../../service/SecurityService';
+import { useNavigate } from 'react-router-dom';
 
 type CaptchaHandle = {
   reset: () => void;
@@ -10,8 +11,13 @@ type CaptchaHandle = {
 const Login: React.FC = () => { 
     const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
     const captchaRef = useRef<CaptchaHandle>(null);
+    const navigate = useNavigate();
 
     const securityService : SecurityService = SecurityService.getInstance();
+
+    const goToDashboardAdmin = () => {
+        navigate('/admin/dashboard');
+    }
     
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -46,6 +52,8 @@ const Login: React.FC = () => {
             console.log('response', response);
             if(response.success) {
                 // si ok appeler page dashboard admin
+                //navigate('/admin/dashboard');
+                goToDashboardAdmin();
             }
             else {
                 // si erreur afficher message et raz des champs du formulaire
