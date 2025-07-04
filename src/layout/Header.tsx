@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import SecurityService from '../service/SecurityService';
 
 const Header: React.FC = () => {
     const securityService = SecurityService.getInstance();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState<any>(null); // TODO: Remplacer 'any' par votre type UserInfo
+    const [user, setUser] = useState<any>(null);
 
-
-    const updateAuthState = () => {
-        // On récupère les dernières valeurs du service
+    // On utilise useCallback pour mémoriser la fonction
+    const updateAuthState = useCallback(() => {
         const currentAuthStatus = securityService.isAuthenticated();
         const currentUser = securityService.getUser();
 
-        // On met à jour les états seulement si nécessaire
         if (currentAuthStatus !== isAuthenticated) {
             setIsAuthenticated(currentAuthStatus);
         }
@@ -21,29 +19,18 @@ const Header: React.FC = () => {
         if (JSON.stringify(currentUser) !== JSON.stringify(user)) {
             setUser(currentUser);
         }
-    };
+    }, [isAuthenticated, user, securityService]);
 
     useEffect(() => {
-        // Charger les données une seule fois au montage du composant
         securityService.onLoad();
-        setIsAuthenticated(securityService.isAuthenticated());
-        setUser(securityService.getUser());
-    }, [securityService]);
+        updateAuthState();
 
-    useEffect(() => {
-    securityService.onLoad();
-    updateAuthState();
-
-    const interval = setInterval(() => {
-        const currentAuthStatus = securityService.isAuthenticated();
-        if (currentAuthStatus !== isAuthenticated) {
+        const interval = setInterval(() => {
             updateAuthState();
-        }
-    }, 1000); // Vérifie toutes les secondes
+        }, 1000);
 
-    return () => clearInterval(interval);
-}, [isAuthenticated, securityService, updateAuthState]);
-
+        return () => clearInterval(interval);
+    }, [updateAuthState]); // On dépend maintenant de la version mémorisée
 
     const handleLogout = () => {
         securityService.logout();
@@ -76,13 +63,12 @@ const Header: React.FC = () => {
                 {isAuthenticated && (
                     <NavLink to="/" className="button-dark-small" onClick={handleLogout}>
                         Deconnexion
-                    </NavLink> 
+                    </NavLink>
                 )}
-
             </nav>
-            {isAuthenticated && (
-               <p className="text-small-secondary">
-                    Connecté : {user?.firstName} {user?.name}
+            {isAuthenticated && user && (
+                <p className="text-small-secondary">
+                    Connecté : {user.firstName} {user.name}
                 </p>
             )}
         </header>
@@ -90,3 +76,12 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
+
+/*
+{isAuthenticated && (
+                    <NavLink to="/" className="button-dark-small" onClick={handleLogout}>
+                        Deconnexion
+                    </NavLink> 
+                )}
+                    */
