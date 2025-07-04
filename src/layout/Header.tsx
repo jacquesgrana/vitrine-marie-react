@@ -30,7 +30,7 @@ const Header: React.FC = () => {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [updateAuthState]); // On dépend maintenant de la version mémorisée
+    }, [updateAuthState, securityService]); // On dépend maintenant de la version mémorisée
 
     const handleLogout = () => {
         securityService.logout();
