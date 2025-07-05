@@ -1,4 +1,4 @@
-import { PhotoSlide } from "../page/gallery/PhotoCarouselItem";
+import { PhotoSlide } from '../type/indexType';
 
 import img1 from '../assets/image/carousel/image_carousel_01.jpg';
 import img2 from '../assets/image/carousel/image_carousel_02.jpg';

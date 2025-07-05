@@ -3,11 +3,8 @@ import coloredGradientStone from '../../assets/image/stone/color_gradient_stone.
 import { Alert, Button, Container, Form, Row } from 'react-bootstrap'
 import ContactFormService from '../../service/ContactFormService';
 import CustomCaptcha from '../../common/CustomCaptcha';
+import { CaptchaHandle } from '../../type/indexType';
 
-
-type CaptchaHandle = {
-  reset: () => void;
-};
 
 const Contact: React.FC = () => {
   const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);

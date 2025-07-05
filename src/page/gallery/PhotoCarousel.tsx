@@ -1,7 +1,8 @@
 // src/components/PhotoCarousel.tsx
 import React, { useState, useEffect } from 'react'; // 1. On importe les hooks
 import Carousel from 'react-bootstrap/Carousel';
-import PhotoCarouselItem, { PhotoSlide } from './PhotoCarouselItem';
+import PhotoCarouselItem from './PhotoCarouselItem';
+import { PhotoSlide } from '../../type/indexType';
 import PhotoCarouselService from '../../service/PhotoCarouselService'; // On importe la classe
 
 // 2. On récupère l'instance du service, exactement comme vous l'aviez fait.

@@ -1,18 +1,4 @@
-interface ContactFormData {
-  name: string;
-  firstName: string;
-  email: string;
-  phone: string;
-  message: string;
-}
-
-// 2. Définir une interface pour la réponse
-interface ApiResponse {
-  success: boolean;
-  message?: string;
-  errors?: Record<string, string[]>;
-  data?: any;
-}
+import { ContactFormData, ApiResponse } from '../type/indexType';
 
 class ContactFormService {
 

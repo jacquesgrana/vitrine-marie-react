@@ -1,24 +1,5 @@
 import LocalStorageService from './LocalStorageService';
-
-interface ApiResponse {
-  success: boolean;
-  message?: string;
-  errors?: Record<string, string[]>;
-  data?: any;
-}
-
-interface LoginFormData {
-  email: string;
-  password: string;
-}
-
-interface UserInfo {
-  //id: number;
-  email: string;
-  name: string;
-  firstName: string;
-  //role: string;
-}
+import { UserInfo, ApiResponse, LoginFormData } from '../type/indexType';
 
 class SecurityService {
     private static instance: SecurityService;

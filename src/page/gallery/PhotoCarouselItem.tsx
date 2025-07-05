@@ -1,12 +1,7 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 
-export interface PhotoSlide {
-  image: string
-  title: string
-  description: string
-  alt: string
-}
+import { PhotoSlide } from '../../type/indexType';
 
 const PhotoCarouselItem: React.FC<PhotoSlide> = ({
   image,

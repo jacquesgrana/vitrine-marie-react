@@ -4,9 +4,7 @@ import { useRef, useState } from 'react';
 import SecurityService from '../../service/SecurityService';
 import { useNavigate } from 'react-router-dom';
 
-type CaptchaHandle = {
-  reset: () => void;
-};
+import { CaptchaHandle } from '../../type/indexType';
 
 const Login: React.FC = () => { 
     const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);

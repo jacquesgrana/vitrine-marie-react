@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import SecurityService from '../service/SecurityService';
+import { UserInfo } from '../type/indexType';
 
 const Header: React.FC = () => {
     const securityService = SecurityService.getInstance();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<UserInfo | null>(null);
 
     const updateAuthState = useCallback(() => {
         setIsAuthenticated(securityService.isAuthenticated());
@@ -63,7 +64,7 @@ const Header: React.FC = () => {
             </nav>
             {isAuthenticated && user && (
                 <p className="text-small-secondary">
-                    Connecté : {user.firstName} {user.name}
+                    <span className="text-small-white">Connecté : </span>{user.firstName} {user.name}<span className="text-small-white"> / </span>{user.email}
                 </p>
             )}
         </header>
