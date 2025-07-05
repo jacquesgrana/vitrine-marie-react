@@ -2,20 +2,26 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 
 import { PhotoSlide } from '../../type/indexType';
+import PhotoCarouselService from '../../service/PhotoCarouselService';
 
 const PhotoCarouselItem: React.FC<PhotoSlide> = ({
+  id,
   image,
   title,
   description,
   alt,
-  ...rest // LA MODIFICATION CLÉ N°1 : On capture toutes les autres props
+  ...rest
 }) => {
+  //const SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
+  
+  //const src = `${SERVER_URL}/src/${image.replace(/^\.\.\//, '')}`;
+  //console.log(image);
+  const photoCarouselService = PhotoCarouselService.getInstance();
   return (
-  // LA MODIFICATION CLÉ N°2 : On applique ces props directement au Carousel.Item
   <Carousel.Item {...rest}> 
     <img 
       className="d-block w-100 photo-carousel-image-cover" 
-      src={image} 
+      src={photoCarouselService.getImageUrl(image)} 
       alt={alt} 
     />
     <Carousel.Caption>

@@ -15,11 +15,8 @@ const PhotoCarousel: React.FC = () => {
   // 4. On ajoute le useEffect pour charger les données au montage du composant.
   useEffect(() => {
     const loadSlides = async () => {
-      // On utilise l'instance récupérée plus haut pour appeler la méthode asynchrone
-      const fetchedSlides = await photoCarouselService.getSlides();
-      
-      // On met à jour l'état, ce qui déclenche un nouveau rendu du composant avec les données
-      setSlides(fetchedSlides);
+        const fetchedSlides = await photoCarouselService.getSlides();
+        setSlides(fetchedSlides);
     };
 
     loadSlides();

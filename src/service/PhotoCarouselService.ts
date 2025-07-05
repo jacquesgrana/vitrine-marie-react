@@ -1,5 +1,5 @@
 import { PhotoSlide } from '../type/indexType';
-
+/*
 import img1 from '../assets/image/carousel/image_carousel_01.jpg';
 import img2 from '../assets/image/carousel/image_carousel_02.jpg';
 import img3 from '../assets/image/carousel/image_carousel_03.jpg';
@@ -35,7 +35,7 @@ import img30 from '../assets/image/carousel/stone_17.jpg';
 import img31 from '../assets/image/carousel/stone_18.jpg';
 import img32 from '../assets/image/carousel/stone_19.jpg';
 //import img33 from '../assets/image/carousel/stone_20.jpg';
-
+*/
 
 class PhotoCarouselService {
 
@@ -43,24 +43,33 @@ class PhotoCarouselService {
 
     private slides: PhotoSlide[] = [];
 
+    static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
+    static readonly GET_PHOTO_SLIDES_URL : string = `${PhotoCarouselService.SERVER_URL}/carousel/get_slides`;
+
     private constructor() {}
     public static getInstance(): PhotoCarouselService {
         if (!PhotoCarouselService.instance) {
             PhotoCarouselService.instance = new PhotoCarouselService();
-            PhotoCarouselService.instance.initSlides();
         }
         return PhotoCarouselService.instance;
     }
 
 
+    public getImageUrl = (imageName: string) => {
+        //console.log(imageName);
+        const baseUrl = window.location.origin;
+        const url = `${baseUrl}/image/carousel/${imageName}`;
+        return (url);
+    }
+
+
 
     public async getSlides(): Promise<PhotoSlide[]> {
-        // Simule un appel réseau qui prend du temps
-    //await new Promise(resolve => setTimeout(resolve, 333)); 
-
-    // Retourne les données (ceci viendrait d'une API dans un cas réel)
-    return this.slides;
-  }
+        if (this.slides.length === 0) { // Si les slides ne sont pas encore chargés
+            await this.fetchSlides();
+        }
+        return this.slides;
+    }
 
     public setSlides(slides: PhotoSlide[]): void {
         this.slides = slides;
@@ -74,201 +83,265 @@ class PhotoCarouselService {
         this.slides.splice(index, 1);
     }
 
-    private initSlides() {
+    public updateSlide(index: number, slide: PhotoSlide): void {
+        this.slides[index] = slide;
+    }
+
+    public async fetchSlides(): Promise<void> {
+        try {
+            const response = await fetch(PhotoCarouselService.GET_PHOTO_SLIDES_URL, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
+            const result = await response.json();
+            this.setSlides(result.data);
+        } catch (error) {
+            console.error('Error fetching slides:', error);
+        }
+    }
+
+    public async initSlides() {
+        await this.fetchSlides();
+        /*
+        */
+    }
+    
+}
+
+export default PhotoCarouselService;
+
+/*
+private initSlides() {
         this.slides = [
             {
+            id: 1,
             image: img1,
             title: 'Premier slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 2,
             image: img2,
             title: 'Deuxième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 3,
             image: img3,
             title: 'Troisième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 4,
             image: img4,
             title: 'Quatrième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 5,
             image: img5,
             title: 'Cinquière slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 6,
             image: img6,
             title: 'Sixième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 7,
             image: img7,
             title: 'Septième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 8,
             image: img8,
             title: 'Huitième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 9,
             image: img9,
             title: 'Neuvième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 10,
             image: img10,
             title: 'Dixième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 11,
             image: img11,
             title: 'Onzième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 12,
             image: img12,
             title: 'Douzième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 13,
             image: img13,
             title: 'Treizième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },            
             {
+            id: 14,
             image: img13bis,
             title: 'Quatorzième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 15,
             image: img14,
             title: 'Quinzième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 16,
             image: img15,
             title: 'Seizième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 17,
             image: img16,
             title: 'Dix-septième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 18,
             image: img17,
             title: 'Dix-huitième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 19,
             image: img18,
             title: 'Dix-neuvième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 20,
             image: img19,
             title: 'Vingtième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 21,
             image: img20,
             title: 'Vingt et unième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 22,
             image: img21,
             title: 'Vingt-deuxième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 23,
             image: img22,
             title: 'Vingt-troisième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 24,
             image: img23,
             title: 'Vingt-quatrième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 25,
             image: img24,
             title: 'Vingt-cinquième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 26,
             image: img25,
             title: 'Vingt-sixième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 27,
             image: img26,
             title: 'Vingt-septième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 28,
             image: img27,
             title: 'Vingt-huitième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 29,
             image: img28,
             title: 'Vingt-neuvième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 30,
             image: img29,
             title: 'Trentième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 31,
             image: img30,
             title: 'Trente-et-unième slide', 
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 32,
             image: img31,
             title: 'Trente-deuxième slide',
             description: 'Description du slide.',
             alt: 'Slide'
             },
             {
+            id: 33,
             image: img32,
             title: 'Trente-troisième slide',
             description: 'Description du slide.',
@@ -276,7 +349,4 @@ class PhotoCarouselService {
             }
         ];
     }
-    
-}
-
-export default PhotoCarouselService;
+*/
