@@ -17,8 +17,8 @@ import img13bis from '../assets/image/carousel/image_carousel_14.jpg';
 
 import img14 from '../assets/image/carousel/stone_01.jpg';
 import img15 from '../assets/image/carousel/stone_02.jpg';
-import img16 from '../assets/image/carousel/stone_03.jpg';
-import img17 from '../assets/image/carousel/stone_04.jpg';
+import img16 from '../assets/image/carousel/stone_03.png';
+import img17 from '../assets/image/carousel/stone_04.png';
 import img18 from '../assets/image/carousel/stone_05.jpg';
 import img19 from '../assets/image/carousel/stone_06.jpg';
 import img20 from '../assets/image/carousel/stone_07.jpg';
