@@ -35,7 +35,8 @@ import img30 from '../assets/image/carousel/stone_17.jpg';
 import img31 from '../assets/image/carousel/stone_18.jpg';
 import img32 from '../assets/image/carousel/stone_19.jpg';
 //import img33 from '../assets/image/carousel/stone_20.jpg';
-*/
+*/import SecurityService from './SecurityService';
+
 
 class PhotoCarouselService {
 
@@ -45,8 +46,14 @@ class PhotoCarouselService {
 
     static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
     static readonly GET_PHOTO_SLIDES_URL : string = `${PhotoCarouselService.SERVER_URL}/carousel/get_slides`;
+    static readonly SET_PHOTO_SLIDES_UP_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/up/`;
+    static readonly SET_PHOTO_SLIDES_DOWN_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/down/`;
 
-    private constructor() {}
+    private securityService : SecurityService;
+
+    private constructor() {
+        this.securityService = SecurityService.getInstance();
+    }
     public static getInstance(): PhotoCarouselService {
         if (!PhotoCarouselService.instance) {
             PhotoCarouselService.instance = new PhotoCarouselService();
@@ -62,13 +69,9 @@ class PhotoCarouselService {
         return (url);
     }
 
-
-
     public async getSlides(): Promise<PhotoSlide[]> {
-        if (this.slides.length === 0) { // Si les slides ne sont pas encore chargés
-            await this.fetchSlides();
-            this.slides.sort((a, b) => a.rank - b.rank);
-        }
+        await this.fetchSlides();
+        this.slides.sort((a, b) => a.rank - b.rank);
         return this.slides;
     }
 
@@ -98,7 +101,7 @@ class PhotoCarouselService {
                 }
             });
             const result = await response.json();
-            this.setSlides(result.data);
+            this.setSlides(result.data); //this.setSlides(result.data);
         } catch (error) {
             console.error('Error fetching slides:', error);
         }
@@ -106,8 +109,46 @@ class PhotoCarouselService {
 
     public async initSlides() {
         await this.fetchSlides();
-        /*
-        */
+    }
+
+    public async setSlideUp(slideId: number): Promise<any> {
+        try {
+            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDES_UP_URL + slideId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                }
+            });
+            const result = await response.json();
+            //this.setSlides(result.data);
+            //alert(result.message);
+            return {success: true, message: result.message}
+        } catch (error) {
+            console.error('Error fetching slides :', error);
+            return {success: false, message: error}
+        }
+    }
+
+    public async setSlideDown(slideId: number): Promise<any> {
+        try {
+            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDES_DOWN_URL + slideId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                }
+            });
+            const result = await response.json();
+            //this.setSlides(result.data);
+            //alert(result.message);
+            return {success: true, message: result.message}
+        } catch (error) {
+            console.error('Error fetching slides :', error);
+            return {success: false, message: error}
+        }
     }
     
 }

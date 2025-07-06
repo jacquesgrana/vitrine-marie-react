@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PhotoSlide } from "../../../../type/indexType";
 import PhotoCarouselService from "../../../../service/PhotoCarouselService";
 import DashboardCarouselListItem from "./DashboardCarouselListItem";
@@ -11,10 +11,13 @@ const DashboardCarousel: React.FC = () => {
     const photoCarouselService = PhotoCarouselService.getInstance();
     
     useEffect(() => {
-        photoCarouselService.getSlides().then((slides) => {
-            setSlides(slides);
-        });
-    }, [photoCarouselService]);
+        refreshList();
+    }, []);
+
+    const refreshList = async () => {
+        const slidesFromService = await photoCarouselService.getSlides();
+        setSlides(slidesFromService);
+    };
 
     return(
         <div className='dashboard-carousel-container'>
@@ -25,6 +28,7 @@ const DashboardCarousel: React.FC = () => {
                     <DashboardCarouselListItem 
                         key={slide.id}
                         slide={slide}
+                        refreshList={refreshList}
                     />
                 ))}
             </div>
