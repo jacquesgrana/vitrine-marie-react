@@ -4,4 +4,5 @@ export interface PhotoSlide {
   title: string
   description: string
   alt: string
+  rank: number
 }

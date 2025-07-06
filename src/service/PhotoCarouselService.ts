@@ -67,6 +67,7 @@ class PhotoCarouselService {
     public async getSlides(): Promise<PhotoSlide[]> {
         if (this.slides.length === 0) { // Si les slides ne sont pas encore chargés
             await this.fetchSlides();
+            this.slides.sort((a, b) => a.rank - b.rank);
         }
         return this.slides;
     }
