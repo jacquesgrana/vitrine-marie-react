@@ -19,12 +19,12 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
     return (
     <div className="dashboard-carousel-list-item">
       <img className='dashboard-carousel-image' 
-      src={photoCarouselService.getImageUrl(slide.image)} 
-      alt={slide.alt} />
+      src={photoCarouselService.getImageUrl(slideState.image)} 
+      alt={slideState.alt} />
         <div className='dashboard-carousel-list-item-div'>
             <div className='dashboard-carousel-list-item-text-container'>
-                <h5 className=''>{slide.title}</h5>
-                <p className='text-small-white'>{slide.description}</p>
+                <h5 className=''>{slideState.title}</h5>
+                <p className='text-small-white'>{slideState.description}</p>
             </div>
             <div className='dashboard-carousel-list-item-button-container'>
                 <button className='button-dark-very-small'>▲</button>

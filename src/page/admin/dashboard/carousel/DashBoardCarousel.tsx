@@ -14,7 +14,7 @@ const DashboardCarousel: React.FC = () => {
         photoCarouselService.getSlides().then((slides) => {
             setSlides(slides);
         });
-    }, []);
+    }, [photoCarouselService]);
 
     return(
         <div className='dashboard-carousel-container'>
