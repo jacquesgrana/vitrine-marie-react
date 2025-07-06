@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SecurityService from '../../../service/SecurityService';
 import { useNavigate } from 'react-router-dom';
+import DashboardCarousel from './carousel/DashBoardCarousel';
+import DashBoardEmpty from './DashBoardEmpty';
 
 const DashboardAdmin: React.FC = () => {
     const navigate = useNavigate();
@@ -19,13 +21,16 @@ const DashboardAdmin: React.FC = () => {
             const currentUser = securityService.getUser();
             const authStatus = securityService.isAuthenticated();
 
-            setUser(currentUser);
-            setIsAuthenticated(authStatus);
-            setIsLoading(false);
+            
 
             // Redirection si non authentifié
             if (!authStatus) {
-                navigate('/login');
+                navigate('/');
+            }
+            else {
+                setUser(currentUser);
+                setIsAuthenticated(authStatus);
+                setIsLoading(false);
             }
         };
 
@@ -34,6 +39,7 @@ const DashboardAdmin: React.FC = () => {
 
         // On ajoute un intervalle pour vérifier périodiquement
         // (au cas où le chargement initial prendrait du temps)
+        /*
         const interval = setInterval(() => {
             if (!isLoading) {
                 clearInterval(interval);
@@ -52,7 +58,8 @@ const DashboardAdmin: React.FC = () => {
             }
         }, 100);
 
-        return () => clearInterval(interval);
+        return () => clearInterval(interval); 
+        */
     }, [navigate, isLoading, securityService]);
 
     if (isLoading) {
@@ -71,6 +78,11 @@ const DashboardAdmin: React.FC = () => {
             <p className='text-small-secondary'>
                 Bonjour {user?.firstName} {user?.name} / {user?.email}
             </p>
+            <div className='dashboard-main-container'>
+                <DashboardCarousel />
+                <DashBoardEmpty />
+                <DashBoardEmpty />
+            </div>
         </div>
     );
 };

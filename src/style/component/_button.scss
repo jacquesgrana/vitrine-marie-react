@@ -35,3 +35,41 @@
         cursor: not-allowed;
     }
 }
+
+.button-dark-very-small {
+    background-color: $primary-color-dark-3;
+    color: $white-color;
+    padding: 8px 5px 5px 5px;
+    border-radius: 5px;
+    //border: 1px solid $white-color;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: small;
+    letter-spacing: 0.33em;
+    text-transform: uppercase;
+    display: inline-block;
+    min-width: 40px;
+    font-family: Source_Sans_3_Regular;
+    font-weight: 900;
+    border: none;
+    text-align: center;
+
+    &:active {
+        transition: 0.3s;
+        background-color: $primary-color-light-1;
+        color: $secondary-color;
+    }
+
+    &:hover {
+        transition: 0.3s;
+        background-color: $secondary-color;
+        color: $black-color;
+    }
+
+    &:disabled {
+        transition: 0.3s;
+        opacity: 0.5;
+        background-color: $primary-color-dark-2;
+        cursor: not-allowed;
+    }
+}

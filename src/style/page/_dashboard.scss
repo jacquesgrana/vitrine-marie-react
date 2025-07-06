@@ -1,0 +1,106 @@
+.dashboard-main-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+
+    .dashboard-carousel-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* MODIFICATION : On aligne les enfants (le titre et la liste) en haut */
+        justify-content: flex-start; 
+        width: 560px;
+        background-color: $primary-color-dark-2;
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 10px;
+        min-height: 800px;
+        height: 1000px;
+
+        .dashboard-carousel-list-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* MODIFICATION 1 : On aligne les items de la liste en haut */
+            justify-content: flex-start;
+            width: 100%;
+            /* MODIFICATION 2 : On retire height: auto et on laisse flexbox gérer la hauteur */
+            flex-grow: 1; /* Permet au conteneur de prendre toute la place restante */
+            min-height: 0; /* Empêche le conteneur de dépasser son parent */
+            gap: 10px;
+            overflow-y: auto; /* Fonctionnera maintenant correctement */
+            margin: 0px;
+            margin-bottom: 20px;
+            padding: 0px;
+            scrollbar-width: auto;
+            scrollbar-color: $primary-color-dark-1 $primary-color-dark-2;
+
+            .dashboard-carousel-list-item {
+                background-color: $primary-color-dark-1;
+                border-radius: 5px;
+                padding: 20px;
+                display: flex;
+                flex-direction: row;
+                align-items: start;
+                /* MODIFICATION : 'flex-shrink: 0' empêche les items de se rétrécir */
+                flex-shrink: 0; 
+                justify-content: start;
+                gap: 10px;
+                width: 90%;
+                height: 160px;
+                
+                .dashboard-carousel-list-item-div {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: start;
+                    justify-content: start;
+                    height: 100%;
+                    width: 100%;
+
+                    .dashboard-carousel-list-item-button-container {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 10px;
+                        margin-top: 10px;
+
+                    }
+
+                    .dashboard-carousel-list-item-text-container {
+                        background-color: $primary-color-dark-2;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: start;
+                        justify-content: start;
+                        overflow: hidden;
+                        height: 80px;
+                        padding: 10px;
+                        border-radius: 5px; 
+                        width: 100%;
+                    }
+            }
+
+                
+
+                .dashboard-carousel-image {
+                    //width: auto;
+                    width: 80px;
+                    height: 120px;
+                    border-radius: 5px; 
+                    object-fit: cover; /* L'image couvre la zone sans se déformer */
+                    object-position: center; /* Centre l'image (utile si rognée) */
+                }
+            }
+        }
+    }
+}
