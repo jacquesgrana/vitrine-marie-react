@@ -33,6 +33,7 @@ const DashboardCarousel: React.FC = () => {
                         key={slide.id}
                         slide={slide}
                         refreshList={refreshList}
+                        slidesSize={slides.length}
                     />
                 ))}
             </div>

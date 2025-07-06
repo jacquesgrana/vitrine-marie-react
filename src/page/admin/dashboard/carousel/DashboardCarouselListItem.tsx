@@ -4,10 +4,11 @@ import PhotoCarouselService from '../../../../service/PhotoCarouselService';
 // Définition des types pour les props du composant
 interface DashboardCarouselListItemProps {
   slide: PhotoSlide;
+  slidesSize: number;
   refreshList: () => Promise<void>; 
 }
 
-const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ slide, refreshList }) => {
+const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ slide, slidesSize, refreshList }) => {
     const photoCarouselService = PhotoCarouselService.getInstance();
 
 
@@ -20,7 +21,6 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
         await photoCarouselService.setSlideDown(id);
         await refreshList();
     };
-  
     return (
     <div className="dashboard-carousel-list-item">
       <img className='dashboard-carousel-image' 
@@ -32,8 +32,18 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
                 <p className='text-small-white'>{slide.description}</p>
             </div>
             <div className='dashboard-carousel-list-item-button-container'>
-                <button type='button' className='button-dark-very-small' onClick={() => handleSetSlideUp(slide.id)}>▲</button>
-                <button type='button' className='button-dark-very-small' onClick={() => handleSetSlideDown(slide.id)}>▼</button>
+                <button 
+                type='button' 
+                className='button-dark-very-small' 
+                onClick={() => handleSetSlideUp(slide.id)}
+                disabled={slide.rank === 1}
+                >▲</button>
+                <button 
+                type='button' 
+                className='button-dark-very-small' 
+                onClick={() => handleSetSlideDown(slide.id)}
+                disabled={slide.rank === slidesSize}
+                >▼</button>
                 <button type='button' className='button-dark-very-small'>👁️</button>
                 <button type='button' className='button-dark-very-small'>✍</button>
                 <button type='button' className='button-dark-very-small'>❌</button>
