@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { PhotoSlide } from "../../../../type/indexType"; // Assurez-vous que le chemin d'importation est correct
 import PhotoCarouselService from '../../../../service/PhotoCarouselService';
 
