@@ -27,11 +27,11 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
                 <p className='text-small-white'>{slideState.description}</p>
             </div>
             <div className='dashboard-carousel-list-item-button-container'>
-                <button className='button-dark-very-small'>▲</button>
-                <button className='button-dark-very-small'>▼</button>
-                <button className='button-dark-very-small'>👁️</button>
-                <button className='button-dark-very-small'>✏️</button>
-                <button className='button-dark-very-small'>❌</button>
+                <button type='button' className='button-dark-very-small'>▲</button>
+                <button type='button' className='button-dark-very-small'>▼</button>
+                <button type='button' className='button-dark-very-small'>👁️</button>
+                <button type='button' className='button-dark-very-small'>✍</button>
+                <button type='button' className='button-dark-very-small'>❌</button>
             </div>
       </div>
     </div>

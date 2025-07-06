@@ -19,7 +19,7 @@ const DashboardCarousel: React.FC = () => {
     return(
         <div className='dashboard-carousel-container'>
             <h4 className='mt-3 mb-3'>Gestion de la galerie de photos</h4>
-            <button className='button-dark-small'>Ajouter une photo</button>   
+            <button className='button-dark-small'>Ajouter</button> 
             <div className='dashboard-carousel-list-container'>
                 {slides.map((slide) => (
                     <DashboardCarouselListItem 
