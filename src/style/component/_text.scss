@@ -1,3 +1,27 @@
+.text-primary {
+    color: $primary-color !important;
+}
+
+.text-secondary {
+    color: $secondary-color !important;
+}
+
+.text-white {
+    color: $white-color !important;
+}
+
+.text-black {
+    color: $black-color !important;
+}
+
+.text-danger {
+    color: $danger-color !important;
+}
+
+.text-success {
+    color: $success-color !important;
+}
+
 .text-small-primary {
     color: $primary-color;
     font-size: small;

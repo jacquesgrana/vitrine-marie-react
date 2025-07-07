@@ -3,6 +3,8 @@
 class LocalStorageService {
     private static instance: LocalStorageService;
 
+    private static readonly TOKEN_DURATION_MS: number = (3600 - 50) * 1000;
+
     private constructor() {}
 
     public static getInstance(): LocalStorageService {
@@ -28,11 +30,37 @@ class LocalStorageService {
         localStorage.clear();
     }
 
+    public setTokenTimestamp(timestamp: number): void {
+        this.setItem('tokenTimestamp', timestamp.toString());
+    }
+
+    public getTokenTimestamp(): string | null {
+        return this.getItem('tokenTimestamp');
+    }
+
+    public clearTokenTimestamp(): void {
+        this.removeItem('tokenTimestamp');
+    }
+
     public setToken(token: string): void {
         this.setItem('token', token);
+        this.setTokenTimestamp(Date.now());
     }
 
     public getToken(): string | null {
+        const tokenTimestamp = this.getTokenTimestamp();
+        if (tokenTimestamp) {
+            const timestampNow = Date.now();
+            if (timestampNow - parseInt(tokenTimestamp) > LocalStorageService.TOKEN_DURATION_MS) {
+                this.clearToken();
+                this.clearUserName();
+                this.clearUserFirstName();
+                this.clearUserEmail();
+                this.clearIsAuthenticated();
+                this.clearTokenTimestamp();
+                return null;
+            }
+        }
         return this.getItem('token');
     }
 

@@ -8,6 +8,7 @@ const DashboardAdmin: React.FC = () => {
     const navigate = useNavigate();
     const securityService = SecurityService.getInstance();
     const [isLoading, setIsLoading] = useState(true);
+    // TODO typer !!
     const [user, setUser] = useState<any>(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -20,8 +21,6 @@ const DashboardAdmin: React.FC = () => {
             // On récupère les données
             const currentUser = securityService.getUser();
             const authStatus = securityService.isAuthenticated();
-
-            
 
             // Redirection si non authentifié
             if (!authStatus) {
@@ -67,7 +66,7 @@ const DashboardAdmin: React.FC = () => {
     }
 
     if (!isAuthenticated) {
-        navigate('/login');
+        navigate('/');
         return null;
     }
 
@@ -76,7 +75,7 @@ const DashboardAdmin: React.FC = () => {
             <h2 className='mt-5'>Tableau de bord</h2>
             <p className='text-xlarge-white'>Accueil de l'administration du site.</p>
             <p className='text-small-secondary'>
-                Bonjour {user?.firstName} {user?.name} / {user?.email}
+                Bonjour {user?.firstName} {user?.name}
             </p>
             <div className='dashboard-main-container'>
                 <DashboardCarousel />

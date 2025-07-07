@@ -25,11 +25,11 @@
     }
 
     .photo-carousel-image-cover {
-    width: 600px;
-    //width: auto;
-    height: 800px;
-    object-fit:scale-down;
-    object-position: center;
+      width: 600px;
+      //width: auto;
+      height: 900px;
+      object-fit: contain;
+      object-position: center;
     }
 
     .description-text {

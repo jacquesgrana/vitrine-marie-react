@@ -1,14 +1,15 @@
 import { PhotoSlide } from "../../../../type/indexType"; // Assurez-vous que le chemin d'importation est correct
 import PhotoCarouselService from '../../../../service/PhotoCarouselService';
 
-// Définition des types pour les props du composant
+// TODO passer dans les types
 interface DashboardCarouselListItemProps {
   slide: PhotoSlide;
   slidesSize: number;
-  refreshList: () => Promise<void>; 
+  refreshList: () => Promise<void>;
+  onViewSlide: (slide: PhotoSlide) => void;
 }
 
-const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ slide, slidesSize, refreshList }) => {
+const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ slide, slidesSize, refreshList, onViewSlide }) => {
     const photoCarouselService = PhotoCarouselService.getInstance();
 
 
@@ -21,6 +22,19 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
         await photoCarouselService.setSlideDown(id);
         await refreshList();
     };
+    
+    const handleViewSlide = async () => {
+        console.log('View slide :', slide);
+        onViewSlide(slide);
+    };
+
+    /*
+    const handleDeleteSlide = async (id: number) => {
+        await photoCarouselService.deleteSlide(id);
+        await refreshList();
+    }
+    */
+
     return (
     <div className="dashboard-carousel-list-item">
       <img className='dashboard-carousel-image' 
@@ -44,9 +58,13 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
                 onClick={() => handleSetSlideDown(slide.id)}
                 disabled={slide.rank === slidesSize}
                 >▼</button>
-                <button type='button' className='button-dark-very-small'>👁️</button>
+                <button 
+                type='button' 
+                onClick={() => handleViewSlide()} 
+                className='button-dark-very-small'
+                >👁️</button>
                 <button type='button' className='button-dark-very-small'>✍</button>
-                <button type='button' className='button-dark-very-small'>❌</button>
+                <button type='button' className='button-dark-very-small'>✖</button>
             </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import SecurityService from '../service/SecurityService';
 import { UserInfo } from '../type/indexType';
 
@@ -7,6 +7,7 @@ const Header: React.FC = () => {
     const securityService = SecurityService.getInstance();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState<UserInfo | null>(null);
+    const navigate = useNavigate();
 
     const updateAuthState = useCallback(() => {
         setIsAuthenticated(securityService.isAuthenticated());
@@ -32,6 +33,7 @@ const Header: React.FC = () => {
 
     const handleLogout = () => {
         securityService.logout();
+        navigate('/');
     };
 
     return (
@@ -57,14 +59,14 @@ const Header: React.FC = () => {
                     </NavLink>
                 )}
                 {isAuthenticated && (
-                    <NavLink to="/" className="button-dark-small" onClick={handleLogout}>
+                    <button type="button" className="button-dark-small" onClick={handleLogout}>
                         Deconnexion
-                    </NavLink> 
+                    </button> 
                 )}
             </nav>
             {isAuthenticated && user && (
                 <p className="text-small-secondary">
-                    <span className="text-small-white">Connecté : </span>{user.firstName} {user.name}<span className="text-small-white"> / </span>{user.email}
+                    <span className="text-small-white">Connecté : </span>{user.firstName} {user.name}<span className="text-small-white"> ● </span>{user.email}
                 </p>
             )}
         </header>
