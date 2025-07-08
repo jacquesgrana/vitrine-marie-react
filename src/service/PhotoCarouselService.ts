@@ -35,7 +35,8 @@ import img30 from '../assets/image/carousel/stone_17.jpg';
 import img31 from '../assets/image/carousel/stone_18.jpg';
 import img32 from '../assets/image/carousel/stone_19.jpg';
 //import img33 from '../assets/image/carousel/stone_20.jpg';
-*/import SecurityService from './SecurityService';
+*/
+import SecurityService from './SecurityService';
 
 
 class PhotoCarouselService {
@@ -44,6 +45,7 @@ class PhotoCarouselService {
 
     private slides: PhotoSlide[] = [];
 
+    // TODO : faire classe config !!!!!!!!!!!!!!!!!!!!!!!
     static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
     static readonly GET_PHOTO_SLIDES_URL : string = `${PhotoCarouselService.SERVER_URL}/carousel/get_slides`;
     static readonly SET_PHOTO_SLIDES_UP_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/up/`;
@@ -64,8 +66,10 @@ class PhotoCarouselService {
 
     public getImageUrl = (imageName: string) => {
         //console.log(imageName);
-        const baseUrl = window.location.origin;
-        const url = `${baseUrl}/image/carousel/${imageName}`;
+        //const baseUrl = window.location.origin;
+        //const url = `${baseUrl}/image/carousel/${imageName}`;
+        // TODO : améliorer !!!
+        const url =`${PhotoCarouselService.SERVER_URL}/image/carousel/${imageName}`;
         return (url);
     }
 

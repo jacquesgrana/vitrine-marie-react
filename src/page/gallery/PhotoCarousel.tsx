@@ -23,14 +23,14 @@ const PhotoCarousel: React.FC = () => {
   }, []);
 
   return (
-    <div className='photo-carousel-container'>
-      <Carousel indicators={true} controls={true} interval={4000}>
+    
+      <Carousel className='photo-carousel-container' indicators={true} controls={true} interval={4000}>
         {slides.map((slide, idx) => {
           // Utiliser un `id` unique comme clé est la meilleure pratique
           return <PhotoCarouselItem key={idx} {...slide} />
         })}
       </Carousel>
-    </div>
+    
   );
 };
 

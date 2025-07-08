@@ -205,7 +205,7 @@ const Contact: React.FC = () => {
           <Row className="justify-content-center">
               <CustomCaptcha ref={captchaRef} onVerify={setIsCaptchaVerified} />
               <div className="">
-                <Button className='button-dark-small no-border' type="submit" disabled={!isCaptchaVerified}>
+                <Button title="Envoyer le formulaire" className='button-dark-small no-border' type="submit" disabled={!isCaptchaVerified}>
                   Envoyer
                 </Button>
               </div>

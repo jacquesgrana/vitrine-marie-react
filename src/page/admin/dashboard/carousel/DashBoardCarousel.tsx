@@ -3,12 +3,14 @@ import { PhotoSlide } from "../../../../type/indexType";
 import PhotoCarouselService from "../../../../service/PhotoCarouselService";
 import DashboardCarouselListItem from "./DashboardCarouselListItem";
 import ModalViewSlide from "./ModalViewSlide";
+import ModalEditSlide from "./ModalEditSlide";
 
 const DashboardCarousel: React.FC = () => {
 
     const [slides, setSlides] = useState<PhotoSlide[]>([]);
 
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
+    const [isModalEditOpen, setIsModalEditOpen] = useState(false);
     const [selectedSlide, setSelectedSlide] = useState<PhotoSlide | null>(null);
 
     const photoCarouselService = PhotoCarouselService.getInstance();
@@ -32,15 +34,26 @@ const DashboardCarousel: React.FC = () => {
         setIsModalViewOpen(true);
     };
 
-    const handleCloseModal = () => {
+    const handleEditSlide = (slide: PhotoSlide) => {
+        setSelectedSlide(slide);
+        setIsModalEditOpen(true);
+    };
+
+    const handleCloseViewModal = () => {
         setIsModalViewOpen(false);
+        setSelectedSlide(null); // Optionnel: réinitialiser le slide sélectionné
+    };
+
+    const handleCloseEditModal = () => {
+        setIsModalEditOpen(false);
         setSelectedSlide(null); // Optionnel: réinitialiser le slide sélectionné
     };
 
     return(
         <div className='dashboard-carousel-container'>
             <h4 className='mt-3 mb-3'>Gestion de la galerie de photos</h4>
-            <button className='button-dark-small'>Ajouter</button> 
+            <button title="Ajouter un slide" className='button-dark-small'>Ajouter</button> 
+            <p className="dashboard-carousel-list-title">LISTE DES SLIDES</p>
             <div className='dashboard-carousel-list-container'>
                 {slides.map((slide) => (
                     <DashboardCarouselListItem 
@@ -49,6 +62,7 @@ const DashboardCarousel: React.FC = () => {
                         refreshList={refreshList}
                         slidesSize={slides.length}
                         onViewSlide={handleViewSlide} // <-- Passer la fonction en prop
+                        onEditSlide={handleEditSlide}
                     />
                 ))}
             </div>
@@ -57,7 +71,14 @@ const DashboardCarousel: React.FC = () => {
                 <ModalViewSlide
                     isModalViewOpen={isModalViewOpen}
                     selectedSlide={selectedSlide}
-                    handleCloseModal={handleCloseModal}
+                    handleCloseViewModal={handleCloseViewModal}
+                /> 
+            )}
+            {selectedSlide && (
+                <ModalEditSlide
+                    isModalEditOpen={isModalEditOpen}
+                    selectedSlide={selectedSlide}
+                    handleCloseEditModal={handleCloseEditModal}
                 /> 
             )}
         </div>

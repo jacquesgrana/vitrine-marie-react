@@ -6,14 +6,14 @@ import PhotoCarouselService from "../../../../service/PhotoCarouselService";
 interface ModalViewProps {
     isModalViewOpen: boolean;
     selectedSlide: PhotoSlide | null;
-    handleCloseModal: () => void;
+    handleCloseViewModal: () => void;
 }
 
 const ModalViewSlide: React.FC<ModalViewProps> = (
     {
         isModalViewOpen,
         selectedSlide,
-        handleCloseModal
+        handleCloseViewModal
     }
 ) => {
     const photoCarouselService = PhotoCarouselService.getInstance();
@@ -27,10 +27,10 @@ const ModalViewSlide: React.FC<ModalViewProps> = (
                 size="lg"
                 className="modal-dark"
                 show={isModalViewOpen} 
-                onHide={handleCloseModal} 
+                onHide={handleCloseViewModal} 
                 centered>
-                    <Modal.Header className="modal-dark-header" closeButton>
-                        <Modal.Title className="modal-dark-header-title"><span className="text-secondary">Titre :&nbsp;</span>{selectedSlide.title}</Modal.Title>
+                    <Modal.Header className="modal-dark-header">
+                        <Modal.Title className="modal-dark-header-title"><span className="text-secondary">Vue de :&nbsp;</span>{selectedSlide.title}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="modal-dark-body">
                         <img 
@@ -46,7 +46,7 @@ const ModalViewSlide: React.FC<ModalViewProps> = (
                     <Modal.Footer className="modal-dark-footer">
                         <button 
                             className="button-dark-small" 
-                            onClick={handleCloseModal}
+                            onClick={handleCloseViewModal}
                         >
                             Fermer
                         </button>

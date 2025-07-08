@@ -5,15 +5,26 @@
     justify-content: center;
     width: 100vw;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 10px;
     margin-top: 20px;
     margin-bottom: 40px;
+
+    .dashboard-carousel-list-title {
+        color: $primary-color-light-1;
+        font-size: small;
+        text-align: center;
+        text-transform: uppercase;
+        font-family: Source_Sans_3_Regular;
+        font-weight: 500;
+        letter-spacing: 0.5em;
+        margin-top: 10px;
+        margin-bottom: 0px
+    }
 
     .dashboard-carousel-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* MODIFICATION : On aligne les enfants (le titre et la liste) en haut */
         justify-content: flex-start; 
         width: 560px;
         background-color: $primary-color-dark-2;
@@ -30,14 +41,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* MODIFICATION 1 : On aligne les items de la liste en haut */
             justify-content: flex-start;
             width: 100%;
-            /* MODIFICATION 2 : On retire height: auto et on laisse flexbox gérer la hauteur */
-            flex-grow: 1; /* Permet au conteneur de prendre toute la place restante */
-            min-height: 0; /* Empêche le conteneur de dépasser son parent */
+            flex-grow: 1;
+            min-height: 0;
             gap: 10px;
-            overflow-y: auto; /* Fonctionnera maintenant correctement */
+            overflow-y: auto;
             margin: 0px;
             margin-bottom: 20px;
             padding: 0px;
@@ -51,7 +60,6 @@
                 display: flex;
                 flex-direction: row;
                 align-items: start;
-                /* MODIFICATION : 'flex-shrink: 0' empêche les items de se rétrécir */
                 flex-shrink: 0; 
                 justify-content: start;
                 gap: 10px;
@@ -103,4 +111,28 @@
             }
         }
     }
+
 }
+
+.edit-slide-form-field {
+        background-color: $primary-color-dark-1 !important;
+        color: $white-color !important;
+        border: none;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        width: 100%;
+
+        &::placeholder {
+            color: $primary-color-light-2;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0px 12px $secondary-color-dark-3;
+        }
+
+        .isValid {
+            background-color: $primary-color-dark-2;
+        }
+    }
