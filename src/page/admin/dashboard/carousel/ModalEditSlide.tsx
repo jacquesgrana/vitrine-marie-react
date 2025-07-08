@@ -1,4 +1,4 @@
-import { Button, Container, Form, Modal, Row } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { PhotoSlide } from "../../../../type/indexType";
 
 interface ModalEditSlideProps {
