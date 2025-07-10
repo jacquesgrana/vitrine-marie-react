@@ -19,7 +19,7 @@ const Login: React.FC = () => {
     
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('submit');
+        //console.log('submit');
         // verifier données ?
 
         // verifier captcha
@@ -33,7 +33,7 @@ const Login: React.FC = () => {
             password: (e.currentTarget.elements.namedItem('password') as HTMLInputElement).value
         };
 
-        console.log('formData', formData);
+        //console.log('formData', formData);
 
         const emailInput = e.currentTarget.elements.namedItem('email') as HTMLInputElement;
         const passwordInput = e.currentTarget.elements.namedItem('password') as HTMLInputElement;
@@ -47,7 +47,7 @@ const Login: React.FC = () => {
             alert(response.message);
           }
           else {
-            console.log('response', response);
+            //console.log('response', response);
             if(response.success) {
                 // si ok appeler page dashboard admin
                 //navigate('/admin/dashboard');
@@ -111,11 +111,10 @@ const Login: React.FC = () => {
                                 //isValid={isFormValid}
                                 placeholder='Saisir votre mot de passe.'
                                 />
-                            
                         </Form.Group>
                     </Row>
                     <Row className="justify-content-center">
-                        <CustomCaptcha ref={captchaRef} onVerify=       {setIsCaptchaVerified} />
+                        <CustomCaptcha ref={captchaRef} onVerify={setIsCaptchaVerified} />
                             <div className="">
                             <Button className='button-dark-small no-border' type="submit" disabled={!isCaptchaVerified}>
                             Envoyer

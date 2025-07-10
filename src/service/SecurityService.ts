@@ -9,10 +9,12 @@ class SecurityService {
 
     private _isAuthenticated: boolean = false;
 
+    // Liste des souscripteurs de l'authentification : tableau de callback
     private subscribers: Array<(user: UserInfo | null) => void> = [];
 
     private localStorageService: LocalStorageService = LocalStorageService.getInstance();
 
+    // TODO : mettre dans une classe config
     public static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
     public static readonly SUBMIT_LOGIN_URL : string = `${SecurityService.SERVER_URL}/api/login`;
     public static readonly GET_USER_INFO_URL : string = `${SecurityService.SERVER_URL}/api/user/user_infos`;
@@ -60,7 +62,7 @@ class SecurityService {
         //console.log('data recuperee', data);
 
         this.setToken(data.token);
-        console.log('token récupéré !!', this.token);
+        //console.log('token récupéré !!', this.token);
 
         const responseUserInfos : any = await this.getUserInfo();
         if(!responseUserInfos.success) {
@@ -76,7 +78,7 @@ class SecurityService {
             this.saveLocalStorageDatas();
             this._isAuthenticated = true;
             //console.log('user recuperé !!', this.user);
-            this.notifySubscribers(); // Ajoutez cette ligne
+            this.notifySubscribers();
             //navigate('/admin/dashboard');
             //window.location.href = '/admin/dashboard';
         }   

@@ -48,9 +48,12 @@ class PhotoCarouselService {
     // TODO : faire classe config !!!!!!!!!!!!!!!!!!!!!!!
     static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
     static readonly GET_PHOTO_SLIDES_URL : string = `${PhotoCarouselService.SERVER_URL}/carousel/get_slides`;
-    static readonly SET_PHOTO_SLIDES_UP_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/up/`;
-    static readonly SET_PHOTO_SLIDES_DOWN_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/down/`;
+    static readonly SET_PHOTO_SLIDE_UP_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/up/`;
+    static readonly SET_PHOTO_SLIDE_DOWN_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/down/`;
+    static readonly SET_PHOTO_SLIDE_TOP_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/top/`;
+    static readonly SET_PHOTO_SLIDE_BOTTOM_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/bottom/`;
     static readonly UPDATE_SLIDE_INFOS_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/update/carousel-slide/`;
+    static readonly UPDATE_SLIDE_IMAGE_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/update/carousel-image/`;
 
     private securityService : SecurityService;
 
@@ -118,7 +121,7 @@ class PhotoCarouselService {
 
     public async setSlideUp(slideId: number): Promise<any> {
         try {
-            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDES_UP_URL + slideId, {
+            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDE_UP_URL + slideId, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -130,7 +133,8 @@ class PhotoCarouselService {
             //this.setSlides(result.data);
             //alert(result.message);
             return {success: true, message: result.message}
-        } catch (error) {
+        } 
+        catch (error) {
             console.error('Error fetching slides :', error);
             return {success: false, message: error}
         }
@@ -138,7 +142,7 @@ class PhotoCarouselService {
 
     public async setSlideDown(slideId: number): Promise<any> {
         try {
-            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDES_DOWN_URL + slideId, {
+            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDE_DOWN_URL + slideId, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -150,7 +154,50 @@ class PhotoCarouselService {
             //this.setSlides(result.data);
             //alert(result.message);
             return {success: true, message: result.message}
-        } catch (error) {
+        } 
+        catch (error) {
+            console.error('Error fetching slides :', error);
+            return {success: false, message: error}
+        }
+    }
+
+    public async setSlideTop(slideId: number): Promise<any> {
+        try {
+            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDE_TOP_URL + slideId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                }
+            });
+            const result = await response.json();
+            //this.setSlides(result.data);
+            //alert(result.message);
+            return {success: true, message: result.message}
+        } 
+        catch (error) {
+            console.error('Error fetching slides :', error);
+            return {success: false, message: error}
+        }
+    }
+
+    public async setSlideBottom(slideId: number): Promise<any> {
+        try {
+            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDE_BOTTOM_URL + slideId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                }
+            });
+            const result = await response.json();
+            //this.setSlides(result.data);
+            //alert(result.message);
+            return {success: true, message: result.message}
+        } 
+        catch (error) {
             console.error('Error fetching slides :', error);
             return {success: false, message: error}
         }
@@ -207,6 +254,42 @@ class PhotoCarouselService {
             return {success: false, message: error}
         }
     }*/
+
+        public async updateSlideImageFromForm(slideId: number, imageFile: File): Promise<any> {
+        try {
+            // 1. Créer une instance de FormData
+            const formData = new FormData();
+
+            // 2. Ajouter le fichier.
+            // La clé 'imageFile' DOIT correspondre à celle attendue par Symfony :
+            // $request->files->get('imageFile')
+            formData.append('imageFile', imageFile);
+
+            // Si vous aviez besoin d'envoyer d'autres données texte en même temps,
+            // vous pourriez simplement les ajouter aussi :
+            // formData.append('unAutreChamp', 'une valeur');
+
+            const response = await fetch(PhotoCarouselService.UPDATE_SLIDE_IMAGE_URL + slideId, { // Assurez-vous que l'URL est correcte
+                method: 'POST',
+                headers: {
+                    // ATTENTION : Ne mettez PAS le header 'Content-Type' !
+                    // Le navigateur le fera pour vous, et il ajoutera la partie 'boundary'
+                    // qui est essentielle pour que le serveur puisse parser le corps de la requête.
+                    // Si vous le mettez manuellement, ça ne marchera pas.
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                },
+                // 3. Envoyer l'objet formData comme body
+                body: formData
+            });
+            
+            const result = await response.json();
+            return { success: result.success, message: result.message, data: result.data };
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            return { success: false, message: error };
+        }
+}
 
 }
 

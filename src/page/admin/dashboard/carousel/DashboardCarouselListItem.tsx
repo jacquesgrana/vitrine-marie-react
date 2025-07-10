@@ -23,6 +23,16 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
         await photoCarouselService.setSlideDown(id);
         await refreshList();
     };
+
+    const handleSetSlideTop = async (id: number) => {
+        await photoCarouselService.setSlideTop(id);
+        await refreshList();
+    };
+
+    const handleSetSlideBottom = async (id: number) => {
+        await photoCarouselService.setSlideBottom(id);
+        await refreshList();
+    };
     
     const handleViewSlide = async () => {
         console.log('View slide :', slide);
@@ -37,7 +47,7 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
 
     const handleEditImageSlide = async () => {
         console.log('Edit image slide :', slide);
-        //onEditSlide(slide);
+        //onEditImage(slide);
     };
 
     
@@ -65,14 +75,28 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
                 className='button-dark-very-small' 
                 onClick={() => handleSetSlideUp(slide.id)}
                 disabled={slide.rank === 1}
-                >▲</button>
+                >↑</button>
                 <button 
                 title="Bouger le slide vers le bas"
                 type='button' 
                 className='button-dark-very-small' 
                 onClick={() => handleSetSlideDown(slide.id)}
                 disabled={slide.rank === slidesSize}
-                >▼</button>
+                >↓</button>
+                <button 
+                title="Bouger le slide en haut de la liste"
+                type='button' 
+                className='button-dark-very-small' 
+                onClick={() => handleSetSlideTop(slide.id)}
+                disabled={slide.rank === 1}
+                >↖</button>
+                <button 
+                title="Bouger le slide en bas de la liste"
+                type='button' 
+                className='button-dark-very-small' 
+                onClick={() => handleSetSlideBottom(slide.id)}
+                disabled={slide.rank === slidesSize}
+                >↘</button>
                 <button 
                 title="Voir le slide"
                 type='button' 
