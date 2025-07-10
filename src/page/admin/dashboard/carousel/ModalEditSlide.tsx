@@ -35,7 +35,10 @@ const ModalEditSlide: React.FC<ModalEditSlideProps> = (
         // appeler méthode asynchrone du ContactFormService pour envoyer le formulaire et récupérer la réponse
         const result = await photoCarouselService.updateSlideFromForm(selectedSlide.id, title, description, alt);
         // TODO gérer les result.success et result.message
-        refreshList();
+        if(result.success) {
+            console.log(result.message);
+            await refreshList();
+        }
         handleCloseEditModal();
     };
 
