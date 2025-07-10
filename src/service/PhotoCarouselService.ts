@@ -50,6 +50,7 @@ class PhotoCarouselService {
     static readonly GET_PHOTO_SLIDES_URL : string = `${PhotoCarouselService.SERVER_URL}/carousel/get_slides`;
     static readonly SET_PHOTO_SLIDES_UP_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/up/`;
     static readonly SET_PHOTO_SLIDES_DOWN_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/down/`;
+    static readonly UPDATE_SLIDE_INFOS_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/update/carousel-slide/`;
 
     private securityService : SecurityService;
 
@@ -154,7 +155,59 @@ class PhotoCarouselService {
             return {success: false, message: error}
         }
     }
+
     
+    public async updateSlideFromForm(slideId: number, title: string, description: string, alt: string): Promise<any> {
+        try {
+            const response = await fetch(PhotoCarouselService.UPDATE_SLIDE_INFOS_URL + slideId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                },
+                body: JSON.stringify({ title, description, alt })
+            });
+            const result = await response.json();
+            //this.setSlides(result.data);
+            //alert(result.message);
+            return {success: result.success, message: result.message}
+        } catch (error) {
+            console.error('Error fetching slides :', error);
+            return {success: false, message: error}
+        }
+    }
+    
+    
+    // version avec 'Content-Type': 'application/x-www-form-urlencoded',
+    /*
+    public async updateSlideFromForm(slideId: number, title: string, description: string, alt: string): Promise<any> {
+        try {
+            // 1. On prépare le corps de la requête au format 'x-www-form-urlencoded'
+            const body = new URLSearchParams();
+            body.append('title', title);
+            body.append('description', description);
+            body.append('alt', alt);
+
+            const response = await fetch(PhotoCarouselService.UPDATE_SLIDE_INFOS_URL + slideId, {
+                method: 'POST',
+                headers: {
+                    // 2. On change le Content-Type pour qu'il corresponde au body
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                },
+                // 3. On envoie l'objet URLSearchParams
+                body: body 
+            });
+            const result = await response.json();
+            return {success: result.success, message: result.message}
+        } catch (error) {
+            console.error('Error fetching slides :', error);
+            return {success: false, message: error}
+        }
+    }*/
+
 }
 
 export default PhotoCarouselService;

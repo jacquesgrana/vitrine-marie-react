@@ -16,6 +16,7 @@ const PhotoCarousel: React.FC = () => {
   useEffect(() => {
     const loadSlides = async () => {
         const fetchedSlides = await photoCarouselService.getSlides();
+        //console.log('fetchedSlides', fetchedSlides);
         setSlides(fetchedSlides);
     };
 

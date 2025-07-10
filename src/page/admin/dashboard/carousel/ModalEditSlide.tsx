@@ -1,27 +1,42 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { PhotoSlide } from "../../../../type/indexType";
+import PhotoCarouselService from "../../../../service/PhotoCarouselService";
 
 interface ModalEditSlideProps {
     isModalEditOpen: boolean,
     selectedSlide: PhotoSlide | null,
     handleCloseEditModal: () => void
+    refreshList: () => Promise<void>
 }
 
 const ModalEditSlide: React.FC<ModalEditSlideProps> = (
     {
         isModalEditOpen,
         selectedSlide,
-        handleCloseEditModal
+        handleCloseEditModal,
+        refreshList
     }
 ) => {
+    const photoCarouselService = PhotoCarouselService.getInstance();
 
     if (!selectedSlide) {
         return null;
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('submit');
+        //console.log('submit');
+        // récupérer les données du formulaire
+        const formData = new FormData(e.currentTarget);
+        const title = formData.get('title') as string;
+        const description = formData.get('description') as string;
+        const alt = formData.get('alt') as string;
+        console.log(title, description, alt, selectedSlide.id);
+        // appeler méthode asynchrone du ContactFormService pour envoyer le formulaire et récupérer la réponse
+        const result = await photoCarouselService.updateSlideFromForm(selectedSlide.id, title, description, alt);
+        // TODO gérer les result.success et result.message
+        refreshList();
+        handleCloseEditModal();
     };
 
     return(

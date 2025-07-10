@@ -35,6 +35,11 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
         onEditSlide(slide);
     };
 
+    const handleEditImageSlide = async () => {
+        console.log('Edit image slide :', slide);
+        //onEditSlide(slide);
+    };
+
     
     const handleDeleteSlide = async () => {
         console.log('Delete slide :', slide.id);
@@ -75,10 +80,15 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
                 className='button-dark-very-small'
                 >👁️</button>
                 <button 
-                title="Modifier le slide" 
+                title="Modifier les informations du slide" 
                 type='button' 
                 onClick={() => handleEditSlide()} 
-                className='button-dark-very-small'>✍</button>
+                className='button-dark-very-small'>🖊️</button>
+                <button 
+                title="Modifier l'image du slide" 
+                type='button' 
+                onClick={() => handleEditImageSlide()} 
+                className='button-dark-very-small'>🖼️</button>
                 <button 
                 title="Supprimer le slide" 
                 type='button' 

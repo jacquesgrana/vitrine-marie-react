@@ -18,6 +18,7 @@ const DashboardCarousel: React.FC = () => {
     useEffect(() => {
         const refreshListIn = async () => {
             const slidesFromService = await photoCarouselService.getSlides();
+            //console.log('slidesFromService', slidesFromService);
             setSlides(slidesFromService);
         };
         refreshListIn();
@@ -79,6 +80,7 @@ const DashboardCarousel: React.FC = () => {
                     isModalEditOpen={isModalEditOpen}
                     selectedSlide={selectedSlide}
                     handleCloseEditModal={handleCloseEditModal}
+                    refreshList={refreshList}
                 /> 
             )}
         </div>
