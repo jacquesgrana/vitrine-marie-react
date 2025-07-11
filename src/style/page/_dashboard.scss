@@ -115,24 +115,36 @@
 }
 
 .edit-slide-form-field {
-        background-color: $primary-color-dark-1 !important;
-        color: $white-color !important;
-        border: none;
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        width: 100%;
+    background-color: $primary-color-dark-1 !important;
+    color: $white-color !important;
+    border: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    width: 100%;
 
-        &::placeholder {
-            color: $primary-color-light-2;
-        }
-
-        &:focus {
-            outline: none;
-            box-shadow: 0 0px 12px $secondary-color-dark-3;
-        }
-
-        .isValid {
-            background-color: $primary-color-dark-2;
-        }
+    &::placeholder {
+        color: $primary-color-light-2;
     }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0px 12px $secondary-color-dark-3;
+    }
+
+    .isValid {
+        background-color: $primary-color-dark-2;
+    }
+}
+
+.edit-image-button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    margin-top: 10px;
+    background-color: $primary-color-dark-3;
+    padding: 10px;
+    border-radius: 5px;
+}

@@ -8,9 +8,10 @@ interface DashboardCarouselListItemProps {
   refreshList: () => Promise<void>;
   onViewSlide: (slide: PhotoSlide) => void;
   onEditSlide: (slide: PhotoSlide) => void;
+  onEditImage: (slide: PhotoSlide) => void;
 }
 
-const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ slide, slidesSize, refreshList, onViewSlide, onEditSlide }) => {
+const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ slide, slidesSize, refreshList, onViewSlide, onEditSlide, onEditImage }) => {
     const photoCarouselService = PhotoCarouselService.getInstance();
 
 
@@ -47,7 +48,7 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
 
     const handleEditImageSlide = async () => {
         console.log('Edit image slide :', slide);
-        //onEditImage(slide);
+        onEditImage(slide);
     };
 
     

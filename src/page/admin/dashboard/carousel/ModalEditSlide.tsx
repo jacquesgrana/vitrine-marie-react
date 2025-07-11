@@ -55,7 +55,7 @@ const ModalEditSlide: React.FC<ModalEditSlideProps> = (
             </Modal.Header>
             <Modal.Body className="modal-dark-body">
                 <Form noValidate onSubmit={handleSubmit}>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formTitle">
                             <Form.Label className="text-medium-secondary">Titre</Form.Label>
                             <Form.Control 
                             className='edit-slide-form-field'
@@ -66,7 +66,7 @@ const ModalEditSlide: React.FC<ModalEditSlideProps> = (
                             required
                              />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formDescription">
                             <Form.Label className="text-medium-secondary">Description</Form.Label>
                             <Form.Control 
                             className='edit-slide-form-field'
@@ -77,7 +77,7 @@ const ModalEditSlide: React.FC<ModalEditSlideProps> = (
                             required
                              />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3" controlId="formAlt">
                             <Form.Label className="text-medium-secondary">Alt</Form.Label>
                             <Form.Control 
                             className='edit-slide-form-field'
