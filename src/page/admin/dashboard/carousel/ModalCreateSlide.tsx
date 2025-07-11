@@ -120,7 +120,7 @@ const ModalCreateSlide: React.FC<ModalCreateSlideProps> = (
                         <>
                             <img 
                             src={loadedImage}
-                            //alt={selectedSlide?.alt}
+                            alt="Nouvelle image"
                             className="img-fluid mb-3"
                             />
                             <p className="modal-dark-body-text text-medium-secondary"><strong>Nom du fichier :</strong> {imageName}</p>
