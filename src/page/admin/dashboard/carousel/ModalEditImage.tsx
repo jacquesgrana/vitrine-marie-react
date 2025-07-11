@@ -19,7 +19,7 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
         refreshList
     }
 ) => {
-    const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const [loadedImage, setLoadedImage] = useState<string | null>(null);
     const [imageName, setImageName] = useState<string | null>(null);
     const isNewImageRef = useRef<boolean>(false);
 
@@ -34,20 +34,21 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
     e.preventDefault();
     //console.log('submit');
 
-    if (!previewImage || !imageName) {
+    if (!loadedImage || !imageName) {
         console.error('Aucune image à envoyer ou nom de fichier manquant.');
         return;
     }
 
     try {
-        const fileToSend = dataURLtoFile(previewImage, imageName);
+        const fileToSend = FileService.dataURLtoFile(loadedImage, imageName);
         //console.log(fileToSend.name, fileToSend.size, fileToSend.type);
 
         await photoCarouselService.updateSlideImageFromForm(selectedSlide.id, fileToSend);
 
         refreshList();
         handleCloseImageModal();
-    } catch (error) {
+    } 
+    catch (error) {
         console.error('Erreur lors de la conversion de l\'image :', error);
     }
 };
@@ -61,7 +62,7 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
         if (file) {
             const reader = new FileReader();
             reader.onload = (event) => {
-                setPreviewImage(event.target?.result as string);
+                setLoadedImage(event.target?.result as string);
                 setImageName(file.name);
                 isNewImageRef.current = true;
             };
@@ -70,6 +71,7 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
         //isNewImageRef.current = true;
     };
 
+    /*
     const dataURLtoFile = (dataurl: string, filename: string): File => {
     // Séparer les métadonnées de la base64
     const arr = dataurl.split(',');
@@ -86,7 +88,7 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
     }
     return new File([u8arr], filename, { type: mime });
 }
-
+*/
 
     return (
         <Modal 
@@ -101,11 +103,11 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
             </Modal.Header>
             <Modal.Body className="modal-dark-body">
                 <img 
-                    src={previewImage || photoCarouselService.getImageUrl(selectedSlide.image)}
-                    alt={selectedSlide?.alt}
+                    src={loadedImage || photoCarouselService.getImageUrl(selectedSlide.image)}
+                    //alt={selectedSlide?.alt}
                     className="img-fluid mb-3" // 'img-fluid' est une classe Bootstrap pour le responsive
                 />
-                <p className="modal-dark-body-text"><strong><span className="text-medium-secondary">Nom du fichier :</span></strong> {imageName || selectedSlide.image}</p>
+                <p className="modal-dark-body-text text-medium-secondary"><strong>Nom du fichier :</strong> {imageName || selectedSlide.image}</p>
                 <div className="edit-image-button-container">
                     <button 
                         className="button-dark-small" 

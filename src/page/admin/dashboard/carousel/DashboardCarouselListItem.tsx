@@ -54,8 +54,10 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
     
     const handleDeleteSlide = async () => {
         console.log('Delete slide :', slide.id);
-        //await photoCarouselService.deleteSlide(slide.id);
-        //await refreshList();
+        const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce slide ?');
+        if (!confirm) return;
+        await photoCarouselService.deleteSlide(slide.id);
+        await refreshList();
     }
     
 

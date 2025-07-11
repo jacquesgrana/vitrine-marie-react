@@ -17,6 +17,8 @@ class PhotoCarouselService {
     static readonly SET_PHOTO_SLIDE_BOTTOM_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/bottom/`;
     static readonly UPDATE_SLIDE_INFOS_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/update/carousel-slide/`;
     static readonly UPDATE_SLIDE_IMAGE_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/update/carousel-image/`;
+    static readonly CREATE_SLIDE_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/create/carousel-slide`;
+    static readonly DELETE_SLIDE_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/delete/carousel-slide/`;
 
     private securityService : SecurityService;
 
@@ -246,6 +248,60 @@ class PhotoCarouselService {
             return { success: false, message: error };
         }
     }
+
+    public async createSlideFromForm(title: string, description: string, alt: string, imageFile: File): Promise<any> {
+        try {
+            // 1. Créer une instance de FormData
+            const formData = new FormData();
+
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('alt', alt);
+            formData.append('imageFile', imageFile);
+
+            const response = await fetch(PhotoCarouselService.CREATE_SLIDE_URL, { // Assurez-vous que l'URL est correcte
+                method: 'POST',
+                headers: {
+                    // ATTENTION : Ne mettez PAS le header 'Content-Type' !
+                    // Le navigateur le fera pour vous, et il ajoutera la partie 'boundary'
+                    // qui est essentielle pour que le serveur puisse parser le corps de la requête.
+                    // Si vous le mettez manuellement, ça ne marchera pas.
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                },
+                // 3. Envoyer l'objet formData comme body
+                body: formData
+            });
+            
+            const result = await response.json();
+            return { success: result.success, message: result.message, data: result.data };
+        } 
+        catch (error) {
+            console.error('Error uploading image:', error);
+            return { success: false, message: error };
+        }
+    }
+
+    public async deleteSlide(slideId: number): Promise<any> {
+        try {
+            const response = await fetch(PhotoCarouselService.DELETE_SLIDE_URL + slideId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                }
+            });
+            const result = await response.json();
+            //this.setSlides(result.data);
+            //alert(result.message);
+            return {success: true, message: result.message}
+        } 
+        catch (error) {
+            console.error('Error fetching slides :', error);
+            return {success: false, message: error}
+        }
+    }   
 
 }
 

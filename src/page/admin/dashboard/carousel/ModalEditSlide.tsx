@@ -55,52 +55,52 @@ const ModalEditSlide: React.FC<ModalEditSlideProps> = (
             </Modal.Header>
             <Modal.Body className="modal-dark-body">
                 <Form noValidate onSubmit={handleSubmit}>
-                        <Form.Group className="mb-3" controlId="formTitle">
-                            <Form.Label className="text-medium-secondary">Titre</Form.Label>
-                            <Form.Control 
-                            className='edit-slide-form-field'
-                            name="title"
-                            type="text" 
-                            placeholder="Titre" 
-                            defaultValue={selectedSlide.title}
-                            required
-                             />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formDescription">
-                            <Form.Label className="text-medium-secondary">Description</Form.Label>
-                            <Form.Control 
-                            className='edit-slide-form-field'
-                            name="description"
-                            type="text" 
-                            placeholder="Description" 
-                            defaultValue={selectedSlide.description}
-                            required
-                             />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formAlt">
-                            <Form.Label className="text-medium-secondary">Alt</Form.Label>
-                            <Form.Control 
-                            className='edit-slide-form-field'
-                            name="alt"
-                            type="text" 
-                            placeholder="Alt" 
-                            defaultValue={selectedSlide.alt}
-                            required
-                             />
-                        </Form.Group>
-                        <Button title="Valider le slide" className='button-dark-small no-border' type="submit" disabled={false}>
-                            Valider
-                        </Button>
+                    <Form.Group className="mb-3" controlId="formTitle">
+                        <Form.Label className="text-medium-secondary">Titre</Form.Label>
+                        <Form.Control 
+                        className='edit-slide-form-field'
+                        name="title"
+                        type="text" 
+                        placeholder="Titre" 
+                        defaultValue={selectedSlide.title}
+                        required
+                            />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formDescription">
+                        <Form.Label className="text-medium-secondary">Description</Form.Label>
+                        <Form.Control 
+                        className='edit-slide-form-field'
+                        name="description"
+                        type="text" 
+                        placeholder="Description" 
+                        defaultValue={selectedSlide.description}
+                        required
+                            />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formAlt">
+                        <Form.Label className="text-medium-secondary">Alt</Form.Label>
+                        <Form.Control 
+                        className='edit-slide-form-field'
+                        name="alt"
+                        type="text" 
+                        placeholder="Alt" 
+                        defaultValue={selectedSlide.alt}
+                        required
+                            />
+                    </Form.Group>
+                    <Button title="Valider le slide" className='button-dark-small no-border' type="submit" disabled={false}>
+                        Valider
+                    </Button>
                 </Form>
             </Modal.Body>
             <Modal.Footer className="modal-dark-footer">
-                        <button 
-                            className="button-dark-small" 
-                            onClick={handleCloseEditModal}
-                        >
-                            Fermer
-                        </button>
-                    </Modal.Footer>
+                <button 
+                    className="button-dark-small" 
+                    onClick={handleCloseEditModal}
+                >
+                    Fermer
+                </button>
+            </Modal.Footer>
         </Modal>
     );
 }

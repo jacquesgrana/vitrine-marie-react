@@ -5,6 +5,7 @@ import DashboardCarouselListItem from "./DashboardCarouselListItem";
 import ModalViewSlide from "./ModalViewSlide";
 import ModalEditSlide from "./ModalEditSlide";
 import ModalEditImage from "./ModalEditImage";
+import ModalCreateSlide from "./ModalCreateSlide";
 
 const DashboardCarousel: React.FC = () => {
 
@@ -13,6 +14,8 @@ const DashboardCarousel: React.FC = () => {
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [isModalEditOpen, setIsModalEditOpen] = useState(false);
     const [isModalEditImageOpen, setIsModalEditImageOpen] = useState(false);
+    const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
+
     const [selectedSlide, setSelectedSlide] = useState<PhotoSlide | null>(null);
 
     const photoCarouselService = PhotoCarouselService.getInstance();
@@ -48,25 +51,33 @@ const DashboardCarousel: React.FC = () => {
         setIsModalEditImageOpen(true);
     };
 
+    const handleCreateSlide = () => {
+        setIsModalCreateOpen(true);
+    };
+
     const handleCloseViewModal = () => {
         setIsModalViewOpen(false);
-        setSelectedSlide(null); // Optionnel: réinitialiser le slide sélectionné
+        setSelectedSlide(null);
     };
 
     const handleCloseEditModal = () => {
         setIsModalEditOpen(false);
-        setSelectedSlide(null); // Optionnel: réinitialiser le slide sélectionné
+        setSelectedSlide(null);
     };
 
     const handleCloseEditImageModal = () => {
         setIsModalEditImageOpen(false);
-        setSelectedSlide(null); // Optionnel: réinitialiser le slide sélectionné
+        setSelectedSlide(null);
+    };
+
+    const handleCloseCreateModal = () => {
+        setIsModalCreateOpen(false);
     };
 
     return(
         <div className='dashboard-carousel-container'>
             <h4 className='mt-3 mb-3'>Gestion de la galerie de photos</h4>
-            <button title="Ajouter un slide" className='button-dark-small'>Ajouter</button> 
+            <button title="Ajouter un slide" className='button-dark-small' onClick={handleCreateSlide}>Ajouter</button> 
             <p className="dashboard-carousel-list-title">LISTE DES SLIDES</p>
             <div className='dashboard-carousel-list-container'>
                 {slides.map((slide) => (
@@ -75,7 +86,7 @@ const DashboardCarousel: React.FC = () => {
                         slide={slide}
                         refreshList={refreshList}
                         slidesSize={slides.length}
-                        onViewSlide={handleViewSlide} // <-- Passer la fonction en prop
+                        onViewSlide={handleViewSlide}
                         onEditSlide={handleEditSlide}
                         onEditImage={handleEditImage}
                     />
@@ -105,42 +116,13 @@ const DashboardCarousel: React.FC = () => {
                     refreshList={refreshList}
                 /> 
             )}
+            <ModalCreateSlide
+                isModalCreateOpen={isModalCreateOpen}
+                handleCloseCreateModal={handleCloseCreateModal}
+                refreshList={refreshList}
+            />
         </div>
     );
 }
 
 export default DashboardCarousel;
-
-/*
-
-<Modal 
-                size="lg"
-                className="modal-dark"
-                show={isModalViewOpen} 
-                onHide={handleCloseModal} 
-                centered>
-                    <Modal.Header className="modal-dark-header" closeButton>
-                        <Modal.Title className="modal-dark-header-title"><span className="text-secondary">Titre :&nbsp;</span>{selectedSlide.title}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="modal-dark-body">
-                        <img 
-                            src={photoCarouselService.getImageUrl(selectedSlide.image)} 
-                            alt={selectedSlide.alt}
-                            className="img-fluid mb-3" // 'img-fluid' est une classe Bootstrap pour le responsive
-                        />
-                        <p className="modal-dark-body-text"><strong><span className="text-medium-secondary">Description :</span></strong> {selectedSlide.description}</p>
-                        <p className="modal-dark-body-text"><strong><span className="text-medium-secondary">Alt :</span></strong> {selectedSlide.alt}</p>
-                        <p className="modal-dark-body-text"><strong><span className="text-medium-secondary">ID :</span></strong> {selectedSlide.id}</p>
-                        <p className="modal-dark-body-text"><strong><span className="text-medium-secondary">Rang :</span></strong> {selectedSlide.rank}</p>
-                    </Modal.Body>
-                    <Modal.Footer className="modal-dark-footer">
-                        <button 
-                            className="button-dark-small" 
-                            onClick={handleCloseModal}
-                        >
-                            Fermer
-                        </button>
-                    </Modal.Footer>
-                </Modal>
-
-*/
