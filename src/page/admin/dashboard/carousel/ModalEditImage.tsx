@@ -30,35 +30,62 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
         return null;
     }
 
- const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    //console.log('submit');
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        //console.log('submit');
 
-    if (!loadedImage || !imageName) {
-        console.error('Aucune image à envoyer ou nom de fichier manquant.');
-        return;
-    }
+        if (!loadedImage || !imageName) {
+            console.error('Aucune image à envoyer ou nom de fichier manquant.');
+            return;
+        }
 
-    try {
-        const fileToSend = FileService.dataURLtoFile(loadedImage, imageName);
-        //console.log(fileToSend.name, fileToSend.size, fileToSend.type);
+        try {
+            const fileToSend = FileService.dataURLtoFile(loadedImage, imageName);
+            //console.log(fileToSend.name, fileToSend.size, fileToSend.type);
 
-        await photoCarouselService.updateSlideImageFromForm(selectedSlide.id, fileToSend);
+            await photoCarouselService.updateSlideImageFromForm(selectedSlide.id, fileToSend);
 
-        refreshList();
-        handleCloseImageModal();
-    } 
-    catch (error) {
-        console.error('Erreur lors de la conversion de l\'image :', error);
-    }
-};
+            refreshList();
+            handleCloseImageModal();
+        } 
+        catch (error) {
+            console.error('Erreur lors de la conversion de l\'image :', error);
+        }
+    };
+
+    const handleLoadImage = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        console.log('load image');
+        const file = await fileService.selectImageFile();
+        if (file) {
+
+            try {
+                if (!FileService.isImageFile(file)) {
+                    alert('Veuillez sélectionner un fichier image valide (JPEG ou PNG).');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    setLoadedImage(event.target?.result as string);
+                    setImageName(file.name);
+                    isNewImageRef.current = true;
+                };
+                reader.readAsDataURL(file);
+            } catch (error) {
+                console.error('Erreur lors de la lecture du fichier :', error);
+                alert('Une erreur est survenue lors de la lecture du fichier.');
+            }
+        }
+    };
 
 
+    /*
     const handleLoadImage = async (e: any) => {
 
         e.preventDefault();
         console.log('load image');
-        const file = await fileService.selectFile();
+        const file = await fileService.selectImageFile();
         if (file) {
             const reader = new FileReader();
             reader.onload = (event) => {
@@ -70,6 +97,7 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
         }
         //isNewImageRef.current = true;
     };
+    */
 
     /*
     const dataURLtoFile = (dataurl: string, filename: string): File => {

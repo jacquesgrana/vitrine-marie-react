@@ -56,11 +56,13 @@ const ModalCreateSlide: React.FC<ModalCreateSlideProps> = (
         handleCloseCreateModal();
     };
 
+    /*
+
     const handleLoadImage = async (e: any) => {
 
         e.preventDefault();
         console.log('load image');
-        const file = await fileService.selectFile();
+        const file = await fileService.selectImageFile();
         if (file) {
             const reader = new FileReader();
             reader.onload = (event) => {
@@ -71,6 +73,32 @@ const ModalCreateSlide: React.FC<ModalCreateSlideProps> = (
             reader.readAsDataURL(file);
         }
         //isNewImageRef.current = true;
+    };*/
+
+    const handleLoadImage = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        console.log('load image');
+        const file = await fileService.selectImageFile();
+        if (file) {
+
+            try {
+                if (!FileService.isImageFile(file)) {
+                    alert('Veuillez sélectionner un fichier image valide (JPEG ou PNG).');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    setLoadedImage(event.target?.result as string);
+                    setImageName(file.name);
+                    isNewImageRef.current = true;
+                };
+                reader.readAsDataURL(file);
+            } catch (error) {
+                console.error('Erreur lors de la lecture du fichier :', error);
+                alert('Une erreur est survenue lors de la lecture du fichier.');
+            }
+        }
     };
 
     return (
@@ -81,8 +109,8 @@ const ModalCreateSlide: React.FC<ModalCreateSlideProps> = (
                 onHide={handleCloseCreateModal} 
                 centered
         >
-             <Modal.Header className="modal-dark-header">
-                        <Modal.Title className="modal-dark-header-title text-secondary">Créer un nouveau slide</Modal.Title>
+            <Modal.Header className="modal-dark-header">
+                <Modal.Title className="modal-dark-header-title text-secondary">Créer un nouveau slide</Modal.Title>
             </Modal.Header>
             <Modal.Body className="modal-dark-body">
                 <Form noValidate onSubmit={handleSubmit}>
