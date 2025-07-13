@@ -5,7 +5,7 @@ import ContactFormService from '../../../../service/ContactFormService';
 import DashboardContactFormListItem from './DashboardContactFormListItem';
 import { ModalViewContactForm } from './ModalViewContactForm';
 
-const DashBoardContactForm: React.FC = () => {
+const DashboardContactForm: React.FC = () => {
     const [contactForms, setContactForms] = useState<ContactForm[]>([]);
 
     const contactFormService = ContactFormService.getInstance();
@@ -22,13 +22,12 @@ const DashBoardContactForm: React.FC = () => {
     }, [contactFormService]);
 
 
-    /*
     const refreshList = async () => {
         const response = await contactFormService.getContactForms();
-        console.log('contactFormsFromService', response.data);
+        //console.log('contactFormsFromService', response.data);
         setContactForms(response.data);
     };
-    */
+    
 
     const onViewContactForm = (contactForm: ContactForm) => {
         //console.log('view contactForm', contactForm);
@@ -42,8 +41,12 @@ const DashBoardContactForm: React.FC = () => {
         setSelectedContactForm(null);
     };
 
-    const onDeleteContactForm = (contactForm: ContactForm) => {
-        console.log('delete contactForm', contactForm);
+    const onDeleteContactForm = async (contactForm: ContactForm) => {
+        //console.log('delete contactForm', contactForm);
+        const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce formulaire de contact ?');
+        if(!confirm) return;
+        await contactFormService.deleteContactForm(contactForm.id);
+        await refreshList();
     };
 
     return(
@@ -76,4 +79,4 @@ const DashBoardContactForm: React.FC = () => {
     );
 }
 
-export default DashBoardContactForm;
+export default DashboardContactForm;

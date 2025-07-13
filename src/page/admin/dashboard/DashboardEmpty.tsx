@@ -1,4 +1,4 @@
-const DashBoardEmpty: React.FC = () => {
+const DashboardEmpty: React.FC = () => {
 
     return(
         <div className='dashboard-carousel-container'>
@@ -7,4 +7,4 @@ const DashBoardEmpty: React.FC = () => {
     );
 }
 
-export default DashBoardEmpty;
+export default DashboardEmpty;

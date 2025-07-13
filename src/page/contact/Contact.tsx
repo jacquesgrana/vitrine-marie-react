@@ -80,7 +80,7 @@ const Contact: React.FC = () => {
           console.log('erreur', response.error);
         }
         else {
-          console.log('response', response);
+          //console.log('response', response);
           setShowAlert(true);
         }
       }

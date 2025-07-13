@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import SecurityService from '../../../service/SecurityService';
 import { useNavigate } from 'react-router-dom';
-import DashboardCarousel from './carousel/DashBoardCarousel';
-import DashBoardEmpty from './DashBoardEmpty';
-import DashBoardContactForm from './contact_form/DashBoardContactForm';
+import DashboardCarousel from './carousel/DashboardCarousel';
+import DashboardEmpty from './DashboardEmpty';
+import DashboardContactForm from './contact_form/DashboardContactForm';
 
 const DashboardAdmin: React.FC = () => {
     const navigate = useNavigate();
@@ -80,8 +80,8 @@ const DashboardAdmin: React.FC = () => {
             </p>
             <div className='dashboard-main-container'>
                 <DashboardCarousel />
-                <DashBoardContactForm />
-                <DashBoardEmpty />
+                <DashboardContactForm />
+                <DashboardEmpty />
             </div>
         </div>
     );
