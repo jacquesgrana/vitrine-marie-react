@@ -9,7 +9,8 @@
     margin-top: 20px;
     margin-bottom: 40px;
 
-    .dashboard-carousel-list-title {
+    .dashboard-carousel-list-title,
+    .dashboard-contact-list-title {
         color: $primary-color-light-1;
         font-size: small;
         text-align: center;
@@ -21,7 +22,8 @@
         margin-bottom: 0px
     }
 
-    .dashboard-carousel-container {
+    .dashboard-carousel-container,
+    .dashboard-contact-container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -37,7 +39,8 @@
         min-height: 800px;
         height: 1000px;
 
-        .dashboard-carousel-list-container {
+        .dashboard-carousel-list-container,
+        .dashboard-contact-list-container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -53,6 +56,43 @@
             scrollbar-width: auto;
             scrollbar-color: $primary-color-dark-1 $primary-color-dark-2;
 
+            .dashboard-contact-list-item {
+                background-color: $primary-color-dark-1;
+                border-radius: 5px;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                flex-shrink: 0; 
+                justify-content: start;
+                gap: 10px;
+                width: 90%;
+                height: auto;
+
+                .dashboard-contact-list-item-text {
+                    background-color: $primary-color-dark-2;
+                    display: flex;
+                    line-height: 1.5;
+                    flex-direction: column;
+                    align-items: start;
+                    justify-content: start;
+                    overflow: hidden;
+                    height: auto;
+                    padding: 10px;
+                    border-radius: 5px; 
+                    width: 100%;
+                }
+
+                .dashboard-contact-list-item-button-container {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                }
+            }
+
             .dashboard-carousel-list-item {
                 background-color: $primary-color-dark-1;
                 border-radius: 5px;
@@ -64,7 +104,7 @@
                 justify-content: start;
                 gap: 10px;
                 width: 90%;
-                height: 160px;
+                height: auto;
                 
                 .dashboard-carousel-list-item-div {
                     display: flex;
@@ -79,6 +119,7 @@
                         flex-direction: row;
                         align-items: center;
                         justify-content: space-between;
+                        flex-wrap: wrap;
                         gap: 5px;
                         margin-top: 10px;
 
@@ -91,7 +132,7 @@
                         align-items: start;
                         justify-content: start;
                         overflow: hidden;
-                        height: 80px;
+                        height: 90px;
                         padding: 10px;
                         border-radius: 5px; 
                         width: 100%;
@@ -102,8 +143,8 @@
 
                 .dashboard-carousel-image {
                     //width: auto;
-                    width: 80px;
-                    height: 120px;
+                    width: 120px;
+                    height: 100%;
                     border-radius: 5px; 
                     object-fit: cover; /* L'image couvre la zone sans se déformer */
                     object-position: center; /* Centre l'image (utile si rognée) */

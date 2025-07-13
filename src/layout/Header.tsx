@@ -65,7 +65,7 @@ const Header: React.FC = () => {
                 )}
             </nav>
             {isAuthenticated && user && (
-                <p className="text-small-secondary">
+                <p className="text-small-secondary mb-3">
                     <span className="text-small-white">Connecté : </span>{user.firstName} {user.name}<span className="text-small-white"> ● </span>{user.email}
                 </p>
             )}

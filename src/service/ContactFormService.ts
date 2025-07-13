@@ -1,4 +1,5 @@
 import { ContactFormData, ApiResponse } from '../type/indexType';
+import SecurityService from './SecurityService';
 
 class ContactFormService {
 
@@ -6,7 +7,10 @@ class ContactFormService {
 
     public static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
     public static readonly SUBMIT_FORM_URL : string = `${ContactFormService.SERVER_URL}/api/contact-form`;
-    
+    private static readonly GET_CONTACT_FORMS_URL : string = `${ContactFormService.SERVER_URL}/api/contact-form/get`;
+
+    private securityService = SecurityService.getInstance();
+
     private constructor() {}
 
     public static getInstance(): ContactFormService {
@@ -87,6 +91,51 @@ class ContactFormService {
 
     return errors;
   }
+
+  public async getContactForms(): Promise<ApiResponse>
+{
+
+  // 5. Configuration de la requête
+  const response = await fetch(ContactFormService.GET_CONTACT_FORMS_URL, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${this.securityService.getToken()}`
+    },
+    // ajouter bearer token
+
+    //credentials: 'omit', // Si tu as besoin des cookies
+    //mode: 'cors'
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    return {
+      success: false,
+      message: errorData.message || "Une erreur est survenue",
+      errors: errorData.errors || {}
+    };
+  }
+
+  const data = await response.json();
+
+  if (data.success) {
+    return {
+      success: true,
+      message: "Liste des formulaires de contact",
+      data: data.data
+    }
+  }
+  else {
+    return {
+      success: false,
+      message: "Une erreur est survenue",
+      errors: data.errors
+    }
+  }
+}
+  
 }
 
 export default ContactFormService;

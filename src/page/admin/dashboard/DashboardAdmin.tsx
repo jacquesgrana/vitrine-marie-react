@@ -3,6 +3,7 @@ import SecurityService from '../../../service/SecurityService';
 import { useNavigate } from 'react-router-dom';
 import DashboardCarousel from './carousel/DashBoardCarousel';
 import DashBoardEmpty from './DashBoardEmpty';
+import DashBoardContactForm from './contact_form/DashBoardContactForm';
 
 const DashboardAdmin: React.FC = () => {
     const navigate = useNavigate();
@@ -79,7 +80,7 @@ const DashboardAdmin: React.FC = () => {
             </p>
             <div className='dashboard-main-container'>
                 <DashboardCarousel />
-                <DashBoardEmpty />
+                <DashBoardContactForm />
                 <DashBoardEmpty />
             </div>
         </div>

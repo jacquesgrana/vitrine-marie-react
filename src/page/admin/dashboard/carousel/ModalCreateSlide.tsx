@@ -41,7 +41,7 @@ const ModalCreateSlide: React.FC<ModalCreateSlideProps> = (
         console.log(title, description, alt);
         try {
             const fileToSend = FileService.dataURLtoFile(loadedImage, imageName);
-            console.log(fileToSend.name, fileToSend.size, fileToSend.type);
+            //console.log(fileToSend.name, fileToSend.size, fileToSend.type);
 
             await photoCarouselService.createSlideFromForm(title, description, alt, fileToSend);
             

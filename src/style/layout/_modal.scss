@@ -24,6 +24,13 @@
         color: $white-color !important;
         padding: 20px !important;
         border: 1px solid $primary-color-light-1 !important;
+
+        .modal-dark-body-text {
+            color: $white-color !important;
+            //font-family: Source_Sans_3_Regular !important;
+            font-weight: 400 !important;
+            line-height: 1.5 !important;
+        }
     }
 
     .modal-dark-footer {
