@@ -68,7 +68,7 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
       alt={slide.alt} />
         <div className='dashboard-carousel-list-item-div'>
             <div className='dashboard-carousel-list-item-text-container'>
-                <h5 className=''>{slide.title}</h5>
+                <h5 className='text-large-secondary'>{slide.title}</h5>
                 <p className='text-small-white'>{slide.description}</p>
             </div>
             <div className='dashboard-carousel-list-item-button-container'>

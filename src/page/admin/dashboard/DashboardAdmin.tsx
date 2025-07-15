@@ -74,8 +74,8 @@ const DashboardAdmin: React.FC = () => {
     return (
         <div className='app-container'>
             <h2 className='mt-5'>Tableau de bord</h2>
-            <p className='text-xlarge-white'>Accueil de l'administration du site.</p>
-            <p className='text-small-secondary'>
+            <p className='mt-3 text-xlarge-white'>Accueil de l'administration du site.</p>
+            <p className='mt-2 text-small-secondary'>
                 Bonjour {user?.firstName} {user?.name}
             </p>
             <div className='dashboard-main-container'>

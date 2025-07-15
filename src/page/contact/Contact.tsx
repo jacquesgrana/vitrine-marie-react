@@ -99,7 +99,7 @@ const Contact: React.FC = () => {
   return (
     <div className='app-container'>
       <h2 className='mt-5'>Contact</h2>
-      <p className='text-xlarge-white'>Pour me contacter, vous pouvez remplir et envoyer ce formulaire.</p>
+      <p className='mt-3 text-xlarge-white'>Pour me contacter, vous pouvez remplir et envoyer ce formulaire.</p>
       <Container className="my-3 contact-form-container">
         {showAlert && <Alert className='alert-success'>Merci pour votre message !</Alert>}
         <Form noValidate onSubmit={handleSubmit}>

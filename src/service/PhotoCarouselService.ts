@@ -1,6 +1,6 @@
 import { PhotoSlide } from '../type/indexType';
 import SecurityService from './SecurityService';
-
+import Config from '../config/Config';
 
 class PhotoCarouselService {
 
@@ -9,6 +9,7 @@ class PhotoCarouselService {
     private slides: PhotoSlide[] = [];
 
     // TODO : faire classe config !!!!!!!!!!!!!!!!!!!!!!!
+    /*
     static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
     static readonly GET_PHOTO_SLIDES_URL : string = `${PhotoCarouselService.SERVER_URL}/carousel/get_slides`;
     static readonly SET_PHOTO_SLIDE_UP_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/up/`;
@@ -19,7 +20,7 @@ class PhotoCarouselService {
     static readonly UPDATE_SLIDE_IMAGE_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/update/carousel-image/`;
     static readonly CREATE_SLIDE_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/create/carousel-slide`;
     static readonly DELETE_SLIDE_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/delete/carousel-slide/`;
-
+    */
     private securityService : SecurityService;
 
     private constructor() {
@@ -38,7 +39,7 @@ class PhotoCarouselService {
         //const baseUrl = window.location.origin;
         //const url = `${baseUrl}/image/carousel/${imageName}`;
         // TODO : améliorer !!!
-        const url =`${PhotoCarouselService.SERVER_URL}/image/carousel/${imageName}`;
+        const url =`${Config.SERVER_URL}/image/carousel/${imageName}`;
         return (url);
     }
 
@@ -66,7 +67,7 @@ class PhotoCarouselService {
 
     public async fetchSlides(): Promise<void> {
         try {
-            const response = await fetch(PhotoCarouselService.GET_PHOTO_SLIDES_URL, {
+            const response = await fetch(Config.GET_PHOTO_SLIDES_URL, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,7 +87,7 @@ class PhotoCarouselService {
 
     public async setSlideUp(slideId: number): Promise<any> {
         try {
-            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDE_UP_URL + slideId, {
+            const response = await fetch(Config.SET_PHOTO_SLIDE_UP_URL + slideId, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -107,7 +108,7 @@ class PhotoCarouselService {
 
     public async setSlideDown(slideId: number): Promise<any> {
         try {
-            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDE_DOWN_URL + slideId, {
+            const response = await fetch(Config.SET_PHOTO_SLIDE_DOWN_URL + slideId, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -128,7 +129,7 @@ class PhotoCarouselService {
 
     public async setSlideTop(slideId: number): Promise<any> {
         try {
-            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDE_TOP_URL + slideId, {
+            const response = await fetch(Config.SET_PHOTO_SLIDE_TOP_URL + slideId, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -149,7 +150,7 @@ class PhotoCarouselService {
 
     public async setSlideBottom(slideId: number): Promise<any> {
         try {
-            const response = await fetch(PhotoCarouselService.SET_PHOTO_SLIDE_BOTTOM_URL + slideId, {
+            const response = await fetch(Config.SET_PHOTO_SLIDE_BOTTOM_URL + slideId, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -171,7 +172,7 @@ class PhotoCarouselService {
     
     public async updateSlideFromForm(slideId: number, title: string, description: string, alt: string): Promise<any> {
         try {
-            const response = await fetch(PhotoCarouselService.UPDATE_SLIDE_INFOS_URL + slideId, {
+            const response = await fetch(Config.UPDATE_SLIDE_INFOS_URL + slideId, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -227,7 +228,7 @@ class PhotoCarouselService {
 
             formData.append('imageFile', imageFile);
 
-            const response = await fetch(PhotoCarouselService.UPDATE_SLIDE_IMAGE_URL + slideId, { // Assurez-vous que l'URL est correcte
+            const response = await fetch(Config.UPDATE_SLIDE_IMAGE_URL + slideId, { // Assurez-vous que l'URL est correcte
                 method: 'POST',
                 headers: {
                     // ATTENTION : Ne mettez PAS le header 'Content-Type' !
@@ -259,7 +260,7 @@ class PhotoCarouselService {
             formData.append('alt', alt);
             formData.append('imageFile', imageFile);
 
-            const response = await fetch(PhotoCarouselService.CREATE_SLIDE_URL, { // Assurez-vous que l'URL est correcte
+            const response = await fetch(Config.CREATE_SLIDE_URL, { // Assurez-vous que l'URL est correcte
                 method: 'POST',
                 headers: {
                     // ATTENTION : Ne mettez PAS le header 'Content-Type' !
@@ -284,7 +285,7 @@ class PhotoCarouselService {
 
     public async deleteSlide(slideId: number): Promise<any> {
         try {
-            const response = await fetch(PhotoCarouselService.DELETE_SLIDE_URL + slideId, {
+            const response = await fetch(Config.DELETE_SLIDE_URL + slideId, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

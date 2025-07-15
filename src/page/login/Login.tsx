@@ -78,7 +78,7 @@ const Login: React.FC = () => {
     return (
         <div className='app-container'>
             <h2 className='mt-5'>Connexion</h2>
-            <p className='text-xlarge-white'>Pour se connecter à l'interface d'administration du site.</p>
+            <p className='mt-3 text-xlarge-white'>Pour se connecter à l'interface d'administration du site.</p>
             <Container className="my-3 login-form-container">
                 <Form noValidate onSubmit={handleSubmit}>
                     <Row className="justify-content-center">

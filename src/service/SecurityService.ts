@@ -1,5 +1,6 @@
 import LocalStorageService from './LocalStorageService';
 import { UserInfo, ApiResponse, LoginFormData } from '../type/indexType';
+import Config from '../config/Config';
 
 class SecurityService {
     private static instance: SecurityService;
@@ -15,9 +16,11 @@ class SecurityService {
     private localStorageService: LocalStorageService = LocalStorageService.getInstance();
 
     // TODO : mettre dans une classe config
+    /*
     public static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
     public static readonly SUBMIT_LOGIN_URL : string = `${SecurityService.SERVER_URL}/api/login`;
     public static readonly GET_USER_INFO_URL : string = `${SecurityService.SERVER_URL}/api/user/user_infos`;
+    */
 
     private constructor() {}
 
@@ -37,7 +40,7 @@ class SecurityService {
 
         try {
             // 5. Configuration de la requête
-            const response = await fetch(SecurityService.SUBMIT_LOGIN_URL, {
+            const response = await fetch(Config.SUBMIT_LOGIN_URL, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -111,7 +114,7 @@ class SecurityService {
     public async getUserInfo(): Promise<ApiResponse> {
         try {
             // 5. Configuration de la requête
-            const response = await fetch(SecurityService.GET_USER_INFO_URL, {
+            const response = await fetch(Config.GET_USER_INFO_URL, {
             method: 'GET',
             headers: {
             'Content-Type': 'application/json',
