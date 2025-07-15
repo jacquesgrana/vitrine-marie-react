@@ -1,9 +1,9 @@
-
+import Config from '../config/Config';
 
 class LocalStorageService {
     private static instance: LocalStorageService;
 
-    private static readonly TOKEN_DURATION_MS: number = (3600 - 50) * 1000;
+    //private static readonly TOKEN_DURATION_MS: number = (3600 - 50) * 1000;
 
     private constructor() {}
 
@@ -51,7 +51,7 @@ class LocalStorageService {
         const tokenTimestamp = this.getTokenTimestamp();
         if (tokenTimestamp) {
             const timestampNow = Date.now();
-            if (timestampNow - parseInt(tokenTimestamp) > LocalStorageService.TOKEN_DURATION_MS) {
+            if (timestampNow - parseInt(tokenTimestamp) > Config.TOKEN_DURATION_MS) {
                 this.clearToken();
                 this.clearUserName();
                 this.clearUserFirstName();

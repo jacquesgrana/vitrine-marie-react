@@ -20,6 +20,9 @@ class Config {
     public static readonly SUBMIT_FORM_URL : string = `${Config.SERVER_URL}/api/contact-form`;
     public static readonly GET_CONTACT_FORMS_URL : string = `${Config.SERVER_URL}/api/contact-form/get`;
     public static readonly DELETE_CONTACT_FORM_URL : string = `${Config.SERVER_URL}/api/contact-form/delete/`;
+
+    //LocalStorageService
+    public static readonly TOKEN_DURATION_MS: number = (3600 - 50) * 1000;
 }
 
 export default Config;
