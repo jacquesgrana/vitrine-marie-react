@@ -1,6 +1,7 @@
 import { ContactFormData, ApiResponse } from '../type/indexType';
 import SecurityService from './SecurityService';
 import Config from '../config/Config';
+import toast from 'react-hot-toast';
 
 class ContactFormService {
 
@@ -58,7 +59,7 @@ class ContactFormService {
       }
 
       const data = await response.json()
-
+      toast.success(data.message);
       return {
         success: true,
         message: "Votre message a été envoyé avec succès!",
@@ -152,6 +153,7 @@ class ContactFormService {
             const result = await response.json();
             //this.setSlides(result.data);
             //alert(result.message);
+            toast.success(result.message);
             return {success: true, message: result.message, data: []}
         } 
         catch (error) {

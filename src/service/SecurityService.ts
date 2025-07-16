@@ -1,6 +1,7 @@
 import LocalStorageService from './LocalStorageService';
 import { UserInfo, ApiResponse, LoginFormData } from '../type/indexType';
 import Config from '../config/Config';
+import toast from 'react-hot-toast';
 
 class SecurityService {
     private static instance: SecurityService;
@@ -53,6 +54,7 @@ class SecurityService {
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
+            toast.error(errorData.message || "Une erreur est survenue");
             return {
             success: false,
             message: errorData.message || "Une erreur est survenue",
@@ -69,6 +71,7 @@ class SecurityService {
 
         const responseUserInfos : any = await this.getUserInfo();
         if(!responseUserInfos.success) {
+            toast.error("Impossible de recuperer les infos de l'utilisateur");
             return {
                 success: false,
                 message: "Connexion reussie, mais impossible de recuperer les infos de l'utilisateur",
@@ -82,6 +85,7 @@ class SecurityService {
             this._isAuthenticated = true;
             //console.log('user recuperé !!', this.user);
             this.notifySubscribers();
+            toast.success('Connexion réussie.');
             //navigate('/admin/dashboard');
             //window.location.href = '/admin/dashboard';
         }   
@@ -219,7 +223,8 @@ class SecurityService {
         this.clearUser();
         this.clearLocalStorageDatas();
         this._isAuthenticated = false;
-        this.notifySubscribers(); // Ajoutez cette ligne
+        this.notifySubscribers();
+        toast.success('Déconnexion réussie.');
     }
 
     public getToken(): string | null {

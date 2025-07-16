@@ -10,6 +10,7 @@ import Gallery from './gallery/Gallery';
 import Contact from './contact/Contact';
 import Login from './login/Login';
 import DashboardAdmin from './admin/dashboard/DashboardAdmin';
+import { Toaster } from 'react-hot-toast';
 
 
 function App() {
@@ -17,6 +18,12 @@ function App() {
     <div className="App">
       <Header />
       <main className="App-main">
+        <Toaster
+        toastOptions={{
+          success: { duration: 3000, className: 'toast-custom-success', iconTheme: { primary: 'green', secondary: 'white' } },
+          error: { duration: 3000, className: 'toast-custom-error', iconTheme: { primary: 'red', secondary: 'white' } }
+        }}
+      />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<Gallery />} />
@@ -34,3 +41,12 @@ function App() {
 }
 
 export default App;
+
+/*
+toastOptions={{
+  success: { duration: 3000, iconTheme: { primary: 'green', secondary: 'black' } },
+  error: { duration: 5000, iconTheme: { primary: 'red', secondary: 'white' } }
+}}
+success: { duration: 3000, className: 'toast-success', iconTheme: { primary: 'green', secondary: 'white' } },
+  error: { duration: 5000, iconTheme: { primary: 'red', secondary: 'white' } }
+*/

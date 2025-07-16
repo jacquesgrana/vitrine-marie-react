@@ -1,0 +1,32 @@
+// toast.scss
+.toast-custom {
+  background: $primary-color-dark-3 !important;
+  color: $white-color !important;
+  font-weight: bold;
+  font-family: Source_Sans_3_Regular !important;
+  border-radius: 5px;
+  padding: 16px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.toast-custom-success {
+  background: $primary-color-dark-2 !important; //$success-color !important;
+  color: $success-color !important;
+  font-weight: bold;
+  font-size: large;
+  font-family: Source_Sans_3_Regular !important;
+  border-radius: 5px;
+  padding: 16px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.toast-custom-error {
+  background: $primary-color-dark-2 !important;
+  color: $danger-color !important;
+  font-weight: bold;
+  font-size: large;
+  font-family: Source_Sans_3_Regular !important;
+  border-radius: 5px;
+  padding: 16px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}

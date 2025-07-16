@@ -1,6 +1,7 @@
 import { PhotoSlide } from '../type/indexType';
 import SecurityService from './SecurityService';
 import Config from '../config/Config';
+import toast from 'react-hot-toast';
 
 class PhotoCarouselService {
 
@@ -98,6 +99,7 @@ class PhotoCarouselService {
             const result = await response.json();
             //this.setSlides(result.data);
             //alert(result.message);
+            toast.success(result.message);
             return {success: true, message: result.message}
         } 
         catch (error) {
@@ -119,6 +121,7 @@ class PhotoCarouselService {
             const result = await response.json();
             //this.setSlides(result.data);
             //alert(result.message);
+            toast.success(result.message);
             return {success: true, message: result.message}
         } 
         catch (error) {
@@ -140,6 +143,7 @@ class PhotoCarouselService {
             const result = await response.json();
             //this.setSlides(result.data);
             //alert(result.message);
+            toast.success(result.message);
             return {success: true, message: result.message}
         } 
         catch (error) {
@@ -161,6 +165,7 @@ class PhotoCarouselService {
             const result = await response.json();
             //this.setSlides(result.data);
             //alert(result.message);
+            toast.success(result.message);
             return {success: true, message: result.message}
         } 
         catch (error) {
@@ -184,6 +189,7 @@ class PhotoCarouselService {
             const result = await response.json();
             //this.setSlides(result.data);
             //alert(result.message);
+            toast.success(result.message);
             return {success: result.success, message: result.message}
         } catch (error) {
             console.error('Error fetching slides :', error);
@@ -243,6 +249,7 @@ class PhotoCarouselService {
             });
             
             const result = await response.json();
+            toast.success(result.message);
             return { success: result.success, message: result.message, data: result.data };
         } catch (error) {
             console.error('Error uploading image:', error);
@@ -275,6 +282,7 @@ class PhotoCarouselService {
             });
             
             const result = await response.json();
+            toast.success(result.message);
             return { success: result.success, message: result.message, data: result.data };
         } 
         catch (error) {
@@ -294,6 +302,7 @@ class PhotoCarouselService {
                 }
             });
             const result = await response.json();
+            toast.success(result.message);
             //this.setSlides(result.data);
             //alert(result.message);
             return {success: true, message: result.message}

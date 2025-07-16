@@ -5,6 +5,7 @@ import SecurityService from '../../service/SecurityService';
 import { useNavigate } from 'react-router-dom';
 
 import { CaptchaHandle } from '../../type/indexType';
+import toast from 'react-hot-toast';
 
 const Login: React.FC = () => { 
     const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
@@ -24,7 +25,8 @@ const Login: React.FC = () => {
 
         // verifier captcha
         if (!isCaptchaVerified) {
-            alert('Veuillez vérifier le captcha.');
+            //alert('Veuillez vérifier le captcha.');
+            toast.error('Veuillez vérifier le captcha.');
             return;
         }
 
@@ -41,28 +43,27 @@ const Login: React.FC = () => {
         // appeler méthode asynchrone du SecurityService pour envoyer le formulaire
         const fct = async () => {
           const response : any = await securityService.tryLogin(formData);
-           if(response.error){
-            console.log('erreur', response.error);
-            // si erreur afficher message et raz des champs du formulaire
-            alert(response.message);
-          }
-          else {
+           if(!response.error){
             //console.log('response', response);
             if(response.success) {
                 // si ok appeler page dashboard admin
                 //navigate('/admin/dashboard');
                 goToDashboardAdmin();
             }
+            /*
             else {
                 // si erreur afficher message et raz des champs du formulaire
-                alert(response.message);
-
+                
+                //alert(response.message);
+                //toast.error(response.message);
             }
+            */
             //setShowAlert(true);
-            emailInput.value = '';
-            passwordInput.value = '';
+            
 
           }
+          emailInput.value = '';
+          passwordInput.value = '';
         }
         fct();
 
