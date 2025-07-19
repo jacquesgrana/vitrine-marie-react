@@ -1,7 +1,7 @@
 import LocalStorageService from './LocalStorageService';
 import { UserInfo, ApiResponse, LoginFormData } from '../type/indexType';
 import Config from '../config/Config';
-import toast from 'react-hot-toast';
+import ToastFacade from '../facade/ToastFacade';
 
 class SecurityService {
     private static instance: SecurityService;
@@ -54,7 +54,8 @@ class SecurityService {
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            toast.error(errorData.message || "Une erreur est survenue");
+            ToastFacade.showErrorToast(errorData.message || "Une erreur est survenue");
+            //toast.error(errorData.message || "Une erreur est survenue");
             return {
             success: false,
             message: errorData.message || "Une erreur est survenue",
@@ -71,7 +72,8 @@ class SecurityService {
 
         const responseUserInfos : any = await this.getUserInfo();
         if(!responseUserInfos.success) {
-            toast.error("Impossible de recuperer les infos de l'utilisateur");
+            ToastFacade.showErrorToast("Impossible de récuperer les infos de l'utilisateur");
+            //toast.error("Impossible de recuperer les infos de l'utilisateur");
             return {
                 success: false,
                 message: "Connexion reussie, mais impossible de recuperer les infos de l'utilisateur",
@@ -85,7 +87,8 @@ class SecurityService {
             this._isAuthenticated = true;
             //console.log('user recuperé !!', this.user);
             this.notifySubscribers();
-            toast.success('Connexion réussie.');
+            ToastFacade.showSuccessToast("Connexion réussie");
+            //toast.success('Connexion réussie.');
             //navigate('/admin/dashboard');
             //window.location.href = '/admin/dashboard';
         }   
@@ -224,7 +227,8 @@ class SecurityService {
         this.clearLocalStorageDatas();
         this._isAuthenticated = false;
         this.notifySubscribers();
-        toast.success('Déconnexion réussie.');
+        ToastFacade.showSuccessToast("Déconnexion réussie");
+        //toast.success('Déconnexion réussie.');
     }
 
     public getToken(): string | null {

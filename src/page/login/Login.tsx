@@ -5,7 +5,7 @@ import SecurityService from '../../service/SecurityService';
 import { useNavigate } from 'react-router-dom';
 
 import { CaptchaHandle } from '../../type/indexType';
-import toast from 'react-hot-toast';
+import ToastFacade from '../../facade/ToastFacade';
 
 const Login: React.FC = () => { 
     const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
@@ -26,7 +26,8 @@ const Login: React.FC = () => {
         // verifier captcha
         if (!isCaptchaVerified) {
             //alert('Veuillez vérifier le captcha.');
-            toast.error('Veuillez vérifier le captcha.');
+            ToastFacade.showErrorToast('Veuillez vérifier le captcha.');
+            //toast.error('Veuillez vérifier le captcha.');
             return;
         }
 

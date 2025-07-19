@@ -24,7 +24,6 @@ class FileService {
         });
     }
 
-
     public static dataURLtoFile = (dataurl: string, filename: string): File => {
         // Séparer les métadonnées de la base64
         const arr = dataurl.split(',');
