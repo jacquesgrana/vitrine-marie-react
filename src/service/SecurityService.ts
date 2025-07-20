@@ -221,7 +221,7 @@ class SecurityService {
         this.user = null;
     }
 
-    public logout(): void {
+    public async logout(): Promise<void> {
         this.clearToken();
         this.clearUser();
         this.clearLocalStorageDatas();

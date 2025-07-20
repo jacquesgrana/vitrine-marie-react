@@ -31,8 +31,8 @@ const Header: React.FC = () => {
         };
     }, [securityService, updateAuthState]);
 
-    const handleLogout = () => {
-        securityService.logout();
+    const handleLogout = async ()  => {
+        await securityService.logout();
         navigate('/');
     };
 
@@ -58,15 +58,10 @@ const Header: React.FC = () => {
                         Dashboard
                     </NavLink>
                 )}
-                {isAuthenticated && (
-                    <button type="button" className="button-dark-small" onClick={handleLogout}>
-                        Deconnexion
-                    </button> 
-                )}
             </nav>
             {isAuthenticated && user && (
                 <p className="text-small-secondary mb-3">
-                    <span className="text-small-white">Connecté : </span>{user.firstName} {user.name}<span className="text-small-white"> ● </span>{user.email}
+                    <span className="text-small-white">Connecté : </span>{user.firstName} {user.name}<span className="text-small-white"> ● </span>{user.email}<span className="text-small-white"> ● </span><button className="app-link text-small-secondary button-as-link" onClick={handleLogout}>déconnexion</button>
                 </p>
             )}
         </header>
@@ -83,4 +78,6 @@ export default Header;
                         Deconnexion
                     </NavLink> 
                 )}
+
+
                     */

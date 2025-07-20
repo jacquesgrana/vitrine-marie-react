@@ -5,13 +5,15 @@ interface DashboardContactFormListItemProps {
     //refreshList: () => Promise<void>;
     onViewContactForm: (contactForm: ContactForm) => void;
     onDeleteContactForm: (contactForm: ContactForm) => void;
+    onCreateProspect: (contactForm: ContactForm) => void;
 }
 
 const DashboardContactFormListItem: React.FC<DashboardContactFormListItemProps> = ({
     contactForm,
     //refreshList,
     onViewContactForm,
-    onDeleteContactForm
+    onDeleteContactForm,
+    onCreateProspect
 }) => {
 
     const handleViewContactForm = () => {
@@ -22,6 +24,11 @@ const DashboardContactFormListItem: React.FC<DashboardContactFormListItemProps> 
     const handleDeleteContactForm = () => {
         //console.log('delete contactForm', contactForm);
         onDeleteContactForm(contactForm);
+    };
+
+    const handleCreateProspect = () => {
+        //console.log('create prospect', contactForm);
+        onCreateProspect(contactForm);
     };
 
     return(
@@ -55,7 +62,15 @@ const DashboardContactFormListItem: React.FC<DashboardContactFormListItemProps> 
             type='button' 
             onClick={() => handleDeleteContactForm()} 
             className='button-dark-very-small'
-            >✖</button>   
+            >✖</button>
+                        <button 
+            title="Créer un prospect"
+            type='button' 
+            onClick={() => handleCreateProspect()} 
+            className='button-dark-very-small'
+            // améliorer !!
+            disabled={contactForm.prospect !== undefined}
+            >👤</button>   
         </div>
     </div>
     );

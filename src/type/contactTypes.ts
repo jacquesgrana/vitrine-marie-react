@@ -18,6 +18,7 @@ export interface ContactForm {
     timezone_type: number;
   };
   message: string;
+  prospect: any;
 }
 
 export type CaptchaHandle = {

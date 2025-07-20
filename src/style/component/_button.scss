@@ -16,6 +16,7 @@
     font-weight: 900;
     border: none;
 
+    &.active,
     &:active {
         transition: 0.3s;
         background-color: $primary-color-light-1;
@@ -35,6 +36,13 @@
         cursor: not-allowed;
     }
 }
+
+/*
+.button-dark-small.active {
+    transition: 0.3s;
+    background-color: $primary-color-light-2;
+    color: $secondary-color;
+}*/
 
 .button-dark-very-small {
     background-color: $primary-color-dark-3;
@@ -76,4 +84,9 @@
         background-color: $primary-color-dark-2;
         cursor: not-allowed;
     }
+}
+
+.button-as-link {
+    padding: 0;
+    margin: 0;
 }

@@ -27,6 +27,10 @@ const DashboardContactForm: React.FC = () => {
         //console.log('contactFormsFromService', response.data);
         setContactForms(response.data);
     };
+
+    const onCreateProspect = (contactForm: ContactForm) => {
+        console.log('create prospect : ', contactForm);
+    };
     
 
     const onViewContactForm = (contactForm: ContactForm) => {
@@ -62,6 +66,7 @@ const DashboardContactForm: React.FC = () => {
                     //refreshList={refreshList}
                     onViewContactForm={onViewContactForm}
                     onDeleteContactForm={onDeleteContactForm}
+                    onCreateProspect={onCreateProspect}
                     />
                 ))
 

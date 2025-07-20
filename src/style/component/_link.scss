@@ -1,3 +1,12 @@
-.App-link {
-  color: #61dafb;
+.app-link {
+  color:$secondary-color;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s;
+  //font-weight: 900;
+
+  &:hover {
+    transition: 0.3s;
+    color: $secondary-color-light-1;
+  }
 }
