@@ -63,13 +63,13 @@ const DashboardContactFormListItem: React.FC<DashboardContactFormListItemProps> 
             onClick={() => handleDeleteContactForm()} 
             className='button-dark-very-small'
             >✖</button>
-                        <button 
-            title="Créer un prospect"
+            <button 
+            title="Créer un nouveau prospect"
             type='button' 
             onClick={() => handleCreateProspect()} 
             className='button-dark-very-small'
             // améliorer !!
-            disabled={contactForm.prospect !== undefined}
+            disabled={Object.keys(contactForm.contactFormProspect).length > 0}
             >👤</button>   
         </div>
     </div>

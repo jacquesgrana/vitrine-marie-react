@@ -18,9 +18,36 @@ export interface ContactForm {
     timezone_type: number;
   };
   message: string;
-  prospect: any;
+  contactFormProspect: ContactFormProspect | [];
 }
 
 export type CaptchaHandle = {
   reset: () => void;
 };
+
+export interface ContactFormProspect {
+  id: number;
+  name: string;
+  firstName: string;
+  email: string;
+  phone: string;
+  comment: string;
+  date: {
+    date: string;
+    timezone: string;
+    timezone_type: number;
+  };
+  contactForms: ContactForm[] | [];
+}
+
+/*
+            "id" => $this->id,
+            "name" => $this->name,
+            "firstName" => $this->firstName,
+            "email" => $this->email,
+            "phone" => $this->phone,
+            "comment" => $this->comment,
+            "contactForms" => [],
+            "date" => $this->date
+
+            */

@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { ContactForm } from '../../../../type/indexType';
 import ContactFormService from '../../../../service/ContactFormService';
+import ContactFormProspectService from '../../../../service/ContactFormProspectService';
 import DashboardContactFormListItem from './DashboardContactFormListItem';
 import { ModalViewContactForm } from './ModalViewContactForm';
 
@@ -9,13 +10,14 @@ const DashboardContactForm: React.FC = () => {
     const [contactForms, setContactForms] = useState<ContactForm[]>([]);
 
     const contactFormService = ContactFormService.getInstance();
+    const contactFormProspectService = ContactFormProspectService.getInstance();
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [selectedContactForm, setSelectedContactForm] = useState<ContactForm | null>(null);
 
     useEffect(() => {
         const refreshListIn = async () => {
             const response = await contactFormService.getContactForms();
-            //console.log('contactFormsFromService', response.data);
+            console.log('contactFormsFromService', response.data);
             setContactForms(response.data);
         };
         refreshListIn();
@@ -24,12 +26,14 @@ const DashboardContactForm: React.FC = () => {
 
     const refreshList = async () => {
         const response = await contactFormService.getContactForms();
-        //console.log('contactFormsFromService', response.data);
         setContactForms(response.data);
     };
 
-    const onCreateProspect = (contactForm: ContactForm) => {
+    const onCreateProspect = async (contactForm: ContactForm) => {
         console.log('create prospect : ', contactForm);
+        await contactFormProspectService.createProspectFromContactForm(contactForm.id);
+        await refreshList();
+        await contactFormProspectService.notifySubscribers();
     };
     
 
