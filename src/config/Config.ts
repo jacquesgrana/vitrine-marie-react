@@ -20,10 +20,11 @@ class Config {
     public static readonly SUBMIT_FORM_URL : string = `${Config.SERVER_URL}/api/contact-form`;
     public static readonly GET_CONTACT_FORMS_URL : string = `${Config.SERVER_URL}/api/contact-form/get`;
     public static readonly DELETE_CONTACT_FORM_URL : string = `${Config.SERVER_URL}/api/contact-form/delete/`;
-
     public static readonly GET_CONTACT_FORM_PROSPECTS_URL : string = `${Config.SERVER_URL}/api/contact-form-prospect/get`;
-
     public static readonly CREATE_PROSPECT_FROM_CONTACT_FORM_URL : string = `${Config.SERVER_URL}/api/contact-form-prospect/create/`;
+    public static readonly UPDATE_PROSPECT_URL : string = `${Config.SERVER_URL}/api/contact-form-prospect/update/`;
+    public static readonly DELETE_PROSPECT_URL : string = `${Config.SERVER_URL}/api/contact-form-prospect/delete/`;
+
     //LocalStorageService
     public static readonly TOKEN_DURATION_MS: number = (3600 - 50) * 1000;
 }

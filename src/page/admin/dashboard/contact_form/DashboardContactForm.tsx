@@ -29,6 +29,8 @@ const DashboardContactForm: React.FC = () => {
         setContactForms(response.data);
     };
 
+    contactFormProspectService.subscribe(refreshList);
+
     const onCreateProspect = async (contactForm: ContactForm) => {
         console.log('create prospect : ', contactForm);
         await contactFormProspectService.createProspectFromContactForm(contactForm.id);
@@ -77,13 +79,13 @@ const DashboardContactForm: React.FC = () => {
                 }
             </div>
         </div>
-            {selectedContactForm && (
-                <ModalViewContactForm
-                    isModalViewOpen={isModalViewOpen}
-                    selectedContactForm={selectedContactForm}
-                    handleCloseViewModal={handleCloseViewModal}
-                /> 
-            )}
+        {selectedContactForm && (
+            <ModalViewContactForm
+                isModalViewOpen={isModalViewOpen}
+                selectedContactForm={selectedContactForm}
+                handleCloseViewModal={handleCloseViewModal}
+            /> 
+        )}
         </>
     );
 }

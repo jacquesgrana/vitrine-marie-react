@@ -98,6 +98,69 @@ class ContactFormProspectService {
         return {success: false, message: error, data: []}
     }
   }
+
+  public async updateProspect(
+    prospectId: number,
+    name: string,
+    firstName: string,
+    email: string,
+    phone: string,
+    comment: string
+): Promise<ApiResponse> {
+    const body = {
+        "name": name,
+        "firstName": firstName,
+        "email": email,
+        "phone": phone,
+        "comment": comment
+    }
+    try {
+        const response = await fetch(Config.UPDATE_PROSPECT_URL + prospectId, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${this.securityService.getToken()}`
+            },
+            body: JSON.stringify(body)
+        });
+        const result = await response.json();
+        //this.setSlides(result.data);
+        //alert(result.message);
+        //toast.success(result.message);
+        ToastFacade.showSuccessToast(result.message);
+        return {success: true, message: result.message, data: result.data}
+    } 
+    catch (error: any) {
+        console.error('Error updating prospect :', error);
+        ToastFacade.showErrorToast(error);
+        return {success: false, message: error, data: []}
+    }
+  }
+
+  public async deleteProspect(prospectId: number): Promise<ApiResponse> {
+    try {
+        const response = await fetch(Config.DELETE_PROSPECT_URL + prospectId, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${this.securityService.getToken()}`
+            }
+        });
+        const result = await response.json();
+        //this.setSlides(result.data);
+        //alert(result.message);
+        //toast.success(result.message);
+        ToastFacade.showSuccessToast(result.message);
+        return {success: true, message: result.message, data: []}
+        } 
+        catch (error: any) {
+            console.error('Error deleting prospect :', error);
+            ToastFacade.showErrorToast(error);
+            return {success: false, message: error, data: []}
+        }
+    }
 }
 
 export default ContactFormProspectService;

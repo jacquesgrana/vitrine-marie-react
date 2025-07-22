@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { ContactFormProspect } from '../../../../type/indexType';
 import ContactFormProspectService from "../../../../service/ContactFormProspectService";
 import DashboardContactFormProspectListItem from "./DashboardContactFormProspectListItem";
+import { ModalViewContactFormProspect } from "./ModalViewContactFormProspect";
+import ModalEditContactFormProspect from "./ModalEditContactFormProspect";
 
 
 const DashboardContactFormProspect: React.FC = () => {
     const [contactFormProspects, setContactFormProspects] = useState<ContactFormProspect[]>([]);
     const contactFormProspectService = ContactFormProspectService.getInstance();
 
+    const [isModalViewOpen, setIsModalViewOpen] = useState(false);
+    const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+    const [selectedContactFormProspect, setSelectedContactFormProspect] = useState<ContactFormProspect | null>(null);
     
 
     useEffect(() => {
@@ -26,19 +31,42 @@ const DashboardContactFormProspect: React.FC = () => {
 
     contactFormProspectService.subscribe(refreshList);
 
-    const onViewContactFormProspect = (contactFormProspect: ContactFormProspect) => {
-        console.log('view contactFormProspect', contactFormProspect);
+    const handleCloseViewModal = () => {
+        setIsModalViewOpen(false);
+        setSelectedContactFormProspect(null);
     };
 
-    const onDeleteContactFormProspect = (contactFormProspect: ContactFormProspect) => {
+    const handleCloseEditModal = () => {
+        setIsModalEditOpen(false);
+        setSelectedContactFormProspect(null);
+    };
+
+    const onViewContactFormProspect = (contactFormProspect: ContactFormProspect) => {
+        console.log('view contactFormProspect', contactFormProspect);
+        setSelectedContactFormProspect(contactFormProspect);
+        setIsModalViewOpen(true);
+    };
+
+    const onDeleteContactFormProspect = async (contactFormProspect: ContactFormProspect) => {
         console.log('delete contactFormProspect', contactFormProspect);
+        const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce prospect ?');
+        if(!confirm) return;
+        const result = await contactFormProspectService.deleteProspect(contactFormProspect.id);
+        if(result.success) {
+            console.log(result.message);
+            await refreshList();
+            await contactFormProspectService.notifySubscribers();
+        }
     };
 
     const onEditContactFormProspect = (contactFormProspect: ContactFormProspect) => {
         console.log('edit contactFormProspect', contactFormProspect);
+        setSelectedContactFormProspect(contactFormProspect);
+        setIsModalEditOpen(true);
     };
 
     return(
+        <>
         <div className='dashboard-carousel-container'>
             <h4 className='mt-3 mb-3'>Dashboard Prospects</h4>
             <p className="dashboard-contact-list-title">LISTE DES PROSPECTS</p>
@@ -59,6 +87,22 @@ const DashboardContactFormProspect: React.FC = () => {
                 )}
             </div>
         </div>
+        {selectedContactFormProspect && (
+            <ModalViewContactFormProspect
+                isModalViewOpen={isModalViewOpen}
+                selectedContactFormProspect={selectedContactFormProspect}
+                handleCloseViewModal={handleCloseViewModal}
+            /> 
+        )}
+        {selectedContactFormProspect && (
+            <ModalEditContactFormProspect
+                isModalEditOpen={isModalEditOpen}
+                selectedContactFormProspect={selectedContactFormProspect}
+                handleCloseEditModal={handleCloseEditModal}
+                refreshList={refreshList}
+            /> 
+        )}
+        </>
     );
 }
 

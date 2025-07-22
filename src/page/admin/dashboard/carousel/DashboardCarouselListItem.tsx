@@ -52,6 +52,7 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
     };
 
     
+    // TODO mettre dans le dashboard parent !!!
     const handleDeleteSlide = async () => {
         console.log('Delete slide :', slide.id);
         const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce slide ?');
