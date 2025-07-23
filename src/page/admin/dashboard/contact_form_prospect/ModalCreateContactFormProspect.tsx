@@ -1,65 +1,61 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import { ContactFormProspect } from "../../../../type/indexType";
 import ContactFormProspectService from "../../../../service/ContactFormProspectService";
 //import PhotoCarouselService from "../../../../service/PhotoCarouselService";
 
-interface ModalEditContactFormProspectProps {
-    isModalEditOpen: boolean,
-    selectedContactFormProspect: ContactFormProspect | null;
-    handleCloseEditModal: () => void
+interface ModalCreateContactFormProspectProps {
+    isModalCreateOpen: boolean,
+    handleCloseCreateModal: () => void
     refreshList: () => Promise<void>
 }
 
-const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> = (
+const ModalCreateContactFormProspect: React.FC<ModalCreateContactFormProspectProps> = (
     {
-        isModalEditOpen,
-        selectedContactFormProspect,
-        handleCloseEditModal,
+        isModalCreateOpen,
+        handleCloseCreateModal,
         refreshList
     }
 ) => {
-    //const photoCarouselService = PhotoCarouselService.getInstance();
-
     const contactFromProspectService = ContactFormProspectService.getInstance();
-
-    if (!selectedContactFormProspect) {
-        return null;
-    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //console.log('submit');
         // récupérer les données du formulaire
         const formData = new FormData(e.currentTarget);
-        const name = formData.get('name') as string;
-        const firstName = formData.get('firstName') as string;
-        const email = formData.get('email') as string;
-        const phone = formData.get('phone') as string;
-        const comment = formData.get('comment') as string;
+        let name = formData.get('name') as string;
+        let firstName = formData.get('firstName') as string;
+        let email = formData.get('email') as string;
+        let phone = formData.get('phone') as string;
+        let comment = formData.get('comment') as string;
+
+        name = name === null ? "" : name;
+        firstName = firstName === null ? "" : firstName;
+        email = email === null ? "" : email;
+        phone = phone === null ? "" : phone;
+        comment = comment === null ? "" : comment;
 
         //console.log(name, firstName, email, phone, comment, selectedContactFormProspect.id);
-        // appeler méthode asynchrone du ContactFormService pour envoyer le formulaire et récupérer la réponse
-        const result = await contactFromProspectService.updateProspect(selectedContactFormProspect.id, name, firstName, email, phone, comment);
-        // TODO gérer les result.success et result.message
+        
+        const result = await contactFromProspectService.createProspect(name, firstName, email, phone, comment);
         
         if(result.success) {
-            //console.log(result.message);
+            console.log(result.message + ' ' + result.data);
             await refreshList();
         }
-        
-        handleCloseEditModal();
+        //await refreshList();
+        handleCloseCreateModal();
     };
 
     return(
         <Modal 
                 size="lg"
                 className="modal-dark"
-                show={isModalEditOpen} 
-                onHide={handleCloseEditModal} 
+                show={isModalCreateOpen} 
+                onHide={handleCloseCreateModal} 
                 centered
         >
             <Modal.Header className="modal-dark-header">
-                        <Modal.Title className="modal-dark-header-title"><span className="text-secondary">Edition de :&nbsp;</span>{selectedContactFormProspect.firstName} {selectedContactFormProspect.name}</Modal.Title>
+                        <Modal.Title className="modal-dark-header-title"><span className="text-secondary">Créer un prospect</span></Modal.Title>
             </Modal.Header>
             <Modal.Body className="modal-dark-body">
                 <Form noValidate onSubmit={handleSubmit}>
@@ -70,7 +66,7 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
                         name="firstName"
                         type="text" 
                         placeholder="First Name" 
-                        defaultValue={selectedContactFormProspect.firstName}
+                        //defaultValue={selectedContactFormProspect.firstName}
                         required
                             />
                     </Form.Group>
@@ -81,7 +77,7 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
                         name="name"
                         type="text" 
                         placeholder="Name" 
-                        defaultValue={selectedContactFormProspect.name}
+                        //defaultValue={selectedContactFormProspect.name}
                         required
                             />
                     </Form.Group>
@@ -90,11 +86,10 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
                         <Form.Control 
                         className='edit-slide-form-field'
                         name="email"
-                        type="text" 
+                        type="email"
                         placeholder="Email" 
-                        defaultValue={selectedContactFormProspect.email}
+                        //defaultValue={selectedContactFormProspect.email}
                         required
-                        readOnly
                             />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formPhone"> 
@@ -104,8 +99,8 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
                         name="phone"
                         type="text" 
                         placeholder="Phone" 
-                        defaultValue={selectedContactFormProspect.phone}
-                        required
+                        //defaultValue={selectedContactFormProspect.phone}
+                        //required
                             />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formComment"> 
@@ -118,11 +113,11 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
                             name="comment"
                             type="text" 
                             placeholder="Comment" 
-                            defaultValue={selectedContactFormProspect.comment}
-                            required
+                            defaultValue="Commentaire à modifier."
+                            //required
                             />
                     </Form.Group>
-                    <Button title="Valider le prospect" className='button-dark-small no-border' type="submit" disabled={false}>
+                    <Button title="Créer le prospect" className='button-dark-small no-border' type="submit" disabled={false}>
                         Valider
                     </Button>
                 </Form>
@@ -130,7 +125,7 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
             <Modal.Footer className="modal-dark-footer">
                 <button 
                     className="button-dark-small" 
-                    onClick={handleCloseEditModal}
+                    onClick={handleCloseCreateModal}
                 >
                     Fermer
                 </button>
@@ -139,4 +134,4 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
     );
 }
 
-export default ModalEditContactFormProspect;
+export default ModalCreateContactFormProspect;

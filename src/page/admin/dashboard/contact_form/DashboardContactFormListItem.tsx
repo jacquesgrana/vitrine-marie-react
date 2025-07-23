@@ -33,22 +33,10 @@ const DashboardContactFormListItem: React.FC<DashboardContactFormListItemProps> 
 
     return(
     <div key={contactForm.id} className="dashboard-contact-list-item">
-        <p className="text-small-white dashboard-contact-list-item-text"><strong><span className='text-small-secondary'>Id : </span></strong>{contactForm.id}</p>
+        
         <p className="text-small-white dashboard-contact-list-item-text"><strong><span className='text-small-secondary'>Prénom : </span></strong>{contactForm.firstName}</p>
         <p className="text-small-white dashboard-contact-list-item-text"><strong><span className='text-small-secondary'>Nom : </span></strong>{contactForm.name}</p>
-        <p className="text-small-white dashboard-contact-list-item-text"><strong><span className='text-small-secondary'>Email : </span></strong>{contactForm.email}</p>
-        <p className="text-small-white dashboard-contact-list-item-text"><strong><span className='text-small-secondary'>Téléphone : </span></strong>{contactForm.phone}</p>
         <p className="text-small-white dashboard-contact-list-item-text"><strong><span className='text-small-secondary'>Message : </span></strong>{contactForm.message}</p>
-        <p className="text-small-white dashboard-contact-list-item-text">
-        <strong><span className='text-small-secondary'>Date : </span></strong>
-        {new Date(contactForm.date.date.replace(' ', 'T')).toLocaleString('fr-FR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        })}
-        </p>
 
         <div className='dashboard-contact-list-item-button-container'>
             <button 

@@ -17,7 +17,7 @@ const DashboardContactForm: React.FC = () => {
     useEffect(() => {
         const refreshListIn = async () => {
             const response = await contactFormService.getContactForms();
-            console.log('contactFormsFromService', response.data);
+            //console.log('contactFormsFromService', response.data);
             setContactForms(response.data);
         };
         refreshListIn();
@@ -32,7 +32,7 @@ const DashboardContactForm: React.FC = () => {
     contactFormProspectService.subscribe(refreshList);
 
     const onCreateProspect = async (contactForm: ContactForm) => {
-        console.log('create prospect : ', contactForm);
+        //console.log('create prospect : ', contactForm);
         await contactFormProspectService.createProspectFromContactForm(contactForm.id);
         await refreshList();
         await contactFormProspectService.notifySubscribers();

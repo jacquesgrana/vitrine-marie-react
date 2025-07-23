@@ -1,7 +1,6 @@
 import { PhotoSlide } from "../../../../type/indexType"; // Assurez-vous que le chemin d'importation est correct
 import PhotoCarouselService from '../../../../service/PhotoCarouselService';
 
-// TODO passer dans les types
 interface DashboardCarouselListItemProps {
   slide: PhotoSlide;
   slidesSize: number;
@@ -52,7 +51,6 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
     };
 
     
-    // TODO mettre dans le dashboard parent !!!
     const handleDeleteSlide = async () => {
         console.log('Delete slide :', slide.id);
         const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce slide ?');

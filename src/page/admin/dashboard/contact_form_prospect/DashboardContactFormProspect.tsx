@@ -4,6 +4,7 @@ import ContactFormProspectService from "../../../../service/ContactFormProspectS
 import DashboardContactFormProspectListItem from "./DashboardContactFormProspectListItem";
 import { ModalViewContactFormProspect } from "./ModalViewContactFormProspect";
 import ModalEditContactFormProspect from "./ModalEditContactFormProspect";
+import ModalCreateContactFormProspect from "./ModalCreateContactFormProspect";
 
 
 const DashboardContactFormProspect: React.FC = () => {
@@ -12,6 +13,7 @@ const DashboardContactFormProspect: React.FC = () => {
 
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+    const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
     const [selectedContactFormProspect, setSelectedContactFormProspect] = useState<ContactFormProspect | null>(null);
     
 
@@ -41,6 +43,10 @@ const DashboardContactFormProspect: React.FC = () => {
         setSelectedContactFormProspect(null);
     };
 
+    const handleCloseCreateModal = () => {
+        setIsModalCreateOpen(false);
+    } // TODO Create
+
     const onViewContactFormProspect = (contactFormProspect: ContactFormProspect) => {
         console.log('view contactFormProspect', contactFormProspect);
         setSelectedContactFormProspect(contactFormProspect);
@@ -65,10 +71,19 @@ const DashboardContactFormProspect: React.FC = () => {
         setIsModalEditOpen(true);
     };
 
+    const onCreateContactFormProspect = () => {
+        console.log('create contactFormProspect');
+        setIsModalCreateOpen(true);
+        //setSelectedContactFormProspect(null);
+        //setIsModalEditOpen(true);
+    };
+
     return(
         <>
         <div className='dashboard-carousel-container'>
             <h4 className='mt-3 mb-3'>Dashboard Prospects</h4>
+            <button title="Ajouter un prospect" className='button-dark-small' onClick={onCreateContactFormProspect}>Ajouter</button> 
+
             <p className="dashboard-contact-list-title">LISTE DES PROSPECTS</p>
             <div className="dashboard-contact-list-container">
                 {contactFormProspects.length > 0 ? (
@@ -102,6 +117,15 @@ const DashboardContactFormProspect: React.FC = () => {
                 refreshList={refreshList}
             /> 
         )}
+        {   
+            isModalCreateOpen && (
+                <ModalCreateContactFormProspect
+                    isModalCreateOpen={isModalCreateOpen}
+                    handleCloseCreateModal={handleCloseCreateModal}
+                    refreshList={refreshList}
+                /> 
+            )
+        }
         </>
     );
 }
