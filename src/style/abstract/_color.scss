@@ -10,7 +10,10 @@ $primary-color-dark-1: darken($primary-color, 5%);  // Résultat : #1b1e24
 $primary-color-dark-2: darken($primary-color, 10%); // Résultat : #0e0f11
 $primary-color-dark-3: darken($primary-color, 15%); // Résultat : #030304
 
-$secondary-color: #ebb215;
+$secondary-color: rgb(235, 178, 21);
+$secondary-color-25: rgba(235, 178, 21, 0.25);
+$secondary-color-50: rgba(235, 178, 21, 0.5);
+$secondary-color-75: rgba(235, 178, 21, 0.75);
 
 $secondary-color-light-1: lighten($secondary-color, 10%); // Résultat : #f2c94c
 $secondary-color-light-2: lighten($secondary-color, 20%); // Résultat : #f5d27d
@@ -29,6 +32,8 @@ $tertiary-color-light-3: lighten($tertiary-color, 30%); // Résultat : #f8daae
 $tertiary-color-dark-1: darken($tertiary-color, 5%);  // Résultat : #e8b400
 $tertiary-color-dark-2: darken($tertiary-color, 10%); // Résultat : #d9a000
 $tertiary-color-dark-3: darken($tertiary-color, 15%); // Résultat : #c89000
+
+
 
 $white-color: #f7f7f7;
 $black-color: #000;

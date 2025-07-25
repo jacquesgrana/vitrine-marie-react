@@ -10,6 +10,18 @@ class FileService {
         return FileService.instance;
     }
 
+    public async exportCsvFile(result: Blob): Promise<void> {
+        if(result.type === 'text/csv'){
+            const blob = new Blob([result], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'prospects.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    }
+
     public async selectImageFile(): Promise<File | null> {
         return new Promise((resolve) => {
             const input = document.createElement('input');

@@ -1,6 +1,7 @@
 import Config from "../config/Config";
 import ToastFacade from "../facade/ToastFacade";
 import { ApiResponse } from "../type/indexType";
+import FileService from "./FileService";
 import SecurityService from "./SecurityService";
 
 
@@ -8,6 +9,7 @@ class ContactFormProspectService {
     private static instance: ContactFormProspectService;
 
     private securityService = SecurityService.getInstance();
+    private fileService = FileService.getInstance();
 
     private observers: Set<() => void> = new Set();
 
@@ -201,6 +203,36 @@ class ContactFormProspectService {
             return {success: false, message: error, data: []}
         }
     }
+
+    public async exportProspects(checkedProspects: string[], checkedFields: string[]): Promise<void> {
+        const body = {
+            "prospects": checkedProspects.join(','),
+            "fields": checkedFields.join(',')
+        }
+
+        try {
+            const response = await fetch(Config.EXPORT_PROSPECTS_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                },
+                body: JSON.stringify(body)
+            });
+            //const result = await response.json();
+            const result = await response.blob();
+            await this.fileService.exportCsvFile(result);
+            ToastFacade.showSuccessToast("Export effectué avec succès");
+            //return {success: true, message: "Export effectué avec succès", data: result.data}
+        } 
+        catch (error: any) {
+            console.error('Error exporting prospects :', error);
+            ToastFacade.showErrorToast(error);
+            //return {success: false, message: error, data: []}
+        }
+    }
+
 }
 
 export default ContactFormProspectService;

@@ -90,3 +90,45 @@
     padding: 0;
     margin: 0;
 }
+
+.checkbox-dark {
+    background-color: $primary-color-dark-1;
+    color: $white-color;
+    //cursor: pointer;
+    text-decoration: none;
+    font-size: medium;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-right: 20px;
+    width: 100%;
+    //letter-spacing: 0.33em;
+    //text-transform: uppercase;
+    display: inline-block;
+    text-align: left;
+    display: flex;
+    align-items: end;
+    padding: 10px;
+    padding-bottom: 15px;
+    padding-left: 40px; /* Augmente le padding à gauche pour laisser de la place à la case */
+    position: relative;
+    
+    & .form-check-input {
+        
+        background-color: $primary-color-dark-1; /* Couleur de fond normale */
+        border: 2px solid $white-color;    /* Bordure blanche */
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+
+    & .form-check-input:checked {
+        background-color: $secondary-color-dark-3; /* Couleur de fond lorsqu'elle est cochée */
+        border-color: $secondary-color; /* Couleur de la bordure lorsqu'elle est cochée */
+    }
+
+    & :focus {
+        box-shadow: 0 0 3px 0.2rem $secondary-color-25;
+        outline: none;
+    }
+}

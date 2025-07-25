@@ -5,6 +5,7 @@ import DashboardContactFormProspectListItem from "./DashboardContactFormProspect
 import { ModalViewContactFormProspect } from "./ModalViewContactFormProspect";
 import ModalEditContactFormProspect from "./ModalEditContactFormProspect";
 import ModalCreateContactFormProspect from "./ModalCreateContactFormProspect";
+import ModalExportContactFormProspect from "./ModalExportContactFormProspect";
 
 
 const DashboardContactFormProspect: React.FC = () => {
@@ -14,13 +15,14 @@ const DashboardContactFormProspect: React.FC = () => {
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [isModalEditOpen, setIsModalEditOpen] = useState(false);
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
+    const [isModalExportOpen, setIsModalExportOpen] = useState(false);
     const [selectedContactFormProspect, setSelectedContactFormProspect] = useState<ContactFormProspect | null>(null);
     
 
     useEffect(() => {
     const refreshListIn = async () => {
         const response = await contactFormProspectService.getContactFormProspects();
-        console.log('contactFormProspectService : ', response.data);
+        //console.log('contactFormProspectService : ', response.data);
         setContactFormProspects(response.data);
     };
     refreshListIn();
@@ -45,7 +47,11 @@ const DashboardContactFormProspect: React.FC = () => {
 
     const handleCloseCreateModal = () => {
         setIsModalCreateOpen(false);
-    } // TODO Create
+    }
+
+    const handleCloseExportModal = () => {
+        setIsModalExportOpen(false);
+    }
 
     const onViewContactFormProspect = (contactFormProspect: ContactFormProspect) => {
         console.log('view contactFormProspect', contactFormProspect);
@@ -78,12 +84,19 @@ const DashboardContactFormProspect: React.FC = () => {
         //setIsModalEditOpen(true);
     };
 
+    const onExportContactFormProspect = () => {
+        console.log('export contactFormProspect');
+        setIsModalExportOpen(true);
+    };
+
     return(
         <>
         <div className='dashboard-carousel-container'>
             <h4 className='mt-3 mb-3'>Dashboard Prospects</h4>
+            <div className="d-flex justify-content-center gap-2">
             <button title="Ajouter un prospect" className='button-dark-small' onClick={onCreateContactFormProspect}>Ajouter</button> 
-
+            <button title="Exporter une liste" className='button-dark-small' onClick={onExportContactFormProspect}>Exporter</button> 
+            </div>
             <p className="dashboard-contact-list-title">LISTE DES PROSPECTS</p>
             <div className="dashboard-contact-list-container">
                 {contactFormProspects.length > 0 ? (
@@ -123,6 +136,15 @@ const DashboardContactFormProspect: React.FC = () => {
                     isModalCreateOpen={isModalCreateOpen}
                     handleCloseCreateModal={handleCloseCreateModal}
                     refreshList={refreshList}
+                /> 
+            )
+        }
+        {   
+            isModalExportOpen && (
+                <ModalExportContactFormProspect
+                    isModalExportOpen={isModalExportOpen}
+                    handleCloseExportModal={handleCloseExportModal}
+                    prospects={contactFormProspects}
                 /> 
             )
         }

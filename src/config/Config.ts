@@ -27,6 +27,7 @@ class Config {
     public static readonly UPDATE_PROSPECT_URL : string = `${Config.SERVER_URL}/api/contact-form-prospect/update/`;
     public static readonly DELETE_PROSPECT_URL : string = `${Config.SERVER_URL}/api/contact-form-prospect/delete/`;
     public static readonly CREATE_PROSPECT_URL : string = `${Config.SERVER_URL}/api/contact-form-prospect/create`;
+    public static readonly EXPORT_PROSPECTS_URL : string = `${Config.SERVER_URL}/api/contact-form-prospect/export`;
 
     //LocalStorageService
     public static readonly TOKEN_DURATION_MS: number = (3600 - 30) * 1000;
