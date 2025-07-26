@@ -2,6 +2,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import ContactFormProspectService from "../../../../service/ContactFormProspectService";
 import { ContactFormProspect } from "../../../../type/indexType";
 import ToastFacade from "../../../../facade/ToastFacade";
+import { useState } from "react";
 //import PhotoCarouselService from "../../../../service/PhotoCarouselService";
 
 interface ModalCreateContactFormProspectProps {
@@ -17,8 +18,14 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
         prospects
     }
 ) => {
-    const contactFromProspectService = ContactFormProspectService.getInstance();
+    const [checkedProspects, setCheckedProspects] = useState<string[]>([]);
+    const [checkedFields, setCheckedFields] = useState<string[]>([]);
 
+    const contactFromProspectService = ContactFormProspectService.getInstance();
+    const fields = [
+        "id", "name", "firstName", "email", "phone", "comment"
+    ]
+    /*
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -34,22 +41,23 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
         //console.log('fields : ' + checkedFieldsString);
         await contactFromProspectService.exportProspects(checkedProspectsString, checkedFieldsString);
         //const result = await contactFromProspectService.createProspect(name, firstName, email, phone, comment);
-        /*
-        if(result.success) {
-            console.log(result.message + ' ' + result.data);
-            //await refreshList();
-        }
-        else {
-            ToastFacade.showErrorToast(result.message ?? 'Une erreur est survenue lors de l\'exportation des prospects.');
-        }
-        */
+        
         //await refreshList();
         handleCloseExportModal();
     };
+*/
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-    const fields = [
-        "id", "name", "firstName", "email", "phone", "comment"
-    ]
+        if (checkedProspects.length === 0 || checkedFields.length === 0) {
+            ToastFacade.showErrorToast('Veuillez choisir au moins un prospect et un champ.');
+            return;
+        }
+
+        await contactFromProspectService.exportProspects(checkedProspects, checkedFields);
+        handleCloseExportModal();
+    };
+
 
     return(
         <Modal 
@@ -66,6 +74,27 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
                 <Form noValidate onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formProspectsList">
                         <Form.Label className="text-medium-secondary">Liste des prospects</Form.Label>
+                            <div className="mb-2">
+                            <Button
+                                //="sm"
+                                //variant="secondary"
+                                title="Tout cocher"
+                                className="button-dark-small me-2"
+                                onClick={() => setCheckedProspects(prospects.map(p => p.id.toString()))}
+                            >
+                                Tout cocher
+                            </Button>
+                            <Button
+                                //size="sm"
+                                //variant="secondary"
+                                title="Tout décocher"
+                                className="button-dark-small me-2"
+                                onClick={() => setCheckedProspects([])}
+                            >
+                                Tout décocher
+                            </Button>
+                        </div>
+
                         <div className="d-flex flex-column align-items-start">
                             {prospects.map((prospect) => (
                             <Form.Check
@@ -76,12 +105,41 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
                                 value={prospect.id}
                                 name="prospects"
                                 className="mb-2 checkbox-dark"
+                                checked={checkedProspects.includes(prospect.id.toString())}
+                                onChange={e => {
+                                    const id = prospect.id.toString();
+                                    setCheckedProspects(e.target.checked
+                                    ? [...checkedProspects, id]
+                                    : checkedProspects.filter(pid => pid !== id)
+                                    );
+                                }}
                             />
+
                             ))}
                         </div>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formFieldsList">
                         <Form.Label className="text-medium-secondary">Liste des champs</Form.Label>
+                        <div className="mb-2">
+                            <Button
+                                //size="sm"
+                                title="Tout cocher"
+                                className="button-dark-small me-2"
+                                onClick={() => setCheckedFields(fields)}
+                            >
+                                Tout cocher
+                            </Button>
+                            <Button
+                                //size="sm"
+                                //variant="secondary"
+                                title="Tout décocher"
+                                className="button-dark-small me-2"
+                                onClick={() => setCheckedFields([])}
+                            >
+                                Tout décocher
+                            </Button>
+                        </div>
+
                         <div className="d-flex flex-column align-items-start">
                             {fields.map((field) => (
                             <Form.Check
@@ -92,7 +150,15 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
                                 value={field}
                                 name="fields"
                                 className="mb-2 checkbox-dark"
+                                checked={checkedFields.includes(field)}
+                                onChange={e => {
+                                    setCheckedFields(e.target.checked
+                                    ? [...checkedFields, field]
+                                    : checkedFields.filter(f => f !== field)
+                                    );
+                                }}
                             />
+
                             ))}
                         </div>    
                     </Form.Group>
