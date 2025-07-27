@@ -1,6 +1,7 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import ContactFormProspectService from "../../../../service/ContactFormProspectService";
-import { ContactFormProspect } from "../../../../type/indexType";
+import FileService from "../../../../service/FileService";
+import { ApiResponse, ContactFormProspect } from "../../../../type/indexType";
 import ToastFacade from "../../../../facade/ToastFacade";
 import { useRef, useState } from "react";
 
@@ -21,6 +22,8 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
     const [checkedFields, setCheckedFields] = useState<string[]>([]);
 
     const contactFromProspectService = ContactFormProspectService.getInstance();
+    const fileService = FileService.getInstance();
+
     const fields = [
         "id", "name", "firstName", "email", "phone", "comment"
     ];
@@ -35,7 +38,8 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
             return;
         }
 
-        await contactFromProspectService.exportProspects(checkedProspects, checkedFields, fileNameRef.current);
+        const result: ApiResponse = await contactFromProspectService.exportProspects(checkedProspects, checkedFields);
+        await fileService.exportCsvFile(result.data, fileNameRef.current);
         handleCloseExportModal();
     };
 
@@ -58,7 +62,7 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
                         <Form.Control
                             type="text"
                             className='edit-slide-form-field'
-                            placeholder="Saisir un nom de fichier"
+                            placeholder="Saisir un nom de fichier (sans l'extension)"
                             defaultValue={fileNameRef.current}
                             onChange={(e) => fileNameRef.current = e.target.value}
                             required
