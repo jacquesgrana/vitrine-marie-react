@@ -10,13 +10,13 @@ class FileService {
         return FileService.instance;
     }
 
-    public async exportCsvFile(result: Blob): Promise<void> {
+    public async exportCsvFile(result: Blob, fileName: string): Promise<void> {
         if(result.type === 'text/csv'){
             const blob = new Blob([result], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'prospects.csv';
+            a.download = fileName + '.csv';
             a.click();
             window.URL.revokeObjectURL(url);
         }

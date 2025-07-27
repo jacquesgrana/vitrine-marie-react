@@ -204,7 +204,11 @@ class ContactFormProspectService {
         }
     }
 
-    public async exportProspects(checkedProspects: string[], checkedFields: string[]): Promise<void> {
+    public async exportProspects(
+        checkedProspects: string[], 
+        checkedFields: string[],
+        fileName: string
+    ): Promise<void> {
         const body = {
             "prospects": checkedProspects.join(','),
             "fields": checkedFields.join(',')
@@ -222,7 +226,7 @@ class ContactFormProspectService {
             });
             //const result = await response.json();
             const result = await response.blob();
-            await this.fileService.exportCsvFile(result);
+            await this.fileService.exportCsvFile(result, fileName);
             ToastFacade.showSuccessToast("Export effectué avec succès");
             //return {success: true, message: "Export effectué avec succès", data: result.data}
         } 
@@ -232,7 +236,6 @@ class ContactFormProspectService {
             //return {success: false, message: error, data: []}
         }
     }
-
 }
 
 export default ContactFormProspectService;

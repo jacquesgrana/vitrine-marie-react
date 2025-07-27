@@ -2,8 +2,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import ContactFormProspectService from "../../../../service/ContactFormProspectService";
 import { ContactFormProspect } from "../../../../type/indexType";
 import ToastFacade from "../../../../facade/ToastFacade";
-import { useState } from "react";
-//import PhotoCarouselService from "../../../../service/PhotoCarouselService";
+import { useRef, useState } from "react";
 
 interface ModalCreateContactFormProspectProps {
     isModalExportOpen: boolean,
@@ -24,54 +23,47 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
     const contactFromProspectService = ContactFormProspectService.getInstance();
     const fields = [
         "id", "name", "firstName", "email", "phone", "comment"
-    ]
-    /*
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
+    ];
 
-        const checkedProspectsString: string[] = formData.getAll('prospects').map(p => p.toString());
-        const checkedFieldsString: string[] = formData.getAll('fields').map(p => p.toString());
-
-        if(checkedProspectsString.length === 0 || checkedFieldsString.length === 0) {
-            ToastFacade.showErrorToast('Veuillez choisir au moins un prospect et un champ.');
-            return;
-        }
-        //console.log('prospects : ' + checkedProspectsString);
-        //console.log('fields : ' + checkedFieldsString);
-        await contactFromProspectService.exportProspects(checkedProspectsString, checkedFieldsString);
-        //const result = await contactFromProspectService.createProspect(name, firstName, email, phone, comment);
-        
-        //await refreshList();
-        handleCloseExportModal();
-    };
-*/
+    const fileNameRef = useRef<string>("");
+    
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (checkedProspects.length === 0 || checkedFields.length === 0) {
-            ToastFacade.showErrorToast('Veuillez choisir au moins un prospect et un champ.');
+        if (checkedProspects.length === 0 || checkedFields.length === 0 || fileNameRef.current === "") {
+            ToastFacade.showErrorToast('Veuillez choisir au moins un prospect, un champ et un nom de fichier.');
             return;
         }
 
-        await contactFromProspectService.exportProspects(checkedProspects, checkedFields);
+        await contactFromProspectService.exportProspects(checkedProspects, checkedFields, fileNameRef.current);
         handleCloseExportModal();
     };
 
 
     return(
         <Modal 
-                size="lg"
-                className="modal-dark"
-                show={isModalExportOpen} 
-                onHide={handleCloseExportModal} 
-                centered
+            size="lg"
+            className="modal-dark"
+            show={isModalExportOpen} 
+            onHide={handleCloseExportModal} 
+            centered
         >
             <Modal.Header className="modal-dark-header">
-                        <Modal.Title className="modal-dark-header-title"><span className="text-secondary">Exporter</span></Modal.Title>
+                <Modal.Title className="modal-dark-header-title"><span className="text-secondary">Exporter</span></Modal.Title>
             </Modal.Header>
             <Modal.Body className="modal-dark-body">
                 <Form noValidate onSubmit={handleSubmit}>
+                    <Form.Group className="mb-4" controlId="formFileName">
+                        <Form.Label className="text-medium-secondary">Nom du fichier</Form.Label>
+                        <Form.Control
+                            type="text"
+                            className='edit-slide-form-field'
+                            placeholder="Saisir un nom de fichier"
+                            defaultValue={fileNameRef.current}
+                            onChange={(e) => fileNameRef.current = e.target.value}
+                            required
+                        />
+                    </Form.Group>
                     <Form.Group className="mb-3" controlId="formProspectsList">
                         <Form.Label className="text-medium-secondary">Liste des prospects</Form.Label>
                             <div className="mb-2">
