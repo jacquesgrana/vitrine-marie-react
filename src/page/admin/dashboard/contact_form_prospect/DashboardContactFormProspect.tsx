@@ -6,12 +6,14 @@ import { ModalViewContactFormProspect } from "./ModalViewContactFormProspect";
 import ModalEditContactFormProspect from "./ModalEditContactFormProspect";
 import ModalCreateContactFormProspect from "./ModalCreateContactFormProspect";
 import ModalExportContactFormProspect from "./ModalExportContactFormProspect";
+import LoadingSpinner from "../../../../common/LoadingSpinner";
 
 
 const DashboardContactFormProspect: React.FC = () => {
     const [contactFormProspects, setContactFormProspects] = useState<ContactFormProspect[]>([]);
     const contactFormProspectService = ContactFormProspectService.getInstance();
 
+    const [isLoading, setIsLoading] = useState(true);
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [isModalEditOpen, setIsModalEditOpen] = useState(false);
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
@@ -21,16 +23,20 @@ const DashboardContactFormProspect: React.FC = () => {
 
     useEffect(() => {
     const refreshListIn = async () => {
+        setIsLoading(true);
         const response = await contactFormProspectService.getContactFormProspects();
         //console.log('contactFormProspectService : ', response.data);
         setContactFormProspects(response.data);
+        setIsLoading(false);
     };
     refreshListIn();
     }, [contactFormProspectService]);
 
     const refreshList = async () => {
+        setIsLoading(true);
         const response = await contactFormProspectService.getContactFormProspects();
         setContactFormProspects(response.data);
+        setIsLoading(false);
     };
 
     contactFormProspectService.subscribe(refreshList);
@@ -99,7 +105,16 @@ const DashboardContactFormProspect: React.FC = () => {
             </div>
             <p className="dashboard-contact-list-title">LISTE DES PROSPECTS</p>
             <div className="dashboard-contact-list-container">
-                {contactFormProspects.length > 0 ? (
+            {isLoading ? (
+                /*
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 120 }}>
+                    <Spinner animation="border" variant="secondary" role="status">
+                        <span className="visually-hidden">Chargement...</span>
+                    </Spinner>
+                </div>*/
+                <LoadingSpinner minHeight={120} />
+            ) : (
+                contactFormProspects.length > 0 ? (
                     contactFormProspects.map((contactFormProspect) => (
                         <DashboardContactFormProspectListItem
                             key={contactFormProspect.id}
@@ -107,13 +122,14 @@ const DashboardContactFormProspect: React.FC = () => {
                             onViewContactFormProspect={onViewContactFormProspect}
                             onDeleteContactFormProspect={onDeleteContactFormProspect}
                             onEditContactFormProspect={onEditContactFormProspect}
-                            //refreshList={refreshList}
                         />
                     ))
                 ) : (
                     <p className="text-medium-white mt-5">Aucun prospect</p>
-                )}
-            </div>
+                )
+            )}
+</div>
+
         </div>
         {selectedContactFormProspect && (
             <ModalViewContactFormProspect

@@ -6,11 +6,12 @@ import ModalViewSlide from "./ModalViewSlide";
 import ModalEditSlide from "./ModalEditSlide";
 import ModalEditImage from "./ModalEditImage";
 import ModalCreateSlide from "./ModalCreateSlide";
+import LoadingSpinner from "../../../../common/LoadingSpinner";
 
 const DashboardCarousel: React.FC = () => {
 
     const [slides, setSlides] = useState<PhotoSlide[]>([]);
-
+    const [isLoading, setIsLoading] = useState(true);
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [isModalEditOpen, setIsModalEditOpen] = useState(false);
     const [isModalEditImageOpen, setIsModalEditImageOpen] = useState(false);
@@ -22,16 +23,20 @@ const DashboardCarousel: React.FC = () => {
     
     useEffect(() => {
         const refreshListIn = async () => {
+            setIsLoading(true);
             const slidesFromService = await photoCarouselService.getSlides();
             //console.log('slidesFromService', slidesFromService);
             setSlides(slidesFromService);
+            setIsLoading(false);
         };
         refreshListIn();
     }, [photoCarouselService]);
 
     const refreshList = async () => {
+        setIsLoading(true);
         const slidesFromService = await photoCarouselService.getSlides();
         setSlides(slidesFromService);
+        setIsLoading(false);
     };
 
     // --- NOUVELLES FONCTIONS POUR GÉRER LA MODALE ---
@@ -80,18 +85,29 @@ const DashboardCarousel: React.FC = () => {
             <button title="Ajouter un slide" className='button-dark-small' onClick={handleCreateSlide}>Ajouter</button> 
             <p className="dashboard-carousel-list-title">LISTE DES SLIDES</p>
             <div className='dashboard-carousel-list-container'>
-                {slides.map((slide) => (
-                    <DashboardCarouselListItem 
-                        key={slide.id}
-                        slide={slide}
-                        refreshList={refreshList}
-                        slidesSize={slides.length}
-                        onViewSlide={handleViewSlide}
-                        onEditSlide={handleEditSlide}
-                        onEditImage={handleEditImage}
-                    />
-                ))}
-            </div>
+            {isLoading ? (
+                /*
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 120 }}>
+                    <Spinner animation="border" variant="secondary" />
+                </div>*/
+                <LoadingSpinner minHeight={120} />
+                    ) : (
+                        <>
+                            {slides.length > 0 && slides.map((slide) => (
+                                <DashboardCarouselListItem 
+                                    key={slide.id}
+                                    slide={slide}
+                                    refreshList={refreshList}
+                                    slidesSize={slides.length}
+                                    onViewSlide={handleViewSlide}
+                                    onEditSlide={handleEditSlide}
+                                    onEditImage={handleEditImage}
+                                />
+                            ))}
+                        </>
+                    )}
+                </div>
+
 
             {selectedSlide && (
                 <ModalViewSlide

@@ -5,9 +5,11 @@ import ContactFormService from '../../../../service/ContactFormService';
 import ContactFormProspectService from '../../../../service/ContactFormProspectService';
 import DashboardContactFormListItem from './DashboardContactFormListItem';
 import { ModalViewContactForm } from './ModalViewContactForm';
+import LoadingSpinner from '../../../../common/LoadingSpinner';
 
 const DashboardContactForm: React.FC = () => {
     const [contactForms, setContactForms] = useState<ContactForm[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const contactFormService = ContactFormService.getInstance();
     const contactFormProspectService = ContactFormProspectService.getInstance();
@@ -16,17 +18,21 @@ const DashboardContactForm: React.FC = () => {
 
     useEffect(() => {
         const refreshListIn = async () => {
+            setIsLoading(true);
             const response = await contactFormService.getContactForms();
             //console.log('contactFormsFromService', response.data);
             setContactForms(response.data);
+            setIsLoading(false);
         };
         refreshListIn();
     }, [contactFormService]);
 
 
     const refreshList = async () => {
+        setIsLoading(true);
         const response = await contactFormService.getContactForms();
         setContactForms(response.data);
+        setIsLoading(false);
     };
 
     contactFormProspectService.subscribe(refreshList);
@@ -65,19 +71,25 @@ const DashboardContactForm: React.FC = () => {
             <h4 className='mt-3 mb-3'>Gestion des Formulaires de Contact</h4>
             <p className="dashboard-contact-list-title">LISTE DES FORMULAIRES</p>
             <div className="dashboard-contact-list-container">
-                {contactForms.map((contactForm) => (
+            {isLoading ? (
+                <LoadingSpinner minHeight={120} />
+                /*
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 120 }}>
+                    <Spinner animation="border" variant="secondary" />
+                </div>*/
+            ) : (
+                contactForms.map((contactForm) => (
                     <DashboardContactFormListItem 
-                    key={contactForm.id} 
-                    contactForm={contactForm} 
-                    //refreshList={refreshList}
-                    onViewContactForm={onViewContactForm}
-                    onDeleteContactForm={onDeleteContactForm}
-                    onCreateProspect={onCreateProspect}
+                        key={contactForm.id} 
+                        contactForm={contactForm} 
+                        onViewContactForm={onViewContactForm}
+                        onDeleteContactForm={onDeleteContactForm}
+                        onCreateProspect={onCreateProspect}
                     />
                 ))
+            )}
+        </div>
 
-                }
-            </div>
         </div>
         {selectedContactForm && (
             <ModalViewContactForm

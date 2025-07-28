@@ -4,35 +4,51 @@ import Carousel from 'react-bootstrap/Carousel';
 import PhotoCarouselItem from './PhotoCarouselItem';
 import { PhotoSlide } from '../../type/indexType';
 import PhotoCarouselService from '../../service/PhotoCarouselService'; // On importe la classe
+import LoadingSpinner from '../../common/LoadingSpinner';
 
-// 2. On récupère l'instance du service, exactement comme vous l'aviez fait.
-const photoCarouselService = PhotoCarouselService.getInstance();
 
 const PhotoCarousel: React.FC = () => {
-  // 3. On crée un état pour conserver les slides. Il est vide au début.
+  const photoCarouselService = PhotoCarouselService.getInstance();
+  const [isLoading, setIsLoading] = useState(true);
   const [slides, setSlides] = useState<PhotoSlide[]>([]);
-
-  // 4. On ajoute le useEffect pour charger les données au montage du composant.
+  
   useEffect(() => {
     const loadSlides = async () => {
+        setIsLoading(true);
         const fetchedSlides = await photoCarouselService.getSlides();
         //console.log('fetchedSlides', fetchedSlides);
         setSlides(fetchedSlides);
+        setIsLoading(false);
     };
 
     loadSlides();
-  }, []);
+  }, [photoCarouselService]);
 
   return (
     
-      <Carousel className='photo-carousel-container' indicators={true} controls={true} interval={4000}>
-        {slides.map((slide, idx) => {
-          // Utiliser un `id` unique comme clé est la meilleure pratique
-          return <PhotoCarouselItem key={idx} {...slide} />
-        })}
-      </Carousel>
-    
+        <>
+        {isLoading ? (
+          <div className="photo-carousel-outer-container">
+            <LoadingSpinner minHeight={120}/>
+          </div>
+        ) : (
+          <Carousel className='photo-carousel-container' indicators={true} controls={true} interval={4000}>
+            {slides.map((slide, idx) => (
+              <PhotoCarouselItem key={slide.id ?? idx} {...slide} />
+            ))}
+          </Carousel>
+        )}
+      </>
+
   );
 };
 
 export default PhotoCarousel;
+
+/*
+            <div className="d-flex justify-content-center align-items-center photo-carousel-spinner">
+              <Spinner animation="border" variant="secondary" role="status">
+                <span className="visually-hidden">Chargement...</span>
+              </Spinner>
+            </div>
+            */

@@ -1,7 +1,6 @@
 import Config from "../config/Config";
 import ToastFacade from "../facade/ToastFacade";
 import { ApiResponse } from "../type/indexType";
-//import FileService from "./FileService";
 import SecurityService from "./SecurityService";
 
 
@@ -9,7 +8,6 @@ class ContactFormProspectService {
     private static instance: ContactFormProspectService;
 
     private securityService = SecurityService.getInstance();
-    //private fileService = FileService.getInstance();
 
     private observers: Set<() => void> = new Set();
 
@@ -167,9 +165,6 @@ class ContactFormProspectService {
             body: JSON.stringify(body)
         });
         const result = await response.json();
-        //this.setSlides(result.data);
-        //alert(result.message);
-        //toast.success(result.message);
         ToastFacade.showSuccessToast(result.message);
         return {success: true, message: result.message, data: result.data}
     } 
@@ -191,9 +186,6 @@ class ContactFormProspectService {
             }
         });
         const result = await response.json();
-        //this.setSlides(result.data);
-        //alert(result.message);
-        //toast.success(result.message);
         ToastFacade.showSuccessToast(result.message);
         return {success: true, message: result.message, data: []}
         } 

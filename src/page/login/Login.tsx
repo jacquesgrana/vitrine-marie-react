@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { CaptchaHandle } from '../../type/indexType';
 import ToastFacade from '../../facade/ToastFacade';
+import LoadingSpinner from '../../common/LoadingSpinner';
 
 const Login: React.FC = () => { 
     const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const captchaRef = useRef<CaptchaHandle>(null);
     const navigate = useNavigate();
 
@@ -20,55 +22,32 @@ const Login: React.FC = () => {
     
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //console.log('submit');
-        // verifier données ?
 
         // verifier captcha
         if (!isCaptchaVerified) {
-            //alert('Veuillez vérifier le captcha.');
             ToastFacade.showErrorToast('Veuillez vérifier le captcha.');
-            //toast.error('Veuillez vérifier le captcha.');
             return;
         }
-
+        setIsLoading(true); 
         const formData = {
             email: (e.currentTarget.elements.namedItem('email') as HTMLInputElement).value,
             password: (e.currentTarget.elements.namedItem('password') as HTMLInputElement).value
         };
 
-        //console.log('formData', formData);
-
-        const emailInput = e.currentTarget.elements.namedItem('email') as HTMLInputElement;
-        const passwordInput = e.currentTarget.elements.namedItem('password') as HTMLInputElement;
-
         // appeler méthode asynchrone du SecurityService pour envoyer le formulaire
         const fct = async () => {
           const response : any = await securityService.tryLogin(formData);
+          setIsLoading(false);
            if(!response.error){
-            //console.log('response', response);
             if(response.success) {
-                // si ok appeler page dashboard admin
-                //navigate('/admin/dashboard');
                 goToDashboardAdmin();
             }
-            /*
-            else {
-                // si erreur afficher message et raz des champs du formulaire
-                
-                //alert(response.message);
-                //toast.error(response.message);
-            }
-            */
-            //setShowAlert(true);
-            
-
           }
-          emailInput.value = '';
-          passwordInput.value = '';
         }
         fct();
 
-        
+        (e.currentTarget.elements.namedItem('email') as HTMLInputElement).value = '';
+        (e.currentTarget.elements.namedItem('password') as HTMLInputElement).value = '';
 
         // si erreur afficher message et raz des champs du formulaire
 
@@ -90,11 +69,7 @@ const Login: React.FC = () => {
                                 className='login-form-field'
                                 type="email"
                                 name="email"
-                                //value={formData.email}
-                                //onChange={handleChange}
                                 required
-                                //isInvalid={submitted && !!errors.email}
-                                //isValid={isFormValid}
                                 placeholder='Saisir votre adresse e-mail.'
                                 />
                         </Form.Group>
@@ -106,23 +81,24 @@ const Login: React.FC = () => {
                                 className='login-form-field'
                                 type="password"
                                 name="password"
-                                //value={formData.email}
-                                //onChange={handleChange}
                                 required
-                                //isInvalid={submitted && !!errors.email}
-                                //isValid={isFormValid}
                                 placeholder='Saisir votre mot de passe.'
                                 />
                         </Form.Group>
                     </Row>
-                    <Row className="justify-content-center">
+                   <Row className="justify-content-center">
                         <CustomCaptcha ref={captchaRef} onVerify={setIsCaptchaVerified} />
-                            <div className="">
-                            <Button className='button-dark-small no-border' type="submit" disabled={!isCaptchaVerified}>
-                            Envoyer
-                            </Button>
-              </div>
-          </Row>
+                        <div>
+                            {isLoading ? (
+                                <LoadingSpinner minHeight={50} />
+                            ) : (
+                                <Button className='button-dark-small no-border' type="submit" disabled={!isCaptchaVerified}>
+                                    Envoyer
+                                </Button>
+                            )}
+                        </div>
+                    </Row>
+
                 </Form>
             </Container>
         </div>

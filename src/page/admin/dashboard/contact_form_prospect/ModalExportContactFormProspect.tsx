@@ -74,7 +74,7 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
                             <Button
                                 //="sm"
                                 //variant="secondary"
-                                title="Tout cocher"
+                                title="Cocher tous les prospects"
                                 className="button-dark-small me-2"
                                 onClick={() => setCheckedProspects(prospects.map(p => p.id.toString()))}
                             >
@@ -83,7 +83,7 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
                             <Button
                                 //size="sm"
                                 //variant="secondary"
-                                title="Tout décocher"
+                                title="Décocher tous les prospects"
                                 className="button-dark-small me-2"
                                 onClick={() => setCheckedProspects([])}
                             >
@@ -119,7 +119,7 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
                         <div className="mb-2">
                             <Button
                                 //size="sm"
-                                title="Tout cocher"
+                                title="Cocher tous les champs"
                                 className="button-dark-small me-2"
                                 onClick={() => setCheckedFields(fields)}
                             >
@@ -128,7 +128,7 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
                             <Button
                                 //size="sm"
                                 //variant="secondary"
-                                title="Tout décocher"
+                                title="Décocher tous les champs"
                                 className="button-dark-small me-2"
                                 onClick={() => setCheckedFields([])}
                             >
