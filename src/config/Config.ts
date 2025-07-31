@@ -17,7 +17,7 @@ class Config {
     public static readonly DELETE_SLIDE_URL : string = `${Config.SERVER_URL}/api/carousel/delete/carousel-slide/`;
 
    //ContactFormService
-    public static readonly SUBMIT_FORM_URL : string = `${Config.SERVER_URL}/api/contact-form`;
+    public static readonly SUBMIT_FORM_URL : string = `${Config.SERVER_URL}/contact-form`;
     public static readonly GET_CONTACT_FORMS_URL : string = `${Config.SERVER_URL}/api/contact-form/get`;
     public static readonly DELETE_CONTACT_FORM_URL : string = `${Config.SERVER_URL}/api/contact-form/delete/`;
 
