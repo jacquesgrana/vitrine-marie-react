@@ -2,7 +2,7 @@ class Config {
     public static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
     
     //SecurityService
-    public static readonly SUBMIT_LOGIN_URL : string = `${Config.SERVER_URL}/api/login`;
+    public static readonly SUBMIT_LOGIN_URL : string = `${Config.SERVER_URL}/login`;
     public static readonly GET_USER_INFO_URL : string = `${Config.SERVER_URL}/api/user/user_infos`;
     
     //PhotoCarouselService
