@@ -21,7 +21,7 @@ const PhotoCarouselItem: React.FC<PhotoSlide> = ({
   <Carousel.Item {...rest}> 
     <img 
       className="d-block w-100 photo-carousel-image-cover" 
-      src={photoCarouselService.getImageUrl(image)} 
+      src={photoCarouselService.getSlideImageUrl(image)} 
       alt={alt} 
     />
     <Carousel.Caption>

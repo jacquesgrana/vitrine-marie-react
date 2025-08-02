@@ -1,4 +1,4 @@
-export interface PhotoSlide {
+export type PhotoSlide = {
   id: number
   image: string
   title: string

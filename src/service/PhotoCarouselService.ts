@@ -9,19 +9,6 @@ class PhotoCarouselService {
 
     private slides: PhotoSlide[] = [];
 
-    // TODO : faire classe config !!!!!!!!!!!!!!!!!!!!!!!
-    /*
-    static readonly SERVER_URL : string = 'https://sandybrown-duck-473650.hostingersite.com';
-    static readonly GET_PHOTO_SLIDES_URL : string = `${PhotoCarouselService.SERVER_URL}/carousel/get_slides`;
-    static readonly SET_PHOTO_SLIDE_UP_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/up/`;
-    static readonly SET_PHOTO_SLIDE_DOWN_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/down/`;
-    static readonly SET_PHOTO_SLIDE_TOP_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/top/`;
-    static readonly SET_PHOTO_SLIDE_BOTTOM_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/bottom/`;
-    static readonly UPDATE_SLIDE_INFOS_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/update/carousel-slide/`;
-    static readonly UPDATE_SLIDE_IMAGE_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/update/carousel-image/`;
-    static readonly CREATE_SLIDE_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/create/carousel-slide`;
-    static readonly DELETE_SLIDE_URL : string = `${PhotoCarouselService.SERVER_URL}/api/carousel/delete/carousel-slide/`;
-    */
     private securityService : SecurityService;
 
     private constructor() {
@@ -35,12 +22,13 @@ class PhotoCarouselService {
     }
 
 
-    public getImageUrl = (imageName: string) => {
+    public getSlideImageUrl = (imageName: string) => {
         //console.log(imageName);
         //const baseUrl = window.location.origin;
         //const url = `${baseUrl}/image/carousel/${imageName}`;
         // TODO : améliorer !!!
-        const url =`${Config.SERVER_URL}/image/carousel/${imageName}`;
+        //const url =`${Config.SERVER_URL}/image/carousel/${imageName}`;
+        const url = `${Config.GET_CAROUSEL_IMAGES_PATH}${imageName}`;
         return (url);
     }
 

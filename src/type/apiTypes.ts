@@ -1,4 +1,4 @@
-export interface ApiResponse<T = any> {
+export type ApiResponse<T = any> = {
   success: boolean;
   message?: string;
   errors?: Record<string, string[]>;

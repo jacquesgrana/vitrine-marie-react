@@ -29,8 +29,17 @@ class Config {
     public static readonly CREATE_PROSPECT_URL : string = `${Config.SERVER_URL}/api/contact-form-prospect/create`;
     public static readonly EXPORT_PROSPECTS_URL : string = `${Config.SERVER_URL}/api/contact-form-prospect/export`;
 
+    //BlogPostService
+    public static readonly GET_PUBLISHED_BLOG_POSTS_URL : string = `${Config.SERVER_URL}/blog-post/published/get`;
+
     //LocalStorageService
     public static readonly TOKEN_DURATION_MS: number = (3600 - 30) * 1000;
+
+    //carousel
+    public static readonly GET_CAROUSEL_IMAGES_PATH : string = `${Config.SERVER_URL}/image/carousel/`;
+
+    //blog homepage
+    public static readonly GET_BLOG_POST_IMAGES_PATH : string = `${Config.SERVER_URL}/image/blog_post/`;
 }
 
 export default Config;

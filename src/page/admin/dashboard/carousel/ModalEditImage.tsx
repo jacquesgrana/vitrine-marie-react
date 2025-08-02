@@ -131,7 +131,7 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
             </Modal.Header>
             <Modal.Body className="modal-dark-body">
                 <img 
-                    src={loadedImage || photoCarouselService.getImageUrl(selectedSlide.image)}
+                    src={loadedImage || photoCarouselService.getSlideImageUrl(selectedSlide.image)}
                     alt="Texte alternatif"
                     className="img-fluid mb-3" // 'img-fluid' est une classe Bootstrap pour le responsive
                 />

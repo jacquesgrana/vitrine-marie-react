@@ -1,11 +1,11 @@
 import { UserInfo } from "./userTypes";
 
-export interface LoginFormData {
+export type LoginFormData = {
   email: string;
   password: string;
 }
 
-export interface AuthState {
+export type AuthState = {
   isAuthenticated: boolean;
   user: UserInfo | null;
   token: string | null;

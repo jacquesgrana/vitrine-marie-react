@@ -34,7 +34,7 @@ const ModalViewSlide: React.FC<ModalViewProps> = (
                     </Modal.Header>
                     <Modal.Body className="modal-dark-body">
                         <img 
-                            src={photoCarouselService.getImageUrl(selectedSlide.image)} 
+                            src={photoCarouselService.getSlideImageUrl(selectedSlide.image)} 
                             alt={selectedSlide?.alt}
                             className="img-fluid mb-3" // 'img-fluid' est une classe Bootstrap pour le responsive
                         />

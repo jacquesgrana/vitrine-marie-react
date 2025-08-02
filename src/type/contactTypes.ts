@@ -1,4 +1,4 @@
-export interface ContactFormData {
+export type ContactFormData = {
   name: string;
   firstName: string;
   email: string;
@@ -6,7 +6,7 @@ export interface ContactFormData {
   message: string;
 }
 
-export interface ContactForm {
+export type ContactForm = {
   id: number;
   name: string;
   firstName: string;
@@ -25,7 +25,7 @@ export type CaptchaHandle = {
   reset: () => void;
 };
 
-export interface ContactFormProspect {
+export type ContactFormProspect = {
   id: number;
   name: string;
   firstName: string;
