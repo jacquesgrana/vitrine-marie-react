@@ -84,10 +84,10 @@ class BlogPostService {
 
     public async setPostUp(blogPostId: number) {
         console.log('setPostUp : ' + blogPostId);
-        /*
+        
         try {
             const response = await fetch(Config.SET_BLOG_POST_UP_URL + blogPostId, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -95,21 +95,19 @@ class BlogPostService {
                 }
             });
             const result = await response.json();
-            //this.setSlides(result.data);
-            //alert(result.message);
             ToastFacade.showSuccessToast(result.message);
-            //toast.success(result.message);
-        } catch (error) {
-            console.error('Error fetching slides :', error);
-        }*/
+        } catch (error: any) {
+            console.error('Error modifying blog post :', error);
+            ToastFacade.showErrorToast(error);
+        }
     }   
 
     public async setPostDown(blogPostId: number) {
         console.log('setPostDown : ' + blogPostId);
-        /*
+        
         try {
             const response = await fetch(Config.SET_BLOG_POST_DOWN_URL + blogPostId, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -117,21 +115,19 @@ class BlogPostService {
                 }
             });
             const result = await response.json();
-            //this.setSlides(result.data);
-            //alert(result.message);
             ToastFacade.showSuccessToast(result.message);
-            //toast.success(result.message);
-        } catch (error) {
-            console.error('Error fetching slides :', error);
-        }*/
+        } catch (error: any) {
+            console.error('Error modifying blog post :', error);
+            ToastFacade.showErrorToast(error);
+        }
     }
 
     public async setPostTop(blogPostId: number) {
         console.log('setPostTop : ' + blogPostId);
-        /*
+        
         try {
             const response = await fetch(Config.SET_BLOG_POST_TOP_URL + blogPostId, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -139,21 +135,20 @@ class BlogPostService {
                 }
             });
             const result = await response.json();
-            //this.setSlides(result.data);
-            //alert(result.message);
             ToastFacade.showSuccessToast(result.message);
-            //toast.success(result.message);
-        } catch (error) {
-            console.error('Error fetching slides :', error);
-        }*/
+        } catch (error: any) {
+            console.error('Error modifying blog post :', error);
+            ToastFacade.showErrorToast(error);
+
+        }
     }
 
     public async setPostBottom(blogPostId: number) {
         console.log('setPostBottom : ' + blogPostId);
-        /*
+        
         try {
             const response = await fetch(Config.SET_BLOG_POST_BOTTOM_URL + blogPostId, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -161,13 +156,11 @@ class BlogPostService {
                 }
             });
             const result = await response.json();
-            //this.setSlides(result.data);
-            //alert(result.message);
             ToastFacade.showSuccessToast(result.message);
-            //toast.success(result.message);
-        } catch (error) {
-            console.error('Error fetching slides :', error);
-        }*/
+        } catch (error: any) {
+            console.error('Error modifying blog post :', error);
+            ToastFacade.showErrorToast(error);
+        }
     }
 
     public async deletePost(blogPostId: number) {
@@ -206,7 +199,7 @@ class BlogPostService {
             const result = await response.json();
             ToastFacade.showSuccessToast(result.message);
         } catch (error) {
-            console.error('Error fetching slides :', error);
+            console.error('Error publishing blog post :', error);
         }
     }
 
@@ -224,7 +217,7 @@ class BlogPostService {
             const result = await response.json();
             ToastFacade.showSuccessToast(result.message);
         } catch (error) {
-            console.error('Error fetching slides :', error);
+            console.error('Error unpublishing blog post :', error);
         }
     }
 }

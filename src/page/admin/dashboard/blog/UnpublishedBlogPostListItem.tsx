@@ -4,7 +4,6 @@ import BlogPostService from "../../../../service/BlogPostService";
 
 interface UnpublishedBlogPostListItemProps {
     blogPost: BlogPost;
-    blogPostsSize: number;
     refreshPublishedList: () => Promise<void>;
     refreshUnpublishedList: () => Promise<void>;
     onViewPost: (blogPost: BlogPost) => void;
@@ -13,7 +12,6 @@ interface UnpublishedBlogPostListItemProps {
 
 const UnpublishedBlogPostListItem: React.FC<UnpublishedBlogPostListItemProps> = ({
     blogPost,
-    blogPostsSize,
     refreshPublishedList,
     refreshUnpublishedList,
     onViewPost,

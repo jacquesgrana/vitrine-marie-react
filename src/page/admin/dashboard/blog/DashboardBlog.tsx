@@ -101,8 +101,6 @@ const DashboardBlog: React.FC = () => {
                         <UnpublishedBlogPostListItem 
                         key={blogPost.id} 
                         blogPost={blogPost} 
-                        blogPostsSize={unpublishedBlogPosts.length
-                        } 
                         refreshPublishedList={refreshPublishedList}
                         refreshUnpublishedList={refreshUnpublishedList}
                         onViewPost={onViewPost}

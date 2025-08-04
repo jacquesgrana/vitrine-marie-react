@@ -34,6 +34,10 @@ class Config {
     public static readonly GET_UNPUBLISHED_BLOG_POSTS_URL : string = `${Config.SERVER_URL}/api/blog-post/unpublished/get`;
     public static readonly PUBLISH_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/publish/`;
     public static readonly UNPUBLISH_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/unpublish/`;
+    public static readonly SET_BLOG_POST_UP_URL : string = `${Config.SERVER_URL}/api/blog-post/up/`;
+    public static readonly SET_BLOG_POST_DOWN_URL : string = `${Config.SERVER_URL}/api/blog-post/down/`;
+    public static readonly SET_BLOG_POST_TOP_URL : string = `${Config.SERVER_URL}/api/blog-post/top/`;
+    public static readonly SET_BLOG_POST_BOTTOM_URL : string = `${Config.SERVER_URL}/api/blog-post/bottom/`;
     /*
     public static readonly CREATE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/create`;
     public static readonly UPDATE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/update/`;

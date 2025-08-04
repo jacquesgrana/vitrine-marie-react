@@ -24,18 +24,22 @@ const BlogPostListItem: React.FC<BlogPostListItemProps> = ({
 
     const handleSetPostUp = async (blogPostId: number) => {
         await blogPostService.setPostUp(blogPostId);
+        await refreshPublishedList();
     };
 
     const handleSetPostDown = async (blogPostId: number) => {
         await blogPostService.setPostDown(blogPostId);
+        await refreshPublishedList();
     };
 
     const handleSetPostTop = async (blogPostId: number) => {
         await blogPostService.setPostTop(blogPostId);
+        await refreshPublishedList();
     };
 
     const handleSetPostBottom = async (blogPostId: number) => {
         await blogPostService.setPostBottom(blogPostId);
+        await refreshPublishedList();
     };
 
     const handleDeletePost = async (blogPostId: number) => {
