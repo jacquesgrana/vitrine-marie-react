@@ -60,7 +60,7 @@ const BlogPostListItem: React.FC<BlogPostListItemProps> = ({
         <div key={blogPost.id} className="dashboard-carousel-list-item">
             <img className='dashboard-carousel-image' 
             src={blogPostService.getBlogImageUrl(blogPost.imageName)} 
-            //alt={slide.alt} 
+            alt={blogPost.title} 
             />
             <div className='dashboard-carousel-list-item-div'>
                 <div className='dashboard-carousel-list-item-text-container'>
