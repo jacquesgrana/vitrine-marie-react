@@ -1,7 +1,6 @@
 import React from "react";
 import { BlogPost } from "../../../../type/indexType";
 import BlogPostService from "../../../../service/BlogPostService";
-import { on } from "events";
 
 interface BlogPostListItemProps {
     blogPost: BlogPost;
