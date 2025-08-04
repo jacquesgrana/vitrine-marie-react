@@ -33,7 +33,7 @@ const Home: React.FC = () => {
             <LoadingSpinner minHeight={120}/>
           </div>
         ) : (
-          <div className="photo-carousel-container">
+          <div className="blog-container">
             {blogPosts.map((blogPost) => (
               <BlogItem key={blogPost.id} blogPost={blogPost} />
             ))}
