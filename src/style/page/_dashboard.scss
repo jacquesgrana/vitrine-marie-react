@@ -137,14 +137,14 @@
                         border-radius: 5px; 
                         width: 100%;
                     }
-            }
-
-                
+                }
 
                 .dashboard-carousel-image {
                     //width: auto;
+                    min-width: 120px;
                     width: 120px;
                     height: 100%;
+                    max-height: 164px;
                     border-radius: 5px; 
                     object-fit: cover; /* L'image couvre la zone sans se déformer */
                     object-position: center; /* Centre l'image (utile si rognée) */
@@ -152,8 +152,7 @@
             }
         }
     }
-
-                                                                     
+                                                            
 }
 
 .edit-slide-form-field {

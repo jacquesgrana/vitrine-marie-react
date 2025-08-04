@@ -62,9 +62,9 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
 
     return (
     <div className="dashboard-carousel-list-item">
-      <img className='dashboard-carousel-image' 
-      src={photoCarouselService.getSlideImageUrl(slide.image)} 
-      alt={slide.alt} />
+        <img className='dashboard-carousel-image' 
+        src={photoCarouselService.getSlideImageUrl(slide.image)} 
+        alt={slide.alt} />
         <div className='dashboard-carousel-list-item-div'>
             <div className='dashboard-carousel-list-item-text-container'>
                 <h5 className='text-large-secondary'>{slide.title}</h5>

@@ -31,6 +31,14 @@ class Config {
 
     //BlogPostService
     public static readonly GET_PUBLISHED_BLOG_POSTS_URL : string = `${Config.SERVER_URL}/blog-post/published/get`;
+    public static readonly GET_UNPUBLISHED_BLOG_POSTS_URL : string = `${Config.SERVER_URL}/api/blog-post/unpublished/get`;
+    public static readonly PUBLISH_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/publish/`;
+    public static readonly UNPUBLISH_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/unpublish/`;
+    /*
+    public static readonly CREATE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/create`;
+    public static readonly UPDATE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/update/`;
+    public static readonly DELETE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/delete/`;
+    */
 
     //LocalStorageService
     public static readonly TOKEN_DURATION_MS: number = (3600 - 30) * 1000;
@@ -40,6 +48,7 @@ class Config {
 
     //blog homepage
     public static readonly GET_BLOG_POST_IMAGES_PATH : string = `${Config.SERVER_URL}/image/blog_post/`;
+
 }
 
 export default Config;
