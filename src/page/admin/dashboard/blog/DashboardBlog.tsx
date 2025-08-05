@@ -4,12 +4,15 @@ import BlogPostService from "../../../../service/BlogPostService";
 import LoadingSpinner from "../../../../common/LoadingSpinner";
 import BlogPostListItem from "./BlogPostListItem";
 import UnpublishedBlogPostListItem from "./UnpublishedBlogPostListItem";
+import ModalViewBlogPost from "./ModalViewBlogPost";
 
 
 const DashboardBlog: React.FC = () => {
     const [publishedBlogPosts, setPublishedBlogPosts] = useState<BlogPost[]>([]);
     const [unpublishedBlogPosts, setUnpublishedBlogPosts] = useState<BlogPost[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isModalViewOpen, setIsModalViewOpen] = useState(false);
+    const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(null);
 
     const blogPostService: BlogPostService = BlogPostService.getInstance();
 
@@ -54,6 +57,8 @@ const DashboardBlog: React.FC = () => {
 
     const onViewPost = (blogPost: BlogPost) => {
         console.log('onViewPost', blogPost);
+        setSelectedBlogPost(blogPost);
+        setIsModalViewOpen(true);
     };
 
     const onEditPost = (blogPost: BlogPost) => {
@@ -62,6 +67,11 @@ const DashboardBlog: React.FC = () => {
 
     const handleCreatePost = () => {
         console.log('handleCreatePost');
+    };
+
+    const handleCloseViewModal = () => {
+        setSelectedBlogPost(null);
+        setIsModalViewOpen(false);
     };
     
 
@@ -109,7 +119,13 @@ const DashboardBlog: React.FC = () => {
                     ))
                 )}
             </div>
-
+                {selectedBlogPost && isModalViewOpen && (
+                    <ModalViewBlogPost 
+                    selectedBlogPost={selectedBlogPost}
+                    isModalViewOpen={isModalViewOpen}
+                    handleCloseViewModal={handleCloseViewModal}
+                    />
+                )}
         </div>
     );
 }

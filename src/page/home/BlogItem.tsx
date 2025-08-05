@@ -25,7 +25,7 @@ const BlogItem = ({ blogPost }: BlogPostProps) => {
                     </div>
                 )
             }
-            
+            <p className="blog-post-author"><span className="text-medium-white">Par </span>{blogPost.author.firstName} {blogPost.author.name}</p>
             <div className="d-flex justify-content-between gap-3">
                 <p className="blog-post-date"><span className="text-medium-white">Créé le </span>{new Date(blogPost.createdAt.date.replace(' ', 'T')).toLocaleString('fr-FR', {
                     day: '2-digit',
@@ -38,8 +38,6 @@ const BlogItem = ({ blogPost }: BlogPostProps) => {
                     year: 'numeric'
                 })}</p>
             </div>
-            
-            <p className="blog-post-author"><span className="text-medium-white">Par </span>{blogPost.author.firstName} {blogPost.author.name}</p>
         </article>
     );
 };

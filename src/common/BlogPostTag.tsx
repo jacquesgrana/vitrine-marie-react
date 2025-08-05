@@ -4,7 +4,7 @@ type BlogPostTagProps = {
     tag: BlogTag;
 }
 
-const BlogPostTag = ({ tag }: BlogPostTagProps) => {
+const BlogPostTag: React.FC<BlogPostTagProps> = ({ tag }: BlogPostTagProps) => {
     return (
         <div key={tag.id} className="blog-post-tag">{tag.name}</div>
     );
