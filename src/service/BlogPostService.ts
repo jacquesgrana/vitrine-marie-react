@@ -16,7 +16,7 @@ class BlogPostService {
 
     private constructor() {
         this.securityService = SecurityService.getInstance();
-     }
+    }
 
     public static getInstance(): BlogPostService {
         if (!BlogPostService.instance) {

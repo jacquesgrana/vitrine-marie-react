@@ -44,6 +44,12 @@ class Config {
     public static readonly DELETE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/delete/`;
     */
 
+    //BlogTagService
+    public static readonly GET_BLOG_TAGS_URL : string = `${Config.SERVER_URL}/blog-tag/get`;
+    //public static readonly CREATE_BLOG_TAG_URL : string = `${Config.SERVER_URL}/api/blog-tag/create`;
+    //public static readonly UPDATE_BLOG_TAG_URL : string = `${Config.SERVER_URL}/api/blog-tag/update/`;
+    //public static readonly DELETE_BLOG_TAG_URL : string = `${Config.SERVER_URL}/api/blog-tag/delete/`;
+
     //LocalStorageService
     public static readonly TOKEN_DURATION_MS: number = (3600 - 30) * 1000;
 

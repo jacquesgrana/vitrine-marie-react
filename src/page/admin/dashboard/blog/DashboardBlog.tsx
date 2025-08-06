@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
-import { BlogPost } from "../../../../type/indexType";
+import { BlogPost, BlogTag } from "../../../../type/indexType";
 import BlogPostService from "../../../../service/BlogPostService";
 import LoadingSpinner from "../../../../common/LoadingSpinner";
 import BlogPostListItem from "./BlogPostListItem";
 import UnpublishedBlogPostListItem from "./UnpublishedBlogPostListItem";
 import ModalViewBlogPost from "./ModalViewBlogPost";
+import ModalEditBlogPost from "./ModalEditBlogPost";
+import BlogTagService from "../../../../service/BlogTagService";
 
 
 const DashboardBlog: React.FC = () => {
     const [publishedBlogPosts, setPublishedBlogPosts] = useState<BlogPost[]>([]);
     const [unpublishedBlogPosts, setUnpublishedBlogPosts] = useState<BlogPost[]>([]);
+    const [allTags, setAllTags] = useState<BlogTag[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
+    const [isModalEditOpen, setIsModalEditOpen] = useState(false);
     const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(null);
 
     const blogPostService: BlogPostService = BlogPostService.getInstance();
+    const blogTagService: BlogTagService = BlogTagService.getInstance();
 
     useEffect(() => {
         const refreshPublishedListIn = async () => {
@@ -33,10 +38,19 @@ const DashboardBlog: React.FC = () => {
             setIsLoading(false);
         }
 
+        const refreshTagsIn = async () => {
+            //setIsLoading(true);
+            await blogTagService.fetchBlogTags();
+            const tagsFromService = await blogTagService.getBlogTags();
+            setAllTags(tagsFromService);
+            //setIsLoading(false);
+        }
+
         refreshPublishedListIn();
         refreshUnpublishedListIn();
+        refreshTagsIn();
         
-    }, [blogPostService]);
+    }, [blogPostService, blogTagService]);
 
     
     const refreshPublishedList = async () => {
@@ -55,14 +69,24 @@ const DashboardBlog: React.FC = () => {
         setIsLoading(false);
     };
 
+    const refreshTags = async () => {
+        //setIsLoading(true);
+        await blogTagService.fetchBlogTags();
+        const tagsFromService = await blogTagService.getBlogTags();
+        setAllTags(tagsFromService);
+        //setIsLoading(false);
+    };
+
     const onViewPost = (blogPost: BlogPost) => {
-        console.log('onViewPost', blogPost);
+        //console.log('onViewPost', blogPost);
         setSelectedBlogPost(blogPost);
         setIsModalViewOpen(true);
     };
 
     const onEditPost = (blogPost: BlogPost) => {
-        console.log('onEditPost', blogPost);
+        //console.log('onEditPost', blogPost);
+        setSelectedBlogPost(blogPost);
+        setIsModalEditOpen(true);
     };
 
     const handleCreatePost = () => {
@@ -72,6 +96,11 @@ const DashboardBlog: React.FC = () => {
     const handleCloseViewModal = () => {
         setSelectedBlogPost(null);
         setIsModalViewOpen(false);
+    };
+
+    const handleCloseEditModal = () => {
+        setSelectedBlogPost(null);
+        setIsModalEditOpen(false);
     };
     
 
@@ -124,6 +153,14 @@ const DashboardBlog: React.FC = () => {
                     selectedBlogPost={selectedBlogPost}
                     isModalViewOpen={isModalViewOpen}
                     handleCloseViewModal={handleCloseViewModal}
+                    />
+                )}
+                {selectedBlogPost && isModalEditOpen && (
+                    <ModalEditBlogPost 
+                    blogPost={selectedBlogPost}
+                    isModalEditPostOpen={isModalEditOpen}
+                    handleCloseEditPostModal={handleCloseEditModal}
+                    allTags={allTags}
                     />
                 )}
         </div>

@@ -1,3 +1,5 @@
+import { CustomDate } from "./commonTypes";
+
 export type BlogPost = {
     id: number,
     rank: number,
@@ -6,16 +8,8 @@ export type BlogPost = {
     intro: string,
     text: string,
     imageName: string,
-    createdAt:  {
-        date: string;
-        timezone: string;
-        timezone_type: number;
-    },
-    modifiedAt: {
-        date: string;
-        timezone: string;
-        timezone_type: number;
-    },
+    createdAt:  CustomDate,
+    modifiedAt: CustomDate,
     isPublished: boolean,
     author: PostAuthor,
     tags: BlogTag[]
