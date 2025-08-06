@@ -69,6 +69,7 @@ const DashboardBlog: React.FC = () => {
         setIsLoading(false);
     };
 
+    /*
     const refreshTags = async () => {
         //setIsLoading(true);
         await blogTagService.fetchBlogTags();
@@ -76,6 +77,7 @@ const DashboardBlog: React.FC = () => {
         setAllTags(tagsFromService);
         //setIsLoading(false);
     };
+    */
 
     const onViewPost = (blogPost: BlogPost) => {
         //console.log('onViewPost', blogPost);
