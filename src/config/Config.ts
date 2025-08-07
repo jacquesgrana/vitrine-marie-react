@@ -38,11 +38,8 @@ class Config {
     public static readonly SET_BLOG_POST_DOWN_URL : string = `${Config.SERVER_URL}/api/blog-post/down/`;
     public static readonly SET_BLOG_POST_TOP_URL : string = `${Config.SERVER_URL}/api/blog-post/top/`;
     public static readonly SET_BLOG_POST_BOTTOM_URL : string = `${Config.SERVER_URL}/api/blog-post/bottom/`;
-    /*
-    public static readonly CREATE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/create`;
-    public static readonly UPDATE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/update/`;
-    public static readonly DELETE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/delete/`;
-    */
+    public static readonly UPDATE_BLOG_POST_INFOS_URL : string = `${Config.SERVER_URL}/api/blog-post/update/infos/`;
+    public static readonly UPDATE_BLOG_POST_IMAGE_URL : string = `${Config.SERVER_URL}/api/blog-post/update/image/`;
 
     //BlogTagService
     public static readonly GET_BLOG_TAGS_URL : string = `${Config.SERVER_URL}/blog-tag/get`;

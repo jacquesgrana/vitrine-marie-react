@@ -163,6 +163,8 @@ const DashboardBlog: React.FC = () => {
                     isModalEditPostOpen={isModalEditOpen}
                     handleCloseEditPostModal={handleCloseEditModal}
                     allTags={allTags}
+                    refreshPublishedList={refreshPublishedList}
+                    refreshUnpublishedList={refreshUnpublishedList}
                     />
                 )}
         </div>

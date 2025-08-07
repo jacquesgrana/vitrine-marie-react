@@ -1,6 +1,6 @@
 import Config from "../config/Config";
 import ToastFacade from "../facade/ToastFacade";
-import { BlogPost } from "../type/indexType";
+import { ApiResponse, BlogPost } from "../type/indexType";
 import SecurityService from "./SecurityService";
 //import SecurityService from "./SecurityService";
 
@@ -218,6 +218,97 @@ class BlogPostService {
             ToastFacade.showSuccessToast(result.message);
         } catch (error) {
             console.error('Error unpublishing blog post :', error);
+        }
+    }
+
+    public async updatePostFromForm(
+        id: number,
+        slug: string,
+        title: string,
+        intro: string,
+        text: string,
+        tags: string[]
+    ): Promise<ApiResponse> {
+        /*
+        console.log('slug : ' + slug);
+        console.log('title : ' + title);
+        console.log('intro : ' + intro);
+        console.log('text : ' + text);
+        console.log('tags : ' + tags);
+        console.log('id : ' + id);
+        */
+        try {
+            const bodyData = JSON.stringify({ 
+                slug: slug,
+                title: title, 
+                intro: intro, 
+                text: text, 
+                tags: tags.join(';') 
+            });
+            //console.log(bodyData);
+            
+            const response = await fetch(Config.UPDATE_BLOG_POST_INFOS_URL + id, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                },
+                body: bodyData
+            });
+            const result = await response.json();
+            result.success ? ToastFacade.showSuccessToast(result.message) : ToastFacade.showErrorToast(result.message);
+            return {
+                success: result.success, 
+                message: result.message, 
+                data: result.data
+            }
+        } catch (error) {
+            console.error('Error updating blog post :', error);
+            return {
+                success: false,
+                message: 'Error updating blog post',
+                data: error
+            }
+        }
+        
+    }
+
+    public async updatePostImageFromForm(id: number, image: File): Promise<ApiResponse> {
+        try {
+            const formData = new FormData();
+            formData.append('imageFile', image);
+            //formData.append('imageName', imageName);
+            const response = await fetch(Config.UPDATE_BLOG_POST_IMAGE_URL + id, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                },
+                body: formData
+            });
+            const result = await response.json();
+            if(!result.success) {
+                ToastFacade.showErrorToast(result.message);
+                return {
+                    success: result.success, 
+                    message: result.message, 
+                    data: result.data
+                }
+            }      
+            ToastFacade.showSuccessToast(result.message);
+            return {
+                success: result.success, 
+                message: result.message, 
+                data: result.data
+            }
+        } catch (error) {
+            console.error('Error updating blog post image :', error);
+            return {
+                success: false,
+                message: 'Error updating blog post image',
+                data: error
+            }
         }
     }
 }

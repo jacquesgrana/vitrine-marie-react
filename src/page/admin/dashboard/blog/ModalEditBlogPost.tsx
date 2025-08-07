@@ -9,14 +9,16 @@ type ModalEditPostBlogProps = {
     handleCloseEditPostModal: () => void,
     blogPost: BlogPost,
     allTags: BlogTag[],
-    //refreshList: () => void,
+    refreshPublishedList: () => void,
+    refreshUnpublishedList: () => void
 }
 
 const ModalEditPostBlog: React.FC<ModalEditPostBlogProps> = ({
     isModalEditPostOpen,
     handleCloseEditPostModal,
     blogPost,
-    //refreshList,
+    refreshPublishedList,
+    refreshUnpublishedList,
     allTags
 }) => {
     const blogPostService = BlogPostService.getInstance();
@@ -61,6 +63,49 @@ const ModalEditPostBlog: React.FC<ModalEditPostBlogProps> = ({
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         //console.log('submit');
+        const formData = new FormData(event.currentTarget);
+        //const slug = formData.get('slug') as string;
+        //const title = formData.get('title') as string;
+        //const intro = formData.get('intro') as string;
+        //const text = formData.get('text') as string;
+        const tags = formData.getAll('tags') as string[];
+        //const imageName = formData.get('imageName') as string;
+        if (!loadedImage) {
+            console.log('No image selected');
+            //console.log(imageName);
+            
+            const result = await blogPostService.updatePostFromForm(blogPost.id, slug, title, intro, text, tags);
+            // TODO gérer les result.success et result.message
+            if(result.success) {
+                console.log(result.message);
+                await refreshPublishedList();
+                await refreshUnpublishedList();
+            }
+        } 
+        else {
+            try {
+                const fileToSend = FileService.dataURLtoFile(loadedImage, imageName);
+                console.log(imageName);
+                //console.log(fileToSend.name, fileToSend.size, fileToSend.type);
+                const resultInfos = await blogPostService.updatePostFromForm(blogPost.id, slug, title, intro, text, tags);
+
+                const resultImage = await blogPostService.updatePostImageFromForm(blogPost.id, fileToSend);
+
+                if(resultInfos.success && resultImage.success) {
+                    console.log(resultInfos.message);
+                    console.log(resultImage.message);
+                    blogPost.isPublished ? await refreshPublishedList() : await refreshUnpublishedList();
+                }
+                
+            } catch (error) {
+                console.error('Erreur lors de la conversion de l\'image :', error);
+            }
+            // appeler methode asynchrone du service qui ne modfie pas l'image
+
+            
+
+        }
+        handleCloseEditPostModal();
     }
 
     /*
