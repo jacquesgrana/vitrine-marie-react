@@ -40,6 +40,8 @@ class Config {
     public static readonly SET_BLOG_POST_BOTTOM_URL : string = `${Config.SERVER_URL}/api/blog-post/bottom/`;
     public static readonly UPDATE_BLOG_POST_INFOS_URL : string = `${Config.SERVER_URL}/api/blog-post/update/infos/`;
     public static readonly UPDATE_BLOG_POST_IMAGE_URL : string = `${Config.SERVER_URL}/api/blog-post/update/image/`;
+    public static readonly CREATE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/create`;
+    public static readonly DELETE_BLOG_POST_URL : string = `${Config.SERVER_URL}/api/blog-post/delete/`;
 
     //BlogTagService
     public static readonly GET_BLOG_TAGS_URL : string = `${Config.SERVER_URL}/blog-tag/get`;

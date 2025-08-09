@@ -163,12 +163,12 @@ class BlogPostService {
         }
     }
 
-    public async deletePost(blogPostId: number) {
+    public async deletePost(blogPostId: number): Promise<ApiResponse> {
         console.log('deletePost : ' + blogPostId);
-        /*
+        
         try {
             const response = await fetch(Config.DELETE_BLOG_POST_URL + blogPostId, {
-                method: 'GET',
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -176,13 +176,29 @@ class BlogPostService {
                 }
             });
             const result = await response.json();
-            //this.setSlides(result.data);
-            //alert(result.message);
             ToastFacade.showSuccessToast(result.message);
-            //toast.success(result.message);
-        } catch (error) {
-            console.error('Error fetching slides :', error);
-        }*/
+            return {
+                success: true,
+                message: result.message,
+                data: result.data
+            }
+        } 
+        catch (error: any) {
+            console.error('Error deleting blog post :', error);
+            return {
+                success: false,
+                message: error,
+                data: null
+            }
+        }
+    }
+
+    public async deletePublishedPost(blogPostId: number): Promise<ApiResponse> {        
+        return await this.deletePost(blogPostId);
+    }
+
+    public async deleteUnpublishedPost(blogPostId: number): Promise<ApiResponse> {
+        return await this.deletePost(blogPostId);
     }
 
     public async publishPost(blogPostId: number) {
@@ -311,6 +327,55 @@ class BlogPostService {
             }
         }
     }
+
+    public async createPostFromForm(
+        slug: string,
+        title: string,
+        intro: string,
+        text: string,
+        tags: string,
+        fileToSend: File
+    ): Promise<ApiResponse> {
+        try {
+            const formData = new FormData();
+            formData.append('slug', slug);
+            formData.append('title', title);
+            formData.append('intro', intro);
+            formData.append('text', text);
+            formData.append('tags', tags);
+            formData.append('imageFile', fileToSend);
+            const response = await fetch(Config.CREATE_BLOG_POST_URL, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                },
+                body: formData
+            });
+            const result = await response.json();
+            if(!result.success) {
+                ToastFacade.showErrorToast(result.message);
+                return {
+                    success: result.success, 
+                    message: result.message, 
+                    data: result.data
+                }
+            }      
+            ToastFacade.showSuccessToast(result.message);
+            return {
+                success: result.success, 
+                message: result.message, 
+                data: result.data
+            }
+        } catch (error) {
+            console.error('Error creating blog post :', error);
+            return {
+                success: false,
+                message: 'Error creating blog post',
+                data: error
+            }
+        }
+    }   
 }
 
 export default BlogPostService;

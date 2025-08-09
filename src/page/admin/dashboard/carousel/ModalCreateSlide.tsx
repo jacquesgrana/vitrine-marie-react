@@ -171,12 +171,12 @@ const ModalCreateSlide: React.FC<ModalCreateSlideProps> = (
                 </Form>
             </Modal.Body>
             <Modal.Footer className="modal-dark-footer">
-                <button 
+                <Button 
                     className="button-dark-small" 
                     onClick={handleCloseCreateModal}
                 >
                     Fermer
-                </button>
+                </Button>
             </Modal.Footer>
         </Modal>
     );

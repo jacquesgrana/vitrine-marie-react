@@ -7,6 +7,7 @@ import UnpublishedBlogPostListItem from "./UnpublishedBlogPostListItem";
 import ModalViewBlogPost from "./ModalViewBlogPost";
 import ModalEditBlogPost from "./ModalEditBlogPost";
 import BlogTagService from "../../../../service/BlogTagService";
+import ModalCreateBlogPost from "./ModalCreateBlogPost";
 
 
 const DashboardBlog: React.FC = () => {
@@ -16,6 +17,7 @@ const DashboardBlog: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+    const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
     const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(null);
 
     const blogPostService: BlogPostService = BlogPostService.getInstance();
@@ -92,7 +94,8 @@ const DashboardBlog: React.FC = () => {
     };
 
     const handleCreatePost = () => {
-        console.log('handleCreatePost');
+        //console.log('handleCreatePost');
+        setIsModalCreateOpen(true);
     };
 
     const handleCloseViewModal = () => {
@@ -104,6 +107,10 @@ const DashboardBlog: React.FC = () => {
         setSelectedBlogPost(null);
         setIsModalEditOpen(false);
     };
+
+    const handleCloseCreateModal = () => {
+        setIsModalCreateOpen(false);
+    };  
     
 
     return(
@@ -162,6 +169,16 @@ const DashboardBlog: React.FC = () => {
                     blogPost={selectedBlogPost}
                     isModalEditPostOpen={isModalEditOpen}
                     handleCloseEditPostModal={handleCloseEditModal}
+                    allTags={allTags}
+                    refreshPublishedList={refreshPublishedList}
+                    refreshUnpublishedList={refreshUnpublishedList}
+                    />
+                )}
+
+                {isModalCreateOpen && (
+                    <ModalCreateBlogPost 
+                    isModalCreatePostOpen={isModalCreateOpen}
+                    handleCloseCreatePostModal={handleCloseCreateModal}
                     allTags={allTags}
                     refreshPublishedList={refreshPublishedList}
                     refreshUnpublishedList={refreshUnpublishedList}

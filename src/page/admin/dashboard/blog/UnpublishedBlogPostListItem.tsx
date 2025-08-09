@@ -20,7 +20,12 @@ const UnpublishedBlogPostListItem: React.FC<UnpublishedBlogPostListItemProps> = 
     const blogPostService = BlogPostService.getInstance();
 
     const handleDeletePost = async (blogPostId: number) => {
-        await blogPostService.deletePost(blogPostId);
+        const confirm = window.confirm('Etes-vous sûr(e) de vouloir supprimer post ?');
+        if(!confirm) return;
+        const result = await blogPostService.deleteUnpublishedPost(blogPostId);
+        if (result.success) {
+            await refreshUnpublishedList();
+        }
     };
 
     const handlePublishPost = async (blogPostId: number) => {
