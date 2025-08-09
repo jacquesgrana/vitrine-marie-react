@@ -1,5 +1,5 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import { BlogPost, BlogTag, Nullable } from "../../../../type/indexType";
+import { BlogTag, Nullable } from "../../../../type/indexType";
 import { useState } from "react";
 import BlogPostService from "../../../../service/BlogPostService";
 import FileService from "../../../../service/FileService";
