@@ -1,7 +1,6 @@
 import React from "react";
 import { BlogTag } from "../../../../type/indexType";
 import { Button } from "react-bootstrap";
-import { on } from "events";
 import BlogPostTag from "../../../../common/BlogPostTag";
 
 type BlogTagListItemProps = {
