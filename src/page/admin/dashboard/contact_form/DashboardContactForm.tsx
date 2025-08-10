@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { ContactForm } from '../../../../type/indexType';
 import ContactFormService from '../../../../service/ContactFormService';
 import ContactFormProspectService from '../../../../service/ContactFormProspectService';
@@ -28,42 +28,47 @@ const DashboardContactForm: React.FC = () => {
     }, [contactFormService]);
 
 
-    const refreshList = async () => {
+    const refreshList = useCallback(async () => {
         setIsLoading(true);
         const response = await contactFormService.getContactForms();
         setContactForms(response.data);
         setIsLoading(false);
-    };
+    } , [contactFormService]);
 
-    contactFormProspectService.subscribe(refreshList);
+    useEffect(() => {
+        contactFormProspectService.subscribe(refreshList);
+        return () => {
+            contactFormProspectService.unsubscribe(refreshList);
+        };
+    }, [contactFormProspectService, refreshList]);  
 
-    const onCreateProspect = async (contactForm: ContactForm) => {
+    const onCreateProspect = useCallback( async (contactForm: ContactForm) => {
         //console.log('create prospect : ', contactForm);
         await contactFormProspectService.createProspectFromContactForm(contactForm.id);
         await refreshList();
         await contactFormProspectService.notifySubscribers();
-    };
+    }, [contactFormProspectService, refreshList]);
     
 
-    const onViewContactForm = (contactForm: ContactForm) => {
+    const onViewContactForm = useCallback((contactForm: ContactForm) => {
         //console.log('view contactForm', contactForm);
         setSelectedContactForm(contactForm);
-        setIsModalViewOpen(true);
-    };
+        setIsModalViewOpen(true) 
+    }, []);
 
 
-    const handleCloseViewModal = () => {
+    const handleCloseViewModal = useCallback(() => {
         setIsModalViewOpen(false);
         setSelectedContactForm(null);
-    };
+    } , []);
 
-    const onDeleteContactForm = async (contactForm: ContactForm) => {
+    const onDeleteContactForm = useCallback( async (contactForm: ContactForm) => {
         //console.log('delete contactForm', contactForm);
         const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce formulaire de contact ?');
         if(!confirm) return;
         await contactFormService.deleteContactForm(contactForm.id);
         await refreshList();
-    };
+    } , [contactFormService, refreshList]);
 
     return(
         <>
@@ -73,10 +78,6 @@ const DashboardContactForm: React.FC = () => {
             <div className="dashboard-contact-list-container">
             {isLoading ? (
                 <LoadingSpinner minHeight={120} />
-                /*
-                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 120 }}>
-                    <Spinner animation="border" variant="secondary" />
-                </div>*/
             ) : (
                 contactForms.map((contactForm) => (
                     <DashboardContactFormListItem 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ContactFormProspect } from '../../../../type/indexType';
 import ContactFormProspectService from "../../../../service/ContactFormProspectService";
 import DashboardContactFormProspectListItem from "./DashboardContactFormProspectListItem";
@@ -32,68 +32,67 @@ const DashboardContactFormProspect: React.FC = () => {
     refreshListIn();
     }, [contactFormProspectService]);
 
-    const refreshList = async () => {
+    const refreshList = useCallback(async () => {
         setIsLoading(true);
         const response = await contactFormProspectService.getContactFormProspects();
         setContactFormProspects(response.data);
         setIsLoading(false);
-    };
+    }, [contactFormProspectService]);
 
-    contactFormProspectService.subscribe(refreshList);
+    //contactFormProspectService.subscribe(refreshList);
 
-    const handleCloseViewModal = () => {
+    useEffect(() => {
+        contactFormProspectService.subscribe(refreshList);
+        return () => {
+            contactFormProspectService.unsubscribe(refreshList);
+        };
+    }, [contactFormProspectService, refreshList]);   
+        
+    const handleCloseViewModal = useCallback(() => {
         setIsModalViewOpen(false);
         setSelectedContactFormProspect(null);
-    };
+    }, []);
 
-    const handleCloseEditModal = () => {
+    const handleCloseEditModal = useCallback(() => {
         setIsModalEditOpen(false);
         setSelectedContactFormProspect(null);
-    };
+    }, []);
 
-    const handleCloseCreateModal = () => {
+    const handleCloseCreateModal = useCallback(() => {
         setIsModalCreateOpen(false);
-    }
+    }, []);
 
-    const handleCloseExportModal = () => {
+    const handleCloseExportModal = useCallback(() => {
         setIsModalExportOpen(false);
-    }
+    }, []);
 
-    const onViewContactFormProspect = (contactFormProspect: ContactFormProspect) => {
-        console.log('view contactFormProspect', contactFormProspect);
+    const onViewContactFormProspect = useCallback((contactFormProspect: ContactFormProspect) => {
         setSelectedContactFormProspect(contactFormProspect);
         setIsModalViewOpen(true);
-    };
+    }, []);
 
-    const onDeleteContactFormProspect = async (contactFormProspect: ContactFormProspect) => {
-        console.log('delete contactFormProspect', contactFormProspect);
+    const onDeleteContactFormProspect = useCallback(async (contactFormProspect: ContactFormProspect) => {
         const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce prospect ?');
         if(!confirm) return;
         const result = await contactFormProspectService.deleteProspect(contactFormProspect.id);
         if(result.success) {
-            console.log(result.message);
             await refreshList();
             await contactFormProspectService.notifySubscribers();
         }
-    };
+    }, [contactFormProspectService, refreshList]);
 
-    const onEditContactFormProspect = (contactFormProspect: ContactFormProspect) => {
-        console.log('edit contactFormProspect', contactFormProspect);
+    const onEditContactFormProspect = useCallback((contactFormProspect: ContactFormProspect) => {
         setSelectedContactFormProspect(contactFormProspect);
         setIsModalEditOpen(true);
-    };
+    }, []);
 
-    const onCreateContactFormProspect = () => {
-        console.log('create contactFormProspect');
+    const onCreateContactFormProspect = useCallback(() => {
         setIsModalCreateOpen(true);
-        //setSelectedContactFormProspect(null);
-        //setIsModalEditOpen(true);
-    };
+    }, []);
 
-    const onExportContactFormProspect = () => {
-        console.log('export contactFormProspect');
+    const onExportContactFormProspect = useCallback(() => {
         setIsModalExportOpen(true);
-    };
+    }, []);
 
     return(
         <>
