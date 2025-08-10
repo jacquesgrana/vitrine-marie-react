@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BlogPost, BlogTag } from "../../../../type/indexType";
 import BlogPostService from "../../../../service/BlogPostService";
 import LoadingSpinner from "../../../../common/LoadingSpinner";
@@ -57,43 +57,43 @@ const DashboardBlog: React.FC = () => {
     }, [blogPostService, blogTagService]);
 
     
-    const refreshPublishedList = async () => {
+    const refreshPublishedList = useCallback(async () => {
         setIsLoadingPublished(true);
         await blogPostService.fetchBlogPosts();
         const postsFromService = await blogPostService.getBlogPosts();
         setPublishedBlogPosts(postsFromService);
         setIsLoadingPublished(false);
-    };
+    }, [blogPostService]);
 
-    const refreshUnpublishedList = async () => {
+    const refreshUnpublishedList = useCallback(async () => {
         setIsLoadingUnpublished(true);
         await blogPostService.fetchUnpublishedBlogPosts();
         const postsFromService = await blogPostService.getUnpublishedBlogPosts();
         setUnpublishedBlogPosts(postsFromService);
         setIsLoadingUnpublished(false);
-    };
+    }, [blogPostService]);
 
-    
-    const refreshTags = async () => {
-        //setIsLoading(true);
+    const refreshTags = useCallback(async () => {
         await blogTagService.fetchBlogTags();
         const tagsFromService = await blogTagService.getBlogTags();
         setAllTags(tagsFromService);
-        //setIsLoading(false);
-    };
+    }, [blogTagService]);
 
-    const resfreshAll = async () => {
+
+    const resfreshAll = useCallback(async () => {
         await refreshTags();
         await refreshPublishedList();
         await refreshUnpublishedList();
-    }
+    }, [refreshTags, refreshPublishedList, refreshUnpublishedList]);
+
 
     useEffect(() => {
-    blogTagService.subscribeTagsObservers(resfreshAll);
-    return () => {
-        blogTagService.unsubscribeTagsObservers(resfreshAll);
-    };
-    });
+        blogTagService.subscribeTagsObservers(resfreshAll);
+        return () => {
+            blogTagService.unsubscribeTagsObservers(resfreshAll);
+        };
+    }, [blogTagService, resfreshAll]);
+
 
     
 

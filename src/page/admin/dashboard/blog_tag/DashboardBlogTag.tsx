@@ -71,7 +71,7 @@ const DashboardBlogTag: React.FC = () => {
 
     return(
         <div className='dashboard-carousel-container'>
-            <h4 className='mt-3 mb-3'>Gestion des tags des posts</h4>
+            <h4 className='mt-3 mb-3'>Gestion des tags des articles</h4>
             <button title="Ajouter un tag" className='button-dark-small' onClick={handleCreateTag}>Ajouter</button> 
             <p className="dashboard-carousel-list-title">LISTE DES TAGS DES POSTS</p>
             <div className='dashboard-carousel-list-container'>
