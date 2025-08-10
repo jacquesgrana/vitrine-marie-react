@@ -2,7 +2,7 @@ import React from "react";
 import { BlogPost } from "../../../../type/indexType";
 import BlogPostService from "../../../../service/BlogPostService";
 
-interface BlogPostListItemProps {
+type BlogPostListItemProps = {
     blogPost: BlogPost;
     blogPostsSize: number;
     refreshPublishedList: () => Promise<void>;

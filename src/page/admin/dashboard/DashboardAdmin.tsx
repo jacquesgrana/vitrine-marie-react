@@ -6,6 +6,7 @@ import DashboardCarousel from './carousel/DashboardCarousel';
 import DashboardContactForm from './contact_form/DashboardContactForm';
 import DashboardContactFormProspect from './contact_form_prospect/DashboardContactFormProspect';
 import DashboardBlog from './blog/DashboardBlog';
+import DashboardBlogTag from './blog_tag/DashboardBlogTag';
 
 const DashboardAdmin: React.FC = () => {
     const navigate = useNavigate();
@@ -82,6 +83,7 @@ const DashboardAdmin: React.FC = () => {
             </p>
             <div className='dashboard-main-container'>
                 <DashboardBlog />
+                <DashboardBlogTag />
                 <DashboardCarousel />
                 <DashboardContactForm />
                 <DashboardContactFormProspect />

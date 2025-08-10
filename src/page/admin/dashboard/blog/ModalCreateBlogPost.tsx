@@ -3,6 +3,7 @@ import { BlogTag, Nullable } from "../../../../type/indexType";
 import { useState } from "react";
 import BlogPostService from "../../../../service/BlogPostService";
 import FileService from "../../../../service/FileService";
+import Library from "../../../../library/Library";
 
 type ModalCreateBlogPostProps = {
     isModalCreatePostOpen: boolean,
@@ -99,11 +100,8 @@ const ModalCreateBlogPost: React.FC<ModalCreateBlogPostProps> = (
     const handleChangeTitle = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);
         // Remplacer les caractères accentués par leur équivalent sans accent
-        const newSlug = event.target.value
-            .normalize('NFD') // décompose les caractères accentués
-            .replace(/[\u0300-\u036f]/g, '') // supprime les diacritiques
-            .replace(/\s+/g, '-') // remplace les espaces par des tirets
-            .toLowerCase();
+
+        const newSlug = Library.getSlugFromField(event.target.value);
         //console.log('newSlug', newSlug);
         setSlug(newSlug);
     }
@@ -128,11 +126,11 @@ const ModalCreateBlogPost: React.FC<ModalCreateBlogPostProps> = (
 
     return(
        <Modal 
-                size="lg"
-                className="modal-dark"
-                show={isModalCreatePostOpen} 
-                onHide={handleCloseCreatePostModal} 
-                centered
+            size="lg"
+            className="modal-dark"
+            show={isModalCreatePostOpen} 
+            onHide={handleCloseCreatePostModal} 
+            centered
         >
             <Modal.Header className="modal-dark-header">
                 <Modal.Title className="modal-dark-header-title text-secondary">Créer un nouveau post</Modal.Title>

@@ -3,6 +3,7 @@ import { BlogPost, BlogTag, Nullable } from "../../../../type/indexType"
 import { useState } from "react";
 import FileService from "../../../../service/FileService";
 import BlogPostService from "../../../../service/BlogPostService";
+import Library from "../../../../library/Library";
 
 type ModalEditPostBlogProps = {
     isModalEditPostOpen: boolean,
@@ -114,17 +115,14 @@ const ModalEditPostBlog: React.FC<ModalEditPostBlogProps> = ({
         //console.log('Slug:', slug);
     }*/
 
-const handleChangeTitle = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-    // Remplacer les caractères accentués par leur équivalent sans accent
-    const newSlug = event.target.value
-        .normalize('NFD') // décompose les caractères accentués
-        .replace(/[\u0300-\u036f]/g, '') // supprime les diacritiques
-        .replace(/\s+/g, '-') // remplace les espaces par des tirets
-        .toLowerCase();
-    console.log('newSlug', newSlug);
-    setSlug(newSlug);
-}
+    const handleChangeTitle = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(event.target.value);
+        // Remplacer les caractères accentués par leur équivalent sans accent
+        
+        const newSlug = Library.getSlugFromField(event.target.value);
+        console.log('newSlug', newSlug);
+        setSlug(newSlug);
+    }
 
 
     const handleChangeIntro = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -264,12 +262,12 @@ const handleChangeTitle = async (event: React.ChangeEvent<HTMLInputElement>) => 
                 </Form>
              </Modal.Body>
              <Modal.Footer className="modal-dark-footer">
-                <button 
+                <Button 
                     className="button-dark-small" 
                     onClick={handleCloseEditPostModal}
                 >
                     Fermer
-                </button>
+                </Button>
             </Modal.Footer>
         </Modal>
     )
