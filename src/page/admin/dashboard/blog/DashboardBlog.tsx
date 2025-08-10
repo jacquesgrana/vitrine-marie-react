@@ -25,7 +25,7 @@ const DashboardBlog: React.FC = () => {
     const blogTagService: BlogTagService = BlogTagService.getInstance();
 
     
-
+    
     useEffect(() => {
         const refreshPublishedListIn = async () => {
             setIsLoadingPublished(true);
@@ -51,10 +51,9 @@ const DashboardBlog: React.FC = () => {
             //setIsLoading(false);
         }
 
+        refreshTagsIn();
         refreshPublishedListIn();
         refreshUnpublishedListIn();
-        refreshTagsIn();
-        
     }, [blogPostService, blogTagService]);
 
     
@@ -89,7 +88,13 @@ const DashboardBlog: React.FC = () => {
         await refreshUnpublishedList();
     }
 
+    useEffect(() => {
     blogTagService.subscribeTagsObservers(resfreshAll);
+    return () => {
+        blogTagService.unsubscribeTagsObservers(resfreshAll);
+    };
+    });
+
     
 
     const onViewPost = (blogPost: BlogPost) => {
