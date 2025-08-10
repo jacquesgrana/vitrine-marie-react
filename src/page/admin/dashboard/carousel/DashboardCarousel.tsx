@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PhotoSlide } from "../../../../type/indexType";
 import PhotoCarouselService from "../../../../service/PhotoCarouselService";
 import DashboardCarouselListItem from "./DashboardCarouselListItem";
@@ -32,52 +32,50 @@ const DashboardCarousel: React.FC = () => {
         refreshListIn();
     }, [photoCarouselService]);
 
-    const refreshList = async () => {
+    const refreshList = useCallback(async () => {
         setIsLoading(true);
         const slidesFromService = await photoCarouselService.getSlides();
         setSlides(slidesFromService);
         setIsLoading(false);
-    };
+    }, [photoCarouselService]);
 
-    // --- NOUVELLES FONCTIONS POUR GÉRER LA MODALE ---
-    const handleViewSlide = (slide: PhotoSlide) => {
+    const handleViewSlide = useCallback((slide: PhotoSlide) => {
         setSelectedSlide(slide);
         setIsModalViewOpen(true);
-    };
+    }, []);
 
-    const handleEditSlide = (slide: PhotoSlide) => {
+    const handleEditSlide = useCallback((slide: PhotoSlide) => {
         setSelectedSlide(slide);
         setIsModalEditOpen(true);
-    };
+    }, []);
 
-    const handleEditImage = (slide: PhotoSlide) => {
-        //console.log('Edit image slide :', slide);
+    const handleEditImage = useCallback((slide: PhotoSlide) => {
         setSelectedSlide(slide);
         setIsModalEditImageOpen(true);
-    };
+    }, []);
 
-    const handleCreateSlide = () => {
+    const handleCreateSlide = useCallback(() => {
         setIsModalCreateOpen(true);
-    };
+    }, []);
 
-    const handleCloseViewModal = () => {
+    const handleCloseViewModal = useCallback(() => {
         setIsModalViewOpen(false);
         setSelectedSlide(null);
-    };
+    }, []);
 
-    const handleCloseEditModal = () => {
+    const handleCloseEditModal = useCallback(() => {
         setIsModalEditOpen(false);
         setSelectedSlide(null);
-    };
+    }, []);
 
-    const handleCloseEditImageModal = () => {
+    const handleCloseEditImageModal = useCallback(() => {
         setIsModalEditImageOpen(false);
         setSelectedSlide(null);
-    };
+    }, []);
 
-    const handleCloseCreateModal = () => {
+    const handleCloseCreateModal = useCallback(() => {
         setIsModalCreateOpen(false);
-    };
+    }, []);
 
     return(
         <div className='dashboard-carousel-container'>
