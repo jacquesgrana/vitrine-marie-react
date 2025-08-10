@@ -42,6 +42,7 @@ const BlogPostListItem: React.FC<BlogPostListItemProps> = ({
         await refreshPublishedList();
     };
 
+    // TODO passer dans le dashboard parent
     const handleDeletePost = async (blogPostId: number) => {
         const confirm = window.confirm('Etes-vous sûr(e) de vouloir supprimer post ?');
         if(!confirm) return;

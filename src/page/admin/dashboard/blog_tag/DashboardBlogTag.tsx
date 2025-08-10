@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BlogTag, Nullable } from "../../../../type/indexType";
 import BlogTagService from "../../../../service/BlogTagService";
 import LoadingSpinner from "../../../../common/LoadingSpinner";
@@ -27,47 +27,41 @@ const DashboardBlogTag: React.FC = () => {
     }, [blogTagService]);
 
     
-    const refreshTags = async () => {
+    const refreshTags = useCallback(async () => {
         setIsLoading(true);
         await blogTagService.fetchBlogTags();
         const tagsFromService = await blogTagService.getBlogTags();
         setTags(tagsFromService);
         setIsLoading(false);
-    }
-    
+    }, [blogTagService]); // Ajoute blogTagService si c'est une instance stable, sinon adapte
 
-    const handleCreateTag = () => {
-       console.log('handleCreateTag');
-       setIsModalCreateOpen(true);
-    };
+    const handleCreateTag = useCallback(() => {
+        setIsModalCreateOpen(true);
+    }, []);
 
-    const onEditTag = (tag: BlogTag) => {
-        console.log('edit tag', tag);
+    const onEditTag = useCallback((tag: BlogTag) => {
         setSelectedTag(tag);
         setIsModalEditOpen(true);
-    };
+    }, []);
 
-    const onDeleteTag = async (tagId: number) => {
-        console.log('delete tag', tagId);
-        const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce tag ?');
-        if(!confirm) return;
+    const onDeleteTag = useCallback(async (tagId: number) => {
+        const confirmDelete = window.confirm('Etes-vous sur de vouloir supprimer ce tag ?');
+        if (!confirmDelete) return;
         const result = await blogTagService.deleteBlogTag(tagId);
-        if(result.success) {
-            console.log(result.message);
+        if (result.success) {
             await refreshTags();
             blogTagService.notifyTagsSubscribers();
         }
-        //refreshTags();
-    };
+    }, [blogTagService, refreshTags]); // Ajoute refreshTags et blogTagService comme dépendances
 
-    const handleCloseEditModal = () => {
+    const handleCloseEditModal = useCallback(() => {
         setSelectedTag(null);
         setIsModalEditOpen(false);
-    };
+    }, []);
 
-    const handleCloseCreateModal = () => {
+    const handleCloseCreateModal = useCallback(() => {
         setIsModalCreateOpen(false);
-    }
+    }, []);
 
     return(
         <div className='dashboard-carousel-container'>

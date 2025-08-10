@@ -97,36 +97,33 @@ const DashboardBlog: React.FC = () => {
 
     
 
-    const onViewPost = (blogPost: BlogPost) => {
-        //console.log('onViewPost', blogPost);
+    const onViewPost = useCallback((blogPost: BlogPost) => {
         setSelectedBlogPost(blogPost);
         setIsModalViewOpen(true);
-    };
+    }, []);
 
-    const onEditPost = (blogPost: BlogPost) => {
-        //console.log('onEditPost', blogPost);
+    const onEditPost = useCallback((blogPost: BlogPost) => {
         setSelectedBlogPost(blogPost);
         setIsModalEditOpen(true);
-    };
+    }, []);
 
-    const handleCreatePost = () => {
-        //console.log('handleCreatePost');
+    const handleCreatePost = useCallback(() => {
         setIsModalCreateOpen(true);
-    };
+    }, []);
 
-    const handleCloseViewModal = () => {
+    const handleCloseViewModal = useCallback(() => {
         setSelectedBlogPost(null);
         setIsModalViewOpen(false);
-    };
+    }, []);
 
-    const handleCloseEditModal = () => {
+    const handleCloseEditModal = useCallback(() => {
         setSelectedBlogPost(null);
         setIsModalEditOpen(false);
-    };
+    }, []);
 
-    const handleCloseCreateModal = () => {
+    const handleCloseCreateModal = useCallback(() => {
         setIsModalCreateOpen(false);
-    };  
+    }, []); 
     
 
     return(
