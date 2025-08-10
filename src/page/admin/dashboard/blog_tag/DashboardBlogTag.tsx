@@ -47,8 +47,17 @@ const DashboardBlogTag: React.FC = () => {
         setIsModalEditOpen(true);
     };
 
-    const onDeleteTag = (tagId: number) => {
+    const onDeleteTag = async (tagId: number) => {
         console.log('delete tag', tagId);
+        const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce tag ?');
+        if(!confirm) return;
+        const result = await blogTagService.deleteBlogTag(tagId);
+        if(result.success) {
+            console.log(result.message);
+            await refreshTags();
+            blogTagService.notifyTagsSubscribers();
+        }
+        //refreshTags();
     };
 
     const handleCloseEditModal = () => {

@@ -1,6 +1,6 @@
 import Config from "../config/Config";
 import ToastFacade from "../facade/ToastFacade";
-import { BlogTag } from "../type/indexType";
+import { ApiResponse, BlogTag } from "../type/indexType";
 import SecurityService from "./SecurityService";
 
 class BlogTagService {
@@ -129,6 +129,34 @@ class BlogTagService {
         catch (error) {
             console.error('Error creating blog tag:', error);
             return {success: false, message: error}
+        }
+    }
+
+    public async deleteBlogTag(id: number): Promise<ApiResponse> {
+        try {
+            const response = await fetch(Config.DELETE_BLOG_TAG_URL + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.securityService.getToken()}`
+                }
+            });
+            const result = await response.json();
+            ToastFacade.showSuccessToast(result.message);
+            return {
+                success: result.success, 
+                message: result.message,
+                data: result.data
+            }
+        } 
+        catch (error: any) {
+            console.error('Error deleting blog tag:', error);
+            return {
+                success: false, 
+                message: error,
+                data: null
+            }
         }
     }
 }

@@ -14,7 +14,8 @@ const DashboardBlog: React.FC = () => {
     const [publishedBlogPosts, setPublishedBlogPosts] = useState<BlogPost[]>([]);
     const [unpublishedBlogPosts, setUnpublishedBlogPosts] = useState<BlogPost[]>([]);
     const [allTags, setAllTags] = useState<BlogTag[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingPublished, setIsLoadingPublished] = useState(true);
+    const [isLoadingUnpublished, setIsLoadingUnpublished] = useState(true);
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [isModalEditOpen, setIsModalEditOpen] = useState(false);
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
@@ -27,19 +28,19 @@ const DashboardBlog: React.FC = () => {
 
     useEffect(() => {
         const refreshPublishedListIn = async () => {
-            setIsLoading(true);
+            setIsLoadingPublished(true);
             await blogPostService.fetchBlogPosts();
             const postsFromService = await blogPostService.getBlogPosts();
             setPublishedBlogPosts(postsFromService);
-            setIsLoading(false);
+            setIsLoadingPublished(false);
         }
 
         const refreshUnpublishedListIn = async () => {
-            setIsLoading(true);
+            setIsLoadingUnpublished(true);
             await blogPostService.fetchUnpublishedBlogPosts();
             const postsFromService = await blogPostService.getUnpublishedBlogPosts();
             setUnpublishedBlogPosts(postsFromService);
-            setIsLoading(false);
+            setIsLoadingUnpublished(false);
         }
 
         const refreshTagsIn = async () => {
@@ -58,19 +59,19 @@ const DashboardBlog: React.FC = () => {
 
     
     const refreshPublishedList = async () => {
-        setIsLoading(true);
+        setIsLoadingPublished(true);
         await blogPostService.fetchBlogPosts();
         const postsFromService = await blogPostService.getBlogPosts();
         setPublishedBlogPosts(postsFromService);
-        setIsLoading(false);
+        setIsLoadingPublished(false);
     };
 
     const refreshUnpublishedList = async () => {
-        setIsLoading(true);
+        setIsLoadingUnpublished(true);
         await blogPostService.fetchUnpublishedBlogPosts();
         const postsFromService = await blogPostService.getUnpublishedBlogPosts();
         setUnpublishedBlogPosts(postsFromService);
-        setIsLoading(false);
+        setIsLoadingUnpublished(false);
     };
 
     
@@ -82,7 +83,13 @@ const DashboardBlog: React.FC = () => {
         //setIsLoading(false);
     };
 
-    blogTagService.subscribeTagsObservers(refreshTags);
+    const resfreshAll = async () => {
+        await refreshTags();
+        await refreshPublishedList();
+        await refreshUnpublishedList();
+    }
+
+    blogTagService.subscribeTagsObservers(resfreshAll);
     
 
     const onViewPost = (blogPost: BlogPost) => {
@@ -123,7 +130,7 @@ const DashboardBlog: React.FC = () => {
             <button title="Ajouter un post" className='button-dark-small' onClick={handleCreatePost}>Ajouter</button> 
             <p className="dashboard-carousel-list-title">LISTE DES ARTICLES PUBLIES</p>
             <div className='dashboard-carousel-list-container'>
-                {isLoading ? (
+                {isLoadingPublished ? (
                     <div className="photo-carousel-outer-container">
                         <LoadingSpinner minHeight={120}/>
                     </div>
@@ -144,7 +151,7 @@ const DashboardBlog: React.FC = () => {
             </div>
             <p className="dashboard-carousel-list-title">LISTE DES ARTICLES NON PUBLIES</p>
             <div className='dashboard-carousel-list-container'>
-                {isLoading ? (
+                {isLoadingUnpublished ? (
                     <div className="photo-carousel-outer-container">
                         <LoadingSpinner minHeight={120}/>
                     </div>
