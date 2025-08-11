@@ -1,6 +1,7 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { PhotoSlide } from "../../../../type/indexType";
 import PhotoCarouselService from "../../../../service/PhotoCarouselService";
+import { useState } from "react";
 
 interface ModalEditSlideProps {
     isModalEditOpen: boolean,
@@ -17,6 +18,7 @@ const ModalEditSlide: React.FC<ModalEditSlideProps> = (
         refreshList
     }
 ) => {
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
     const photoCarouselService = PhotoCarouselService.getInstance();
 
     if (!selectedSlide) {
@@ -31,14 +33,16 @@ const ModalEditSlide: React.FC<ModalEditSlideProps> = (
         const title = formData.get('title') as string;
         const description = formData.get('description') as string;
         const alt = formData.get('alt') as string;
-        console.log(title, description, alt, selectedSlide.id);
+        //console.log(title, description, alt, selectedSlide.id);
         // appeler méthode asynchrone du ContactFormService pour envoyer le formulaire et récupérer la réponse
+        setIsWaiting(true);
         const result = await photoCarouselService.updateSlideFromForm(selectedSlide.id, title, description, alt);
         // TODO gérer les result.success et result.message
         if(result.success) {
-            console.log(result.message);
+            //console.log(result.message);
             await refreshList();
         }
+        setIsWaiting(false);
         handleCloseEditModal();
     };
 
@@ -88,7 +92,11 @@ const ModalEditSlide: React.FC<ModalEditSlideProps> = (
                         required
                             />
                     </Form.Group>
-                    <Button title="Valider le slide" className='button-dark-small no-border' type="submit" disabled={false}>
+                    <Button 
+                    title="Valider le slide" 
+                    className='button-dark-small no-border' 
+                    type="submit" 
+                    disabled={isWaiting}>
                         Valider
                     </Button>
                 </Form>

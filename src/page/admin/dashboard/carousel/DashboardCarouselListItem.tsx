@@ -1,5 +1,6 @@
 import { PhotoSlide } from "../../../../type/indexType"; // Assurez-vous que le chemin d'importation est correct
 import PhotoCarouselService from '../../../../service/PhotoCarouselService';
+import { Button } from "react-bootstrap";
 
 interface DashboardCarouselListItemProps {
   slide: PhotoSlide;
@@ -8,29 +9,48 @@ interface DashboardCarouselListItemProps {
   onViewSlide: (slide: PhotoSlide) => void;
   onEditSlide: (slide: PhotoSlide) => void;
   onEditImage: (slide: PhotoSlide) => void;
+  isWaiting: boolean;
+  setIsWaiting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ slide, slidesSize, refreshList, onViewSlide, onEditSlide, onEditImage }) => {
+const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ 
+    slide, 
+    slidesSize, 
+    refreshList, 
+    onViewSlide, 
+    onEditSlide, 
+    onEditImage,
+    isWaiting,
+    setIsWaiting
+ }) => {
     const photoCarouselService = PhotoCarouselService.getInstance();
 
     const handleSetSlideUp = async (id: number) => {
+        setIsWaiting(true);
         await photoCarouselService.setSlideUp(id);
         await refreshList();
+        setIsWaiting(false);
     };
 
     const handleSetSlideDown = async (id: number) => {
+        setIsWaiting(true);
         await photoCarouselService.setSlideDown(id);
         await refreshList();
+        setIsWaiting(false);
     };
 
     const handleSetSlideTop = async (id: number) => {
+        setIsWaiting(true);
         await photoCarouselService.setSlideTop(id);
         await refreshList();
+        setIsWaiting(false);
     };
 
     const handleSetSlideBottom = async (id: number) => {
+        setIsWaiting(true);
         await photoCarouselService.setSlideBottom(id);
         await refreshList();
+        setIsWaiting(false);
     };
     
     const handleViewSlide = async () => {
@@ -54,8 +74,10 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
         //console.log('Delete slide :', slide.id);
         const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce slide ?');
         if(!confirm) return;
+        setIsWaiting(true);
         await photoCarouselService.deleteSlide(slide.id);
         await refreshList();
+        setIsWaiting(false);
     }
     
 
@@ -70,55 +92,62 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
                 <p className='text-small-white'>{slide.description}</p>
             </div>
             <div className='dashboard-carousel-list-item-button-container'>
-                <button 
+                <Button 
                 title="Bouger le slide vers le haut"
                 type='button' 
                 className='button-dark-very-small' 
                 onClick={() => handleSetSlideUp(slide.id)}
-                disabled={slide.rank === 1}
-                >↑</button>
-                <button 
+                disabled={isWaiting || slide.rank === 1}
+                >↑</Button>
+                <Button 
                 title="Bouger le slide vers le bas"
                 type='button' 
                 className='button-dark-very-small' 
                 onClick={() => handleSetSlideDown(slide.id)}
-                disabled={slide.rank === slidesSize}
-                >↓</button>
-                <button 
+                disabled={isWaiting || slide.rank === slidesSize}
+                >↓</Button>
+                <Button 
                 title="Bouger le slide en haut de la liste"
                 type='button' 
                 className='button-dark-very-small' 
                 onClick={() => handleSetSlideTop(slide.id)}
-                disabled={slide.rank === 1}
-                >↖</button>
-                <button 
+                disabled={isWaiting || slide.rank === 1}
+                >↖</Button>
+                <Button 
                 title="Bouger le slide en bas de la liste"
                 type='button' 
                 className='button-dark-very-small' 
                 onClick={() => handleSetSlideBottom(slide.id)}
-                disabled={slide.rank === slidesSize}
-                >↘</button>
-                <button 
+                disabled={isWaiting || slide.rank === slidesSize}
+                >↘</Button>
+                <Button 
                 title="Voir le slide"
                 type='button' 
                 onClick={() => handleViewSlide()} 
                 className='button-dark-very-small'
-                >👁️</button>
-                <button 
+                disabled={isWaiting}
+                >👁️</Button>
+                <Button 
                 title="Modifier les informations du slide" 
                 type='button' 
                 onClick={() => handleEditSlide()} 
-                className='button-dark-very-small'>🖊️</button>
-                <button 
+                className='button-dark-very-small'
+                disabled={isWaiting}
+                >🖊️</Button>
+                <Button 
                 title="Modifier l'image du slide" 
                 type='button' 
                 onClick={() => handleEditImageSlide()} 
-                className='button-dark-very-small'>🖼️</button>
-                <button 
+                className='button-dark-very-small'
+                disabled={isWaiting}
+                >🖼️</Button>
+                <Button 
                 title="Supprimer le slide" 
                 type='button' 
                 onClick={() => handleDeleteSlide()}
-                className='button-dark-very-small'>✖</button>
+                className='button-dark-very-small'
+                disabled={isWaiting}
+                >✖</Button>
             </div>
       </div>
     </div>

@@ -18,6 +18,7 @@ const DashboardCarousel: React.FC = () => {
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
     const [selectedSlide, setSelectedSlide] = useState<PhotoSlide | null>(null);
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
     const photoCarouselService = PhotoCarouselService.getInstance();
     
@@ -84,10 +85,6 @@ const DashboardCarousel: React.FC = () => {
             <p className="dashboard-carousel-list-title">LISTE DES SLIDES</p>
             <div className='dashboard-carousel-list-container'>
             {isLoading ? (
-                /*
-                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 120 }}>
-                    <Spinner animation="border" variant="secondary" />
-                </div>*/
                 <LoadingSpinner minHeight={120} />
                     ) : (
                         <>
@@ -100,6 +97,8 @@ const DashboardCarousel: React.FC = () => {
                                     onViewSlide={handleViewSlide}
                                     onEditSlide={handleEditSlide}
                                     onEditImage={handleEditImage}
+                                    isWaiting={isWaiting}
+                                    setIsWaiting={setIsWaiting}
                                 />
                             ))}
                         </>

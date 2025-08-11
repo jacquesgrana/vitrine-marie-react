@@ -21,10 +21,11 @@ const ModalCreateSlide: React.FC<ModalCreateSlideProps> = (
     const photoCarouselService = PhotoCarouselService.getInstance();
     const fileService = FileService.getInstance();
 
-
     const [loadedImage, setLoadedImage] = useState<string | null>(null);
     const [imageName, setImageName] = useState<string | null>(null);
     const isNewImageRef = useRef<boolean>(false);
+    
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -40,12 +41,14 @@ const ModalCreateSlide: React.FC<ModalCreateSlideProps> = (
         const alt = formData.get('alt') as string;
         console.log(title, description, alt);
         try {
+            setIsWaiting(true);
             const fileToSend = FileService.dataURLtoFile(loadedImage, imageName);
             //console.log(fileToSend.name, fileToSend.size, fileToSend.type);
 
             await photoCarouselService.createSlideFromForm(title, description, alt, fileToSend);
             
             refreshList();
+            setIsWaiting(false);
             handleCloseCreateModal();
         } 
         catch (error) {
@@ -161,10 +164,16 @@ const ModalCreateSlide: React.FC<ModalCreateSlideProps> = (
                         className="button-dark-small" 
                         type="button"
                         onClick={handleLoadImage}
+                        disabled={isWaiting}
                         >
                             Charger une image
                         </Button>
-                        <Button title="Valider le slide" className='button-dark-small no-border' type="submit" disabled={!isNewImageRef.current}>
+                        <Button 
+                        title="Valider le slide" 
+                        className='button-dark-small no-border' 
+                        type="submit" 
+                        disabled={isWaiting || !isNewImageRef.current}
+                        >
                             Valider
                         </Button>
                     </div>

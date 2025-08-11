@@ -1,4 +1,4 @@
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import PhotoCarouselService from "../../../../service/PhotoCarouselService";
 import { PhotoSlide } from "../../../../type/indexType"
 import { useRef, useState } from "react";
@@ -22,6 +22,8 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
     const [loadedImage, setLoadedImage] = useState<string | null>(null);
     const [imageName, setImageName] = useState<string | null>(null);
     const isNewImageRef = useRef<boolean>(false);
+    
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
     const photoCarouselService = PhotoCarouselService.getInstance();
     const fileService = FileService.getInstance();
@@ -40,12 +42,14 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
         }
 
         try {
+            setIsWaiting(true);
             const fileToSend = FileService.dataURLtoFile(loadedImage, imageName);
             //console.log(fileToSend.name, fileToSend.size, fileToSend.type);
 
             await photoCarouselService.updateSlideImageFromForm(selectedSlide.id, fileToSend);
 
             refreshList();
+            setIsWaiting(false);
             handleCloseImageModal();
         } 
         catch (error) {
@@ -137,21 +141,22 @@ const ModalEditImage: React.FC<ModalEditImageProps> = (
                 />
                 <p className="modal-dark-body-text text-medium-secondary"><strong>Nom du fichier :</strong> {imageName || selectedSlide.image}</p>
                 <div className="edit-image-button-container">
-                    <button 
+                    <Button 
                         className="button-dark-small" 
                         type="button"
                         onClick={handleLoadImage}
+                        disabled={isWaiting}
                     >
                         Charger
-                    </button>
-                    <button 
+                    </Button>
+                    <Button 
                         className="button-dark-small" 
                         type="button"
                         onClick={handleSubmit}
-                        disabled={!isNewImageRef.current}
+                        disabled={isWaiting || !isNewImageRef.current}
                     >
                         Valider
-                    </button>
+                    </Button>
                 </div>
 
             </Modal.Body>
