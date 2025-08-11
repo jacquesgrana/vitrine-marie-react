@@ -25,6 +25,7 @@ const ModalEditBlogTag: React.FC<ModalEditBlogTagProps> = (
     const [slug, setSlug] = useState<string>(selectedBlogTag.slug);
     const [name, setName] = useState<string>(selectedBlogTag.name);
     const [isNewSlug, setIsNewSlug] = useState<boolean>(false);
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
     //const isNewSlugRef = useRef<boolean>(false);   
     if(!selectedBlogTag) {
         return null;
@@ -33,6 +34,7 @@ const ModalEditBlogTag: React.FC<ModalEditBlogTagProps> = (
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //console.log('submit');
+        setIsWaiting(true);
         const result = await blogTagService.updateBlogTagFromForm(selectedBlogTag.id, name, slug);
 
         if(result.success) {
@@ -40,7 +42,7 @@ const ModalEditBlogTag: React.FC<ModalEditBlogTagProps> = (
             await refreshTags();
             blogTagService.notifyTagsSubscribers();
         }
-
+        setIsWaiting(false);
         handleCloseEditModal();
     }
 
@@ -108,7 +110,7 @@ const ModalEditBlogTag: React.FC<ModalEditBlogTagProps> = (
                     <Button 
                     type="submit" 
                     className="button-dark-small" 
-                    disabled={!name || !isNewSlug || isUpdatingSlug}
+                    disabled={isWaiting || !name || !isNewSlug || isUpdatingSlug}
                     >Valider</Button>
                 </Form>  
             </Modal.Body>

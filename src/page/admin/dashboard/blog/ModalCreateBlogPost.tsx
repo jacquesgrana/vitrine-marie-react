@@ -18,7 +18,7 @@ const ModalCreateBlogPost: React.FC<ModalCreateBlogPostProps> = (
         isModalCreatePostOpen,
         handleCloseCreatePostModal,
         allTags,
-        refreshPublishedList,
+        //refreshPublishedList,
         refreshUnpublishedList
     }
 ) => {
@@ -31,6 +31,7 @@ const ModalCreateBlogPost: React.FC<ModalCreateBlogPostProps> = (
     const [selectedTags, setSelectedTags] = useState<BlogTag[]>([]);
     const [loadedImage, setLoadedImage] = useState<Nullable<string>>(null);
     const [imageName, setImageName] = useState<Nullable<string>>(null);
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
     const handleLoadImage = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -84,7 +85,7 @@ const ModalCreateBlogPost: React.FC<ModalCreateBlogPostProps> = (
             alert('Veuillez remplir tous les champs.');
             return;
         }
-
+        setIsWaiting(true);
         const fileToSend = FileService.dataURLtoFile(loadedImage, imageName);
         const result = await blogPostService.createPostFromForm(slug, title, intro, text, tags, fileToSend);
         // TODO gérer les result.success et result.message
@@ -93,6 +94,7 @@ const ModalCreateBlogPost: React.FC<ModalCreateBlogPostProps> = (
             //await refreshPublishedList();
             await refreshUnpublishedList();
         }
+        setIsWaiting(false);
         handleCloseCreatePostModal();
         
     }
@@ -234,6 +236,7 @@ const ModalCreateBlogPost: React.FC<ModalCreateBlogPostProps> = (
                                 className="button-dark-small" 
                                 type="button"
                                 onClick={handleLoadImage}
+                                disabled={isWaiting}
                             >
                                 Charger
                             </Button>
@@ -243,7 +246,7 @@ const ModalCreateBlogPost: React.FC<ModalCreateBlogPostProps> = (
                     title="Valider le post" 
                     className='button-dark-small no-border' 
                     type="submit" 
-                    disabled={!loadedImage || title.length === 0 || intro.length === 0 || text.length === 0 || selectedTags.length === 0}>
+                    disabled={isWaiting || !loadedImage || title.length === 0 || intro.length === 0 || text.length === 0 || selectedTags.length === 0}>
                         Valider
                     </Button>
                 </Form>
@@ -253,6 +256,7 @@ const ModalCreateBlogPost: React.FC<ModalCreateBlogPostProps> = (
                     title="Fermer"
                     className="button-dark-small" 
                     onClick={handleCloseCreatePostModal}
+                    //disabled={isWaiting}
                 >
                     Fermer
                 </Button>

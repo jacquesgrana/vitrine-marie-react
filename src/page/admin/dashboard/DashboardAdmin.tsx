@@ -63,7 +63,7 @@ const DashboardAdmin: React.FC = () => {
 
         return () => clearInterval(interval); 
         */
-    }, [navigate, isLoading, securityService]);
+    }, [navigate, securityService]);
 
     if (isLoading) {
         return <div>Chargement en cours...</div>;

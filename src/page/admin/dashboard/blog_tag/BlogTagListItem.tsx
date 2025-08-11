@@ -7,14 +7,17 @@ type BlogTagListItemProps = {
     tag: BlogTag;
     onEditTag: (tag: BlogTag) => void;
     onDeleteTag: (tagId: number) => void;
-    refreshTags: () => void;
+    //refreshTags: () => void;
+    isWaiting: boolean;
+    //setIsWaiting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BlogTagListItem: React.FC<BlogTagListItemProps> = ({
      tag,
      onEditTag,
      onDeleteTag,
-     refreshTags
+     //refreshTags,
+     isWaiting
     }) => {
 
     const handleEditTag = (tag: BlogTag) => {
@@ -42,12 +45,16 @@ const BlogTagListItem: React.FC<BlogTagListItemProps> = ({
                     title="Modifier le tag" 
                     type='button' 
                     onClick={() => handleEditTag(tag)} 
-                    className='button-dark-very-small'>🖊️</Button>
+                    className='button-dark-very-small'
+                    disabled={isWaiting}
+                    >🖊️</Button>
                     <Button 
                     title="Supprimer le tag" 
                     type='button' 
                     onClick={() => handleDeleteTag(tag.id)}
-                    className='button-dark-very-small'>✖</Button>
+                    className='button-dark-very-small'
+                    disabled={isWaiting}
+                    >✖</Button>
                 </div> 
             </div>
         </div>

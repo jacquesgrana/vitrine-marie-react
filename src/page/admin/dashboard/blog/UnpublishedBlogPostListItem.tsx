@@ -1,6 +1,7 @@
 import React from "react";
 import { BlogPost } from "../../../../type/indexType";
 import BlogPostService from "../../../../service/BlogPostService";
+import { Button } from "react-bootstrap";
 
 interface UnpublishedBlogPostListItemProps {
     blogPost: BlogPost;
@@ -8,6 +9,8 @@ interface UnpublishedBlogPostListItemProps {
     refreshUnpublishedList: () => Promise<void>;
     onViewPost: (blogPost: BlogPost) => void;
     onEditPost: (blogPost: BlogPost) => void;
+    isWaiting: boolean;
+    setIsWaiting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UnpublishedBlogPostListItem: React.FC<UnpublishedBlogPostListItemProps> = ({
@@ -15,23 +18,29 @@ const UnpublishedBlogPostListItem: React.FC<UnpublishedBlogPostListItemProps> = 
     refreshPublishedList,
     refreshUnpublishedList,
     onViewPost,
-    onEditPost
+    onEditPost,
+    isWaiting,
+    setIsWaiting
 }) => {
     const blogPostService = BlogPostService.getInstance();
 
     const handleDeletePost = async (blogPostId: number) => {
         const confirm = window.confirm('Etes-vous sûr(e) de vouloir supprimer post ?');
         if(!confirm) return;
+        setIsWaiting(true);
         const result = await blogPostService.deleteUnpublishedPost(blogPostId);
         if (result.success) {
             await refreshUnpublishedList();
         }
+        setIsWaiting(false);
     };
 
     const handlePublishPost = async (blogPostId: number) => {
+        setIsWaiting(true);
         await blogPostService.publishPost(blogPostId);
         await refreshPublishedList();
         await refreshUnpublishedList();
+        setIsWaiting(false);
     };
 
     const handleViewPost = async () => {
@@ -61,27 +70,34 @@ const UnpublishedBlogPostListItem: React.FC<UnpublishedBlogPostListItemProps> = 
                     <p className="text-small-white dashboard-carousel-list-item-text"><strong><span className='text-small-secondary'>Auteur : </span></strong>{blogPost.author.firstName} {blogPost.author.name}</p>
                 </div>
                 <div className='dashboard-carousel-list-item-button-container'>
-                    <button 
+                    <Button 
                     title="Voir le post"
                     type='button' 
                     onClick={() => handleViewPost()} 
                     className='button-dark-very-small'
-                    >👁️</button>
-                    <button 
+                    disabled={isWaiting}
+                    >👁️</Button>
+                    <Button 
                     title="Modifier le post" 
                     type='button' 
                     onClick={() => handleEditPost()} 
-                    className='button-dark-very-small'>🖊️</button>
-                    <button 
+                    className='button-dark-very-small'
+                    disabled={isWaiting}
+                    >🖊️</Button>
+                    <Button 
                     title="Supprimer le post" 
                     type='button' 
                     onClick={() => handleDeletePost(blogPost.id)}
-                    className='button-dark-very-small'>✖</button>
-                    <button 
+                    className='button-dark-very-small'
+                    disabled={isWaiting}
+                    >✖</Button>
+                    <Button 
                     title="Publier le post" 
                     type='button' 
                     onClick={() => handlePublishPost(blogPost.id)}
-                    className='button-dark-very-small'>📢</button>
+                    className='button-dark-very-small'
+                    disabled={isWaiting}
+                    >📢</Button>
                 </div>
             </div>
 

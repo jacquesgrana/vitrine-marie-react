@@ -31,6 +31,7 @@ const ModalEditPostBlog: React.FC<ModalEditPostBlogProps> = ({
     const [selectedTags, setSelectedTags] = useState<BlogTag[]>(blogPost.tags);
     const [imageName, setImageName] = useState<string>(blogPost.imageName);
     const [loadedImage, setLoadedImage] = useState<Nullable<string>>(null);
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
     if(!blogPost) {
         return null;
@@ -74,7 +75,7 @@ const ModalEditPostBlog: React.FC<ModalEditPostBlogProps> = ({
         if (!loadedImage) {
             console.log('No image selected');
             //console.log(imageName);
-            
+            setIsWaiting(true);
             const result = await blogPostService.updatePostFromForm(blogPost.id, slug, title, intro, text, tags);
             // TODO gérer les result.success et result.message
             if(result.success) {
@@ -82,9 +83,11 @@ const ModalEditPostBlog: React.FC<ModalEditPostBlogProps> = ({
                 await refreshPublishedList();
                 await refreshUnpublishedList();
             }
+            setIsWaiting(false);
         } 
         else {
             try {
+                setIsWaiting(true);
                 const fileToSend = FileService.dataURLtoFile(loadedImage, imageName);
                 console.log(imageName);
                 //console.log(fileToSend.name, fileToSend.size, fileToSend.type);
@@ -97,6 +100,7 @@ const ModalEditPostBlog: React.FC<ModalEditPostBlogProps> = ({
                     console.log(resultImage.message);
                     blogPost.isPublished ? await refreshPublishedList() : await refreshUnpublishedList();
                 }
+                setIsWaiting(false);
                 
             } catch (error) {
                 console.error('Erreur lors de la conversion de l\'image :', error);
@@ -247,16 +251,17 @@ const ModalEditPostBlog: React.FC<ModalEditPostBlogProps> = ({
                         />
                         <p className="modal-dark-body-text text-medium-secondary"><strong>Nom du fichier :</strong> {imageName || blogPost.imageName}</p>
                         <div className="edit-image-button-container">
-                            <button 
+                            <Button 
                                 className="button-dark-small" 
                                 type="button"
                                 onClick={handleLoadImage}
+                                disabled={isWaiting}
                             >
                                 Charger
-                            </button>
+                            </Button>
                         </div>
                     </div>
-                    <Button title="Valider le post" className='button-dark-small no-border' type="submit" disabled={false}>
+                    <Button title="Valider le post" className='button-dark-small no-border' type="submit" disabled={isWaiting || title.length === 0 || intro.length === 0 || text.length === 0 || selectedTags.length === 0}>
                         Valider
                     </Button>
                 </Form>

@@ -13,7 +13,6 @@ interface DashboardCarouselListItemProps {
 const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ slide, slidesSize, refreshList, onViewSlide, onEditSlide, onEditImage }) => {
     const photoCarouselService = PhotoCarouselService.getInstance();
 
-
     const handleSetSlideUp = async (id: number) => {
         await photoCarouselService.setSlideUp(id);
         await refreshList();
@@ -35,24 +34,24 @@ const DashboardCarouselListItem: React.FC<DashboardCarouselListItemProps> = ({ s
     };
     
     const handleViewSlide = async () => {
-        console.log('View slide :', slide);
+        //console.log('View slide :', slide);
         onViewSlide(slide);
     };
 
 
     const handleEditSlide = async () => {
-        console.log('Edit slide :', slide);
+        //console.log('Edit slide :', slide);
         onEditSlide(slide);
     };
 
     const handleEditImageSlide = async () => {
-        console.log('Edit image slide :', slide);
+        //console.log('Edit image slide :', slide);
         onEditImage(slide);
     };
 
     
     const handleDeleteSlide = async () => {
-        console.log('Delete slide :', slide.id);
+        //console.log('Delete slide :', slide.id);
         const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce slide ?');
         if(!confirm) return;
         await photoCarouselService.deleteSlide(slide.id);

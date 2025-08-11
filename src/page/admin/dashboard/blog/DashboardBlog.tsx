@@ -24,6 +24,7 @@ const DashboardBlog: React.FC = () => {
     const blogPostService: BlogPostService = BlogPostService.getInstance();
     const blogTagService: BlogTagService = BlogTagService.getInstance();
 
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
     
     
     useEffect(() => {
@@ -147,6 +148,8 @@ const DashboardBlog: React.FC = () => {
                         refreshUnpublishedList={refreshUnpublishedList}
                         onViewPost={onViewPost}
                         onEditPost={onEditPost}
+                        isWaiting={isWaiting}
+                        setIsWaiting={setIsWaiting}
                         />
                     ))
                 )}
@@ -166,6 +169,8 @@ const DashboardBlog: React.FC = () => {
                         refreshUnpublishedList={refreshUnpublishedList}
                         onViewPost={onViewPost}
                         onEditPost={onEditPost}
+                        isWaiting={isWaiting}
+                        setIsWaiting={setIsWaiting}
                         />
                     ))
                 )}

@@ -13,6 +13,8 @@ const DashboardBlogTag: React.FC = () => {
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
     const [selectedTag, setSelectedTag] = useState<Nullable<BlogTag>>(null);
 
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
+
     const blogTagService: BlogTagService = BlogTagService.getInstance();
 
     useEffect(() => {
@@ -47,11 +49,13 @@ const DashboardBlogTag: React.FC = () => {
     const onDeleteTag = useCallback(async (tagId: number) => {
         const confirmDelete = window.confirm('Etes-vous sur de vouloir supprimer ce tag ?');
         if (!confirmDelete) return;
+        setIsWaiting(true);
         const result = await blogTagService.deleteBlogTag(tagId);
         if (result.success) {
             await refreshTags();
             blogTagService.notifyTagsSubscribers();
         }
+        setIsWaiting(false);
     }, [blogTagService, refreshTags]); // Ajoute refreshTags et blogTagService comme dépendances
 
     const handleCloseEditModal = useCallback(() => {
@@ -78,7 +82,9 @@ const DashboardBlogTag: React.FC = () => {
                         tag={tag} 
                         onEditTag={onEditTag} 
                         onDeleteTag={onDeleteTag}
-                        refreshTags={refreshTags}
+                        //refreshTags={refreshTags}
+                        isWaiting={isWaiting}
+                        //setIsWaiting={setIsWaiting}
                         />
                     ))
                 )}  

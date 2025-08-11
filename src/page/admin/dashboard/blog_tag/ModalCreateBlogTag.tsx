@@ -22,6 +22,7 @@ const ModalCreateBlogTag: React.FC<ModalCreateBlogPostProps> = (
     const [slug, setSlug] = useState<Nullable<string>>(null);
     const [name, setName] = useState<Nullable<string>>(null);
     const [isNewSlug, setIsNewSlug] = useState<boolean>(false);
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
     const blogTagService = BlogTagService.getInstance();
 
@@ -30,13 +31,14 @@ const ModalCreateBlogTag: React.FC<ModalCreateBlogPostProps> = (
         if(!name || !slug) {
             return;
         }
+        setIsWaiting(true);
         const result = await blogTagService.createBlogTagFromForm(name, slug);
         if(result.success) {
             // TODO inscrire le dashboard tag ?
             await refreshTags();
             blogTagService.notifyTagsSubscribers();
         }
-
+        setIsWaiting(false);
         handleCloseCreateModal();
     }
     const handleChangeName = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +95,7 @@ const ModalCreateBlogTag: React.FC<ModalCreateBlogPostProps> = (
                         <Button 
                         type="submit" 
                         className="button-dark-small" 
-                        disabled={!name || !isNewSlug || isUpdatingSlug}
+                        disabled={isWaiting || !name || !isNewSlug || isUpdatingSlug}
                         >Valider</Button>       
                     </Form>
                 </Modal.Body>
