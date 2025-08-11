@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import cyanYellowMandala from '../../assets/image/canvas/cyan_yellow_mandala.png'
 import BlogPostService from '../../service/BlogPostService';
 import { BlogPost, BlogTag } from '../../type/indexType';
@@ -18,6 +18,15 @@ const Home: React.FC = () => {
   const [activeBlogTags, setActiveBlogTags] = useState<BlogTag[]>([]);
   const [inactiveBlogTags, setInactiveBlogTags] = useState<BlogTag[]>([]);
   //const [allBlogTags, setAllBlogTags] = useState<BlogTag[]>([]);
+
+    // Mémorisation des tags triés
+  const sortedActiveTags = useMemo(() => {
+    return [...activeBlogTags].sort((a, b) => a.name.localeCompare(b.name));
+  }, [activeBlogTags]);
+
+  const sortedInactiveTags = useMemo(() => {
+    return [...inactiveBlogTags].sort((a, b) => a.name.localeCompare(b.name));
+  }, [inactiveBlogTags]);
   
   const getInactiveTagsFromLists = useCallback((allTags: BlogTag[], activeTags: BlogTag[]): BlogTag[] => {
     if (!allTags || !activeTags) return [];
@@ -73,46 +82,6 @@ const Home: React.FC = () => {
     setActiveBlogTags(prev => [...prev, tag]);
   }, []);
 
-  /*
-  const handleClickOnActiveTag = useCallback((tag: BlogTag) => {
-    //console.log('active tag', tag);
-    // enlever le tag de la liste des actifs
-    setActiveBlogTags((prev) => {
-        const filteredTags: BlogTag[] = prev.filter(t => t.id !== tag.id);
-        updatePostsFromActiveTags(filteredTags);
-        return filteredTags;
-      });
-    // ajouter le tag dans la liste des inactifs
-    setInactiveBlogTags((prev) => [...prev, tag]);
-    //updatePostsFromActiveTags();
-
-  }, []);
-
-  const handleClickOnInactiveTag = useCallback((tag: BlogTag) => {
-    //console.log('inactive tag', tag);
-    // enlever le tag de la liste des inactifs
-    setInactiveBlogTags((prev) => prev.filter(t => t.id !== tag.id));
-    // ajouter le tag dans la liste des actifs
-    setActiveBlogTags((prev) => {
-      const filteredTags: BlogTag[] = [...prev, tag];
-      updatePostsFromActiveTags(filteredTags);
-      return filteredTags;
-    });
-    //updatePostsFromActiveTags();
-  }, []);
-
-  const updatePostsFromActiveTags = (actives: BlogTag[]) => {
-    setFilteredBlogPosts(prev => {
-      const activeIds = new Set(actives.map(t => t.id));
-      console.log('activeIds', activeIds);
-      return allBlogPosts.filter(post => post.tags.some(tag => activeIds.has(tag.id)));
-    });
-  }; 
-  */
-
-
-
-
   return(
     <div className='app-container'>
       <h2 className='mt-5'>Accueil</h2>
@@ -120,23 +89,24 @@ const Home: React.FC = () => {
       <div className='blog-post-tags-div-container'>
         <p className="blog-post-tags-list-title">TAGS ACTIFS</p>
         <div className='blog-post-tags-container'>
-          {activeBlogTags && activeBlogTags.map((tag) => (
-            <BlogPostTag 
-            key={tag.id} 
-            tag={tag} 
-            handleClick={() => handleClickOnActiveTag(tag)}
+        {sortedActiveTags.map(tag => (
+            <BlogPostTag
+              key={tag.id}
+              tag={tag}
+              handleClick={() => handleClickOnActiveTag(tag)}
             />
-          ))}
+        ))}
         </div>
         <p className="blog-post-tags-list-title">TAGS INACTIFS</p>
         <div className='blog-post-tags-container'>
-          {inactiveBlogTags && inactiveBlogTags.map((tag) => (
-            <BlogPostTag 
-            key={tag.id} 
-            tag={tag} 
-            handleClick={() => handleClickOnInactiveTag(tag)}
+        {sortedInactiveTags.map(tag => (
+            <BlogPostTag
+              key={tag.id}
+              tag={tag}
+              handleClick={() => handleClickOnInactiveTag(tag)}
             />
-          ))}
+        ))}
+
         </div>
       </div>
       {isLoading ? (
