@@ -50,6 +50,7 @@ class BlogTagService {
                 }
             });
             const result = await response.json();
+            //console.log('Fetched blog tags : ' + result.data);
             this.setBlogTags(result.data);
         } catch (error) {
             console.error('Error fetching blog tags:', error);

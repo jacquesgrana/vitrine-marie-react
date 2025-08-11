@@ -2,11 +2,19 @@ import { BlogTag } from "../type/indexType";
 
 type BlogPostTagProps = {
     tag: BlogTag;
+    handleClick?: (e: any) => void
 }
 
-const BlogPostTag: React.FC<BlogPostTagProps> = ({ tag }: BlogPostTagProps) => {
+const BlogPostTag: React.FC<BlogPostTagProps> = ({ 
+    tag,
+    handleClick
+ }: BlogPostTagProps) => {
     return (
-        <div key={tag.id} className="blog-post-tag">{tag.name}</div>
+        <div 
+        className="blog-post-tag"
+        style={{cursor: handleClick ? 'pointer' : 'default'}}
+        onClick={handleClick}
+        >{tag.name}</div>
     );
 };
 

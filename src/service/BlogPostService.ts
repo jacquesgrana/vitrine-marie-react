@@ -1,6 +1,6 @@
 import Config from "../config/Config";
 import ToastFacade from "../facade/ToastFacade";
-import { ApiResponse, BlogPost } from "../type/indexType";
+import { ApiResponse, BlogPost, BlogTag } from "../type/indexType";
 import SecurityService from "./SecurityService";
 //import SecurityService from "./SecurityService";
 
@@ -375,7 +375,21 @@ class BlogPostService {
                 data: error
             }
         }
-    }   
+    }
+    
+    public getCollectedTagsFromPosts(): BlogTag[] {
+        const toReturn: BlogTag[] = [];
+        this.blogPosts.forEach((post) => {
+            post.tags.forEach((tag) => {
+                if(toReturn.indexOf(tag) === -1) {
+                    toReturn.push(tag);
+                }
+            });
+        });
+        //console.log('posts : ' + this.blogPosts);
+        //console.log('toReturn : tags : ' + toReturn);
+        return toReturn.sort((a, b) => a.name.localeCompare(b.name));
+    }
 }
 
 export default BlogPostService;
