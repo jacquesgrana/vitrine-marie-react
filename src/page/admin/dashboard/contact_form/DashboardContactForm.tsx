@@ -16,6 +16,8 @@ const DashboardContactForm: React.FC = () => {
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [selectedContactForm, setSelectedContactForm] = useState<ContactForm | null>(null);
 
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
+
     useEffect(() => {
         const refreshListIn = async () => {
             setIsLoading(true);
@@ -44,9 +46,11 @@ const DashboardContactForm: React.FC = () => {
 
     const onCreateProspect = useCallback( async (contactForm: ContactForm) => {
         //console.log('create prospect : ', contactForm);
+        setIsWaiting(true);
         await contactFormProspectService.createProspectFromContactForm(contactForm.id);
         await refreshList();
         await contactFormProspectService.notifySubscribers();
+        setIsWaiting(false);
     }, [contactFormProspectService, refreshList]);
     
 
@@ -66,8 +70,10 @@ const DashboardContactForm: React.FC = () => {
         //console.log('delete contactForm', contactForm);
         const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce formulaire de contact ?');
         if(!confirm) return;
+        setIsWaiting(true);
         await contactFormService.deleteContactForm(contactForm.id);
         await refreshList();
+        setIsWaiting(false);
     } , [contactFormService, refreshList]);
 
     return(
@@ -86,6 +92,7 @@ const DashboardContactForm: React.FC = () => {
                         onViewContactForm={onViewContactForm}
                         onDeleteContactForm={onDeleteContactForm}
                         onCreateProspect={onCreateProspect}
+                        isWaiting={isWaiting}
                     />
                 ))
             )}

@@ -1,3 +1,4 @@
+import { Button } from "react-bootstrap";
 import { ContactFormProspect } from "../../../../type/indexType";
 
 
@@ -7,13 +8,15 @@ interface DashboardContactFormProspectListItemProps {
     onDeleteContactFormProspect: (contactFormProspect: ContactFormProspect) => void,
     onEditContactFormProspect: (contactFormProspect: ContactFormProspect) => void
     //refreshList: () => Promise<void>
+    isWaiting: boolean
 }
 
 const DashboardContactFormProspectListItem: React.FC<DashboardContactFormProspectListItemProps> = ({ 
     contactFormProspect,
     onViewContactFormProspect,
     onDeleteContactFormProspect,
-    onEditContactFormProspect 
+    onEditContactFormProspect,
+    isWaiting
     //refreshList 
 }) => {
 
@@ -39,23 +42,27 @@ const DashboardContactFormProspectListItem: React.FC<DashboardContactFormProspec
         <p className="text-small-white dashboard-contact-list-item-text"><strong><span className='text-small-secondary'>Commentaire : </span></strong>{contactFormProspect.comment}</p>
 
         <div className='dashboard-contact-list-item-button-container'>
-            <button 
+            <Button 
                 title="Voir le prospect"
                 type='button' 
                 onClick={() => handleViewContactFormProspect()} 
                 className='button-dark-very-small'
-            >👁️</button>
-            <button 
+                disabled={isWaiting}
+            >👁️</Button>
+            <Button 
                 title="Modifier le prospect" 
                 type='button' 
                 onClick={() => handleEditContactFormProspect()} 
-                className='button-dark-very-small'>🖊️</button>
-            <button 
+                className='button-dark-very-small'
+                disabled={isWaiting}
+                >🖊️</Button>
+            <Button 
                 title="Supprimer le prospect"
                 type='button' 
                 onClick={() => handleDeleteContactFormProspect()} 
                 className='button-dark-very-small'
-            >✖</button>  
+                disabled={isWaiting}
+            >✖</Button>  
         </div>
     </div>
 );

@@ -1,6 +1,7 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import { ContactFormProspect } from "../../../../type/indexType";
 import ContactFormProspectService from "../../../../service/ContactFormProspectService";
+import { useState } from "react";
 //import PhotoCarouselService from "../../../../service/PhotoCarouselService";
 
 interface ModalEditContactFormProspectProps {
@@ -19,6 +20,7 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
     }
 ) => {
     //const photoCarouselService = PhotoCarouselService.getInstance();
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
     const contactFromProspectService = ContactFormProspectService.getInstance();
 
@@ -39,6 +41,7 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
 
         //console.log(name, firstName, email, phone, comment, selectedContactFormProspect.id);
         // appeler méthode asynchrone du ContactFormService pour envoyer le formulaire et récupérer la réponse
+        setIsWaiting(true);
         const result = await contactFromProspectService.updateProspect(selectedContactFormProspect.id, name, firstName, email, phone, comment);
         // TODO gérer les result.success et result.message
         
@@ -46,7 +49,7 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
             //console.log(result.message);
             await refreshList();
         }
-        
+        setIsWaiting(false);
         handleCloseEditModal();
     };
 
@@ -122,7 +125,12 @@ const ModalEditContactFormProspect: React.FC<ModalEditContactFormProspectProps> 
                             required
                             />
                     </Form.Group>
-                    <Button title="Valider le prospect" className='button-dark-small no-border' type="submit" disabled={false}>
+                    <Button 
+                    title="Valider le prospect" 
+                    className='button-dark-small no-border' 
+                    type="submit" 
+                    disabled={isWaiting}
+                    >
                         Valider
                     </Button>
                 </Form>

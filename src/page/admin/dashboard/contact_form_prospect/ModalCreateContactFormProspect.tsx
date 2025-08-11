@@ -1,5 +1,6 @@
 import { Button, Form, Modal } from "react-bootstrap";
 import ContactFormProspectService from "../../../../service/ContactFormProspectService";
+import { useState } from "react";
 //import PhotoCarouselService from "../../../../service/PhotoCarouselService";
 
 interface ModalCreateContactFormProspectProps {
@@ -15,6 +16,8 @@ const ModalCreateContactFormProspect: React.FC<ModalCreateContactFormProspectPro
         refreshList
     }
 ) => {
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
+
     const contactFromProspectService = ContactFormProspectService.getInstance();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,7 +38,7 @@ const ModalCreateContactFormProspect: React.FC<ModalCreateContactFormProspectPro
         comment = comment === null ? "" : comment;
 
         //console.log(name, firstName, email, phone, comment, selectedContactFormProspect.id);
-        
+        setIsWaiting(true);
         const result = await contactFromProspectService.createProspect(name, firstName, email, phone, comment);
         
         if(result.success) {
@@ -43,6 +46,7 @@ const ModalCreateContactFormProspect: React.FC<ModalCreateContactFormProspectPro
             await refreshList();
         }
         //await refreshList();
+        setIsWaiting(false);
         handleCloseCreateModal();
     };
 
@@ -117,7 +121,7 @@ const ModalCreateContactFormProspect: React.FC<ModalCreateContactFormProspectPro
                             //required
                             />
                     </Form.Group>
-                    <Button title="Créer le prospect" className='button-dark-small no-border' type="submit" disabled={false}>
+                    <Button title="Créer le prospect" className='button-dark-small no-border' type="submit" disabled={isWaiting}>
                         Valider
                     </Button>
                 </Form>

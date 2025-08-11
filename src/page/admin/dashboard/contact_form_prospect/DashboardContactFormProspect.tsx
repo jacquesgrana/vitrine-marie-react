@@ -19,7 +19,7 @@ const DashboardContactFormProspect: React.FC = () => {
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
     const [isModalExportOpen, setIsModalExportOpen] = useState(false);
     const [selectedContactFormProspect, setSelectedContactFormProspect] = useState<ContactFormProspect | null>(null);
-    
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
     useEffect(() => {
     const refreshListIn = async () => {
@@ -74,11 +74,13 @@ const DashboardContactFormProspect: React.FC = () => {
     const onDeleteContactFormProspect = useCallback(async (contactFormProspect: ContactFormProspect) => {
         const confirm = window.confirm('Etes-vous sur de vouloir supprimer ce prospect ?');
         if(!confirm) return;
+        setIsWaiting(true);
         const result = await contactFormProspectService.deleteProspect(contactFormProspect.id);
         if(result.success) {
             await refreshList();
             await contactFormProspectService.notifySubscribers();
         }
+        setIsWaiting(false);
     }, [contactFormProspectService, refreshList]);
 
     const onEditContactFormProspect = useCallback((contactFormProspect: ContactFormProspect) => {
@@ -105,12 +107,6 @@ const DashboardContactFormProspect: React.FC = () => {
             <p className="dashboard-contact-list-title">LISTE DES PROSPECTS</p>
             <div className="dashboard-contact-list-container">
             {isLoading ? (
-                /*
-                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 120 }}>
-                    <Spinner animation="border" variant="secondary" role="status">
-                        <span className="visually-hidden">Chargement...</span>
-                    </Spinner>
-                </div>*/
                 <LoadingSpinner minHeight={120} />
             ) : (
                 contactFormProspects.length > 0 ? (
@@ -121,6 +117,7 @@ const DashboardContactFormProspect: React.FC = () => {
                             onViewContactFormProspect={onViewContactFormProspect}
                             onDeleteContactFormProspect={onDeleteContactFormProspect}
                             onEditContactFormProspect={onEditContactFormProspect}
+                            isWaiting={isWaiting}
                         />
                     ))
                 ) : (

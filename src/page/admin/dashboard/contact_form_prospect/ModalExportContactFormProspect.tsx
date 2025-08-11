@@ -20,6 +20,7 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
 ) => {
     const [checkedProspects, setCheckedProspects] = useState<string[]>([]);
     const [checkedFields, setCheckedFields] = useState<string[]>([]);
+    const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
     const contactFromProspectService = ContactFormProspectService.getInstance();
     const fileService = FileService.getInstance();
@@ -37,9 +38,10 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
             ToastFacade.showErrorToast('Veuillez choisir au moins un prospect, un champ et un nom de fichier.');
             return;
         }
-
+        setIsWaiting(true);
         const result: ApiResponse = await contactFromProspectService.exportProspects(checkedProspects, checkedFields);
         await fileService.exportCsvFile(result.data, fileNameRef.current);
+        setIsWaiting(false);
         handleCloseExportModal();
     };
 
@@ -158,7 +160,11 @@ const ModalExportContactFormProspect: React.FC<ModalCreateContactFormProspectPro
                             ))}
                         </div>    
                     </Form.Group>
-                    <Button title="Exporter" className='button-dark-small no-border' type="submit" disabled={false}>
+                    <Button 
+                    title="Exporter" 
+                    className='button-dark-small no-border' 
+                    type="submit" 
+                    disabled={isWaiting}>
                         Exporter
                     </Button>
                 </Form>

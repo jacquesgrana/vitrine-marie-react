@@ -1,3 +1,4 @@
+import { Button } from "react-bootstrap";
 import { ContactForm } from "../../../../type/indexType";
 
 interface DashboardContactFormListItemProps {
@@ -6,6 +7,7 @@ interface DashboardContactFormListItemProps {
     onViewContactForm: (contactForm: ContactForm) => void;
     onDeleteContactForm: (contactForm: ContactForm) => void;
     onCreateProspect: (contactForm: ContactForm) => void;
+    isWaiting: boolean
 }
 
 const DashboardContactFormListItem: React.FC<DashboardContactFormListItemProps> = ({
@@ -13,7 +15,8 @@ const DashboardContactFormListItem: React.FC<DashboardContactFormListItemProps> 
     //refreshList,
     onViewContactForm,
     onDeleteContactForm,
-    onCreateProspect
+    onCreateProspect,
+    isWaiting
 }) => {
 
     const handleViewContactForm = () => {
@@ -39,26 +42,28 @@ const DashboardContactFormListItem: React.FC<DashboardContactFormListItemProps> 
         <p className="text-small-white dashboard-contact-list-item-text"><strong><span className='text-small-secondary'>Message : </span></strong>{contactForm.message}</p>
 
         <div className='dashboard-contact-list-item-button-container'>
-            <button 
+            <Button 
             title="Voir le formulaire"
             type='button' 
             onClick={() => handleViewContactForm()} 
             className='button-dark-very-small'
-            >👁️</button>
-            <button 
+            disabled={isWaiting}
+            >👁️</Button>
+            <Button 
             title="Supprimer le formulaire"
             type='button' 
             onClick={() => handleDeleteContactForm()} 
             className='button-dark-very-small'
-            >✖</button>
-            <button 
+            disabled={isWaiting}
+            >✖</Button>
+            <Button 
             title="Créer un nouveau prospect"
             type='button' 
             onClick={() => handleCreateProspect()} 
             className='button-dark-very-small'
             // améliorer !!
-            disabled={Object.keys(contactForm.contactFormProspect).length > 0}
-            >👤</button>   
+            disabled={isWaiting || Object.keys(contactForm.contactFormProspect).length > 0}
+            >👤</Button>   
         </div>
     </div>
     );
