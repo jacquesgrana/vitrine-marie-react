@@ -47,10 +47,12 @@ const Home: React.FC = () => {
         const allTagsFromService = blogTagService.getBlogTags();
 
         const activeTags = blogPostService.getCollectedTagsFromPosts();
-        setActiveBlogTags(activeTags);
+        setActiveBlogTags(() => {
+          //console.log('activeTags', activeTags);
+          return activeTags;
+        });
 
         const inactivesTags = getInactiveTagsFromLists(allTagsFromService, activeTags);
-        //console.log('inactivesTags', inactivesTags);
         setInactiveBlogTags(inactivesTags);
 
         setIsLoading(false);

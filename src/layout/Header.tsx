@@ -94,7 +94,7 @@ const Header: React.FC = () => {
 
     const handleLogout = async () => {
         await securityService.logout();
-        navigate('/');
+        if (location.pathname === '/admin/dashboard') navigate('/');
     };
 
     return (

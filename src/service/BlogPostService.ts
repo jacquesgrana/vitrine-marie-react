@@ -378,18 +378,25 @@ class BlogPostService {
     }
     
     public getCollectedTagsFromPosts(): BlogTag[] {
-        const toReturn: BlogTag[] = [];
+        if (this.blogPosts.length === 0) {
+            return [];
+        }
+
+        const uniqueTags: BlogTag[] = [];
+        
         this.blogPosts.forEach((post) => {
             post.tags.forEach((tag) => {
-                if(toReturn.indexOf(tag) === -1) {
-                    toReturn.push(tag);
+                // Vérifier si un tag avec cet id existe déjà
+                if (!uniqueTags.some(existingTag => existingTag.id === tag.id)) {
+                    uniqueTags.push(tag);
                 }
             });
         });
-        //console.log('posts : ' + this.blogPosts);
-        //console.log('toReturn : tags : ' + toReturn);
-        return toReturn.sort((a, b) => a.name.localeCompare(b.name));
+
+        return uniqueTags.sort((a, b) => a.name.localeCompare(b.name));
     }
+
 }
+
 
 export default BlogPostService;

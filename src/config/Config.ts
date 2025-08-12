@@ -52,8 +52,6 @@ class Config {
 
     //LocalStorageService
     public static readonly TOKEN_DURATION_MS: number = (3600 - 10) * 1000;
-
-    // Intervalle de vérification du token (en ms)
     public static readonly TOKEN_CHECK_INTERVAL_MS: number = 10 * 1000; // 10 secondes
 
     //carousel
