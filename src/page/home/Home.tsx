@@ -87,13 +87,16 @@ const Home: React.FC = () => {
       <h2 className='mt-5'>Accueil</h2>
       <p className='mt-3 mb-3 text-xlarge-white'>Bienvenue sur le site de Sushi Dot Painting.</p>
       <div className='blog-post-tags-div-container'>
-        <p className="blog-post-tags-list-title">TAGS ACTIFS</p>
-        <div className='blog-post-tags-container'>
+        {!isLoading ? (
+          <>
+          <p className="blog-post-tags-list-title">TAGS ACTIFS</p>
+          <div className='blog-post-tags-container'>
         {sortedActiveTags.map(tag => (
             <BlogPostTag
               key={tag.id}
               tag={tag}
               handleClick={() => handleClickOnActiveTag(tag)}
+              title={"Cliquer pour inactiver le tag " + tag.name}
             />
         ))}
         </div>
@@ -104,10 +107,15 @@ const Home: React.FC = () => {
               key={tag.id}
               tag={tag}
               handleClick={() => handleClickOnInactiveTag(tag)}
+              title={"Cliquer pour activer le tag " + tag.name}
             />
         ))}
 
         </div>
+        </>
+        ) : (
+          <></>
+        ) }
       </div>
       {isLoading ? (
           <div className="photo-carousel-outer-container">

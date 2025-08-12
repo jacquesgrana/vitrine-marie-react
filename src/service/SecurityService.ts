@@ -32,6 +32,22 @@ class SecurityService {
         return SecurityService.instance;
     }
 
+
+    public isTokenExpired(): boolean {
+        return this.localStorageService.isTokenExpired();
+    }
+
+    /**
+     * Déconnexion automatique en cas de token expiré
+     */
+    public async autoLogoutIfTokenExpired(): Promise<boolean> {
+        if (this._isAuthenticated && this.isTokenExpired()) {
+            await this.logout();
+            return true; // Token expiré et déconnexion effectuée
+        }
+        return false; // Token valide
+    }
+
     public async tryLogin(formData: LoginFormData): Promise<ApiResponse> {
         //route : /api/login
         // verifier données formulaire ?
@@ -168,6 +184,10 @@ class SecurityService {
         };
     }
 
+    public unsubscribe(callback: (user: UserInfo | null) => void): void {
+        this.subscribers = this.subscribers.filter(sub => sub !== callback);
+    }
+
     private notifySubscribers(): void {
         this.subscribers.forEach(callback => callback(this.user));
     }
@@ -244,7 +264,7 @@ class SecurityService {
     }
 
     public isAuthenticated(): boolean {
-        return this.token !== null && this.user !== null && this._isAuthenticated;
+        return this.token !== null && this.user !== null && this._isAuthenticated && !this.isTokenExpired();
     }
 
     public setIsAuthenticated(isAuthenticated: boolean): void {

@@ -51,7 +51,10 @@ class Config {
     public static readonly DELETE_BLOG_TAG_URL : string = `${Config.SERVER_URL}/api/blog-tag/delete/`;
 
     //LocalStorageService
-    public static readonly TOKEN_DURATION_MS: number = (3600 - 30) * 1000;
+    public static readonly TOKEN_DURATION_MS: number = (3600 - 10) * 1000;
+
+    // Intervalle de vérification du token (en ms)
+    public static readonly TOKEN_CHECK_INTERVAL_MS: number = 10 * 1000; // 10 secondes
 
     //carousel
     public static readonly GET_CAROUSEL_IMAGES_PATH : string = `${Config.SERVER_URL}/image/carousel/`;

@@ -14,6 +14,15 @@ class LocalStorageService {
         return LocalStorageService.instance;
     }
 
+    public isTokenExpired(): boolean {
+        const tokenTimestamp = this.getTokenTimestamp();
+        if (tokenTimestamp) {
+            const timestampNow = Date.now();
+            return timestampNow - parseInt(tokenTimestamp) > Config.TOKEN_DURATION_MS;
+        }
+        return true;
+    }
+
     public setItem(key: string, value: string): void {
         localStorage.setItem(key, value);
     }
