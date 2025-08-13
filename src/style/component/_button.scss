@@ -104,6 +104,48 @@
     }
 }
 
+.button-medium-very-small {
+    background-color: $primary-color-dark-2;
+    color: $white-color;
+    padding: 5px;
+    padding-top: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: small;
+    text-transform: uppercase;
+    width: 70px;
+    height: 30px;
+    font-family: Source_Sans_3_Regular;
+    font-weight: 900;
+    border: none;
+    //margin-top: 10px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+
+    &:active {
+        transition: 0.3s;
+        background-color: $primary-color-light-1;
+        color: $secondary-color;
+    }
+
+    &:hover {
+        transition: 0.3s;
+        background-color: $secondary-color;
+        color: $black-color;
+    }
+
+    &:disabled {
+        transition: 0.3s;
+        opacity: 0.5;
+        background-color: $primary-color-dark-1;
+        cursor: not-allowed;
+    }
+}
+
 .button-as-link {
     padding: 0;
     margin: 0;

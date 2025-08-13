@@ -11,6 +11,7 @@ import LoadingSpinner from '../../common/LoadingSpinner';
 const Login: React.FC = () => { 
     const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const captchaRef = useRef<CaptchaHandle>(null);
     const navigate = useNavigate();
 
@@ -79,12 +80,17 @@ const Login: React.FC = () => {
                             <Form.Label className='text-large-white'>Mot de passe</Form.Label>
                             <Form.Control
                                 className='login-form-field'
-                                type="password"
+                                type={isPasswordVisible ? "text" : "password"}
                                 name="password"
                                 required
                                 placeholder='Saisir votre mot de passe.'
                                 />
                         </Form.Group>
+                        <Button className='button-medium-very-small mb-3' onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                        title={isPasswordVisible ? 'Cacher le mot de passe' : 'Afficher le mot de passe'}
+                            >
+                            {isPasswordVisible ? "🔒" : '👁️'}
+                        </Button>   
                     </Row>
                    <Row className="justify-content-center">
                         <CustomCaptcha ref={captchaRef} onVerify={setIsCaptchaVerified} />

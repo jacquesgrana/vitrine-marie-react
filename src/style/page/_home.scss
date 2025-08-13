@@ -25,21 +25,12 @@
 .blog-post-container {
   background: $primary-color-dark-2;
   border-radius: 10px;
-  //box-shadow: 0 4px 24px 0 rgba($primary-color, 0.08);
   padding: 2rem 2rem;
   margin-bottom: 2.5rem;
   margin-left: 20px;
   margin-right: 20px;
   width: 100%;
   max-width: 1200px;
-  //border: 1px solid $primary-color-dark-1;
-  //transition: box-shadow 0.2s;
-
-  /*
-  &:hover {
-    box-shadow: 0 0px 16px 0 rgba($primary-color-light-3, 0.33);
-  }
-  */
 }
 
 .blog-post-title {
@@ -57,36 +48,43 @@
   line-height: 2rem;
   font-weight: 700;
   font-style: italic;
-  text-align: start;
-  
+  text-align: justify; // ✅ Texte justifié comme demandé
+}
+
+// ✅ Nouveau conteneur pour image + texte avec wrapping
+.blog-post-content-wrapper {
+  display: block;
+  margin-bottom: 20px;
 }
 
 .blog-post-image {
-  display: block;
-  width: 100%;
+  float: left; // ✅ Image flottante à gauche
+  width: 38%; // ✅ Largeur 38%
   max-height: 1600px;
   object-fit: cover;
   border-radius: 5px;
-  margin: 0;
-  margin-bottom: 20px;
-  //box-shadow: 0 2px 12px 0 rgba($primary-color, 0.07);
+  margin: 0 20px 20px 0; // ✅ Marge droite et bas pour l'espacement
 }
 
 .blog-post-text {
   color: $white-color;
-  font-size: 1rem;
-  line-height: 1.7;
-  margin-top: 0;
-  margin-bottom: 20px;
-  text-align: start;
+  font-size: 1.5rem; // ✅ Légèrement plus gros (était 1rem)
+  line-height: 2.05rem;
+  margin: 0;
+  text-align: justify; // ✅ Texte justifié
+  
+  // ✅ Assure le clearfix pour gérer le float
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 }
 
 .blog-post-date {
   color: $secondary-color-dark-2;
   font-size: 0.98rem;
-  //margin-bottom: 10px;
   font-weight: 500;
-  //font-family: 'Fira Mono', 'Consolas', monospace;
   letter-spacing: 0.02em;
 }
 
@@ -95,65 +93,65 @@
   font-size: 1.05rem;
   font-weight: 500;
   margin-top: 1.2rem;
-  letter-spacing: 0.01em;
-  text-align: start;
   margin-bottom: 20px;
+  letter-spacing: 0.01em;
+  text-align: right; // ✅ Aligné à gauche
   font-style: italic;
 }
 
+// ✅ Tags container modifié pour alignement à gauche
 .blog-post-tags-container {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 0px;
-  margin-top: 10px;
-}
-
-.blog-post-tag {
-  background-color: $secondary-color;
-  display: inline-block;
-  padding-top: 9px;
-  padding-bottom: 7px;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 15px;
-  color: $primary-color-dark-3;
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  letter-spacing: 0.01em;
-  min-width: 60px;
-  width: fit-content;
-  height: 30px;
-  font-family: Source_Sans_3_Regular;
-  text-align: center;
-}
-
-.blog-post-tags-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; // ✅ Alignement à gauche (était center)
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   background-color: $primary-color-dark-2;
   border-radius: 10px;
   padding: 10px;
   width: 100%;
   max-width: 1200px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   margin-top: 0px;
-  height: 50px;
-  //border: 1px solid $primary-color-dark-1;
-  //transition: box-shadow 0.2s;
+  min-height: 50px; // ✅ min-height au lieu de height fixe
 }
 
+// ✅ Tags container modifié pour alignement à gauche
+.blog-post-tags-bottom-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start; // ✅ Alignement à gauche (était center)
+  align-items: center;
+  gap: 8px;
+  background-color: $primary-color-dark-2;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 15px;
+  margin-top: 0px;
+  min-height: 50px; // ✅ min-height au lieu de height fixe
+}
+
+// ✅ Responsive : Sur mobile, l'image prend toute la largeur
+@media (max-width: 768px) {
+  .blog-post-image {
+    float: none;
+    width: 100%;
+    margin: 0 0 20px 0;
+  }
+  
+  .blog-post-text {
+    margin-top: 0;
+  }
+}
+
+// Classes utilitaires conservées
 .blog-post-tags-div-container {
   max-width: 1200px;
   margin: 0;
   padding: 0px;
   width: 100%;
-  //scrollbar-width: auto;
-  //scrollbar-color: $primary-color-dark-1 $primary-color-dark-2;
 }
 
 .blog-post-tags-list-title {
@@ -165,5 +163,6 @@
   font-weight: 500;
   letter-spacing: 0.5em;
   margin-top: 10px;
-  margin-bottom: 0px
+  margin-bottom: 0px;
 }
+
