@@ -9,10 +9,11 @@
     align-items: center;
     justify-content: center;
 
-    min-width: 100vw;
+    width: 100vw;
     max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+    margin: 0;
+    padding: 0;
+    //padding: 20px;
 
     .contact-form-field {
         background-color: $primary-color-dark-1 !important;
@@ -21,7 +22,8 @@
         padding: 10px;
         margin-bottom: 10px;
         border-radius: 5px;
-        width: 100%;
+        max-width: 95vw;
+        //width:100vw;
 
         &::placeholder {
             color: $primary-color-light-2;
@@ -40,42 +42,12 @@
 
 
     .contact-form-field:not(:placeholder-shown) {
-    background-color: $primary-color-dark-1;
+        background-color: $primary-color-dark-1;
     }
 
     .contact-form-field.form-control:not(:placeholder-shown) {
-    background-color: $primary-color-dark-1;
+        background-color: $primary-color-dark-1;
     }
 }
 
-.contact-captcha-field {
-        background-color: $primary-color-dark-1 !important;
-        color: $secondary-color;
-        border: none;
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        width: 120px;
-        text-align: center;
 
-        &::placeholder {
-            color: $primary-color-light-2;
-        }
-
-        &:focus {
-            outline: none;
-            box-shadow: 0 0px 12px $secondary-color-dark-3;
-        }
-
-        .isValid {
-            background-color: $primary-color-dark-2;
-        }
-}
-
-.captcha-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-}

@@ -1,0 +1,12 @@
+.custom-progress {
+    margin-top: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background-color: $primary-color-dark-2;
+
+    .custom-progress-bar {
+        height: 10px;
+        border-radius: 2px;
+        background-color: $secondary-color-dark-2;
+        color: $black-color;
+    }}

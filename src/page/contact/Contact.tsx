@@ -104,7 +104,7 @@ const Contact: React.FC = () => {
         {showAlert && <Alert className='alert-success'>Merci pour votre message !</Alert>}
         <Form noValidate onSubmit={handleSubmit}>
           <Row className="justify-content-center">
-                <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Group className="mb-3 ms-2 me-2" controlId="formBasicName">
                   <Form.Label className='text-large-white'>Nom</Form.Label>
                   <Form.Control
                     className='contact-form-field'
@@ -123,9 +123,8 @@ const Contact: React.FC = () => {
                 </Form.Group>
           </Row>
 
-          {/* NOUVEAU BLOC : Champ "Prénom" ajouté ici */}
           <Row className="justify-content-center">
-                <Form.Group className="mb-3" controlId="formBasicFirstName">
+                <Form.Group className="mb-3 ms-2 me-2" controlId="formBasicFirstName">
                   <Form.Label className='text-large-white'>Prénom</Form.Label>
                   <Form.Control
                     className='contact-form-field'
@@ -145,7 +144,7 @@ const Contact: React.FC = () => {
           </Row>
 
           <Row className="justify-content-center">
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3 ms-2 me-2" controlId="formBasicEmail">
                   <Form.Label className='text-large-white'>Adresse e-mail</Form.Label>
                   <Form.Control
                     className='contact-form-field'
@@ -164,7 +163,7 @@ const Contact: React.FC = () => {
                 </Form.Group>
           </Row>
           <Row className="justify-content-center">
-                <Form.Group className="mb-3" controlId="formBasicPhone">
+                <Form.Group className="mb-3 ms-2 me-2" controlId="formBasicPhone">
                   <Form.Label className='text-large-white'>Numéro de téléphone <span className='text-medium-secondary'>(facultatif)</span></Form.Label>
                   <Form.Control
                     className='contact-form-field'
@@ -182,7 +181,7 @@ const Contact: React.FC = () => {
                 </Form.Group>
           </Row>
           <Row className="justify-content-center">
-                <Form.Group className="mb-3" controlId="formBasicMessage">
+                <Form.Group className="mb-3 ms-2 me-2" controlId="formBasicMessage">
                   <Form.Label className='text-large-white'>Message</Form.Label>
                   <Form.Control
                     className='contact-form-field'

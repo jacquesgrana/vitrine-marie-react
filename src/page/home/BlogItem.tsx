@@ -12,19 +12,19 @@ const BlogItem = ({ blogPost }: BlogPostProps) => {
     return (
         <article className="blog-post-container">
             <h3 className='blog-post-title'>{blogPost.title}</h3>
+            <hr className="custom-hr"/>
+            
             <p className='blog-post-intro'>{blogPost.intro}</p>
-            <hr />
-            {/* Conteneur pour image + texte avec wrapping */}
+            <hr className="custom-hr"/>
             <div className="blog-post-content-wrapper">
                 <img 
                     className='blog-post-image' 
                     src={blogPostService.getBlogImageUrl(blogPost.imageName)} 
-                    alt={blogPost.title}
+                    alt={"Image de " + blogPost.title}
                 />
                 <p className='blog-post-text'>{blogPost.text}</p>
             </div>
 
-            {/* Tags alignés à gauche */}
             {blogPost.tags && (
                 <div className="blog-post-tags-bottom-container">
                     {blogPost.tags.map((tag) => (
@@ -33,14 +33,12 @@ const BlogItem = ({ blogPost }: BlogPostProps) => {
                 </div>
             )}
 
-            {/* Auteur aligné à gauche */}
             <p className="blog-post-author">
                 <span className="text-medium-white">Par </span>
                 {blogPost.author.firstName} {blogPost.author.name}
             </p>
-            <hr />
+            <hr className="custom-hr"/>
 
-            {/* Dates (inchangées) */}
             <div className="d-flex justify-content-between gap-3">
                 <p className="blog-post-date">
                     <span className="text-medium-white">Créé le </span>

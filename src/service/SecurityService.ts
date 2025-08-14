@@ -32,6 +32,11 @@ class SecurityService {
         return SecurityService.instance;
     }
 
+    public getTokenValidTimePercentage = (): number => {
+        const tokenValidTimePercent = ((Date.now() - Number(this.localStorageService.getTokenTimestamp())) / (Config.TOKEN_DURATION_MS)) * 100;
+        return Math.floor(tokenValidTimePercent * 100) / 100; // Arrondi au milli(tokenValidTimePercent;
+    }
+
 
     public isTokenExpired(): boolean {
         return this.localStorageService.isTokenExpired();

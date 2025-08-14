@@ -4,13 +4,16 @@ import SecurityService from '../service/SecurityService';
 import { Nullable, UserInfo } from '../type/indexType';
 import Config from '../config/Config';
 import ToastFacade from '../facade/ToastFacade';
+import CustomProgressBar from '../common/CustomProgressBar';
 
 const Header: React.FC = () => {
     const securityService = SecurityService.getInstance();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [user, setUser] = useState<Nullable<UserInfo>>(null);
+    const [tokenValidTimePercentage, setTokenValidTimePercentage] = useState<number>(0);
     const navigate = useNavigate();
     const location = useLocation();
+
     
     // Références pour gérer les timers et subscriptions
     const tokenCheckIntervalRef = useRef<Nullable<NodeJS.Timer>>(null);
@@ -67,6 +70,8 @@ const Header: React.FC = () => {
             // Vérification toutes les TOKEN_CHECK_INTERVAL_MS ms
             tokenCheckIntervalRef.current = setInterval(() => {
                 checkTokenValidity();
+                //const tokenValidTimePercentage = ((Date.now() - Number(localStorageService.getTokenTimestamp()) * 1000) / (Config.TOKEN_DURATION_MS)) * 100;
+                setTokenValidTimePercentage(securityService.getTokenValidTimePercentage());
             }, Config.TOKEN_CHECK_INTERVAL_MS);
         } else {
             // Nettoyer l'intervalle si pas authentifié
@@ -83,7 +88,7 @@ const Header: React.FC = () => {
                 tokenCheckIntervalRef.current = null;
             }
         };
-    }, [isAuthenticated, checkTokenValidity]);
+    }, [isAuthenticated, checkTokenValidity, securityService]);
 
     // Effet pour vérifier le token lors de la navigation
     useEffect(() => {
@@ -121,7 +126,7 @@ const Header: React.FC = () => {
                 )}
             </nav>
             {isAuthenticated && user && (
-                <p className="text-small-secondary mb-3">
+                <div className="text-small-secondary mb-3">
                     <span className="text-small-white">Connecté : </span>
                     {user.firstName} {user.name}
                     <span className="text-small-white"> ● </span>
@@ -134,7 +139,11 @@ const Header: React.FC = () => {
                     >
                         déconnexion
                     </button>
-                </p>
+                    <CustomProgressBar 
+                    value={tokenValidTimePercentage}
+                    //label="token expiré"
+                    />
+                </div>
             )}
         </header>
     );
